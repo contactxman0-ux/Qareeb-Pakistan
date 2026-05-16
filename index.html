@@ -695,6 +695,32 @@ function App(){
   // ── Scroll to top on profile sub-page change ──
   useEffect(()=>{if(profScrollRef.current)profScrollRef.current.scrollTop=0;},[profPage]);
 
+  // ── Auto GPS on app load ──
+  useEffect(()=>{
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        async function(pos){
+          var lat=pos.coords.latitude;
+          var lng=pos.coords.longitude;
+          setUserLat(lat);
+          setUserLng(lng);
+          // Reverse geocode city name
+          fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var city=d.address&&(d.address.city||d.address.town||d.address.village||d.address.county||'');
+              if(city)setLocLabel(city);
+            })
+            .catch(function(){});
+          // Auto load real places
+          await loadGooglePlaces(lat,lng);
+        },
+        function(err){console.log('Auto GPS failed:',err);},
+        {timeout:10000,enableHighAccuracy:true}
+      );
+    }
+  },[]);
+
   // ── Supabase session check on load ──
   useEffect(()=>{
     sb.auth.getSession().then(({data:{session}})=>{
@@ -819,15 +845,15 @@ function App(){
   // Foursquare Places API - Free & Pakistan mein best data!
   var FSQ_KEY="SISPMZLV3PBD0K4RDL2AWKUYK5W2PMJIMSIKZ3QSTVGWFW0U";
   var FSQ_CAT={
-    restaurants:'13065',
-    dhabas:'13032,13276',
-    clinics:'15014,15000',
-    pharmacy:'17069',
-    grocery:'17069,17018',
-    salons:'11010,11039',
-    atm:'18021',
-    mosque:'12116',
-    petrol:'19014'
+    restaurants:'13065,13064,13003',
+    dhabas:'13032,13276,13040',
+    clinics:'15014,15013,15000,15002',
+    pharmacy:'17069,17114',
+    grocery:'17069,17018,17034',
+    salons:'11010,11039,11052',
+    atm:'18021,18062',
+    mosque:'12116,12100',
+    petrol:'19014,19006'
   };
   var CAT_ICONS2={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
 
@@ -835,7 +861,7 @@ function App(){
     try{
       var cats=FSQ_CAT[category]||'13065';
       var rad=15000;
-      var url='https://api.foursquare.com/v3/places/search?ll='+lat+','+lng+'&radius='+rad+'&categories='+cats+'&limit=15&fields=fsq_id,name,location,geocodes,rating,stats,hours,tel,categories';
+      var url='https://api.foursquare.com/v3/places/search?ll='+lat+','+lng+'&radius='+rad+'&categories='+cats+'&limit=20&fields=fsq_id,name,location,geocodes,rating,stats,hours,tel,categories&sort=DISTANCE';
       var res=await fetch(url,{
         headers:{
           'Authorization':FSQ_KEY,
@@ -881,30 +907,27 @@ function App(){
   var loadGooglePlaces=async function(lat,lng){
     setBusy(true);
     try{
-      var cats=['restaurants','clinics','pharmacy','dhabas','grocery','mosque','petrol','atm','salons'];
+      var cats=['restaurants','dhabas','clinics','pharmacy','grocery','mosque','petrol','atm','salons'];
       var allPlaces=[];
-      var places0=await fetchNearbyPlaces(lat,lng,cats[0]);
-      var places1=await fetchNearbyPlaces(lat,lng,cats[1]);
-      var places2=await fetchNearbyPlaces(lat,lng,cats[2]);
-      allPlaces=allPlaces.concat(places0,places1,places2);
-      setPL(function(prev){
-        var userAdded=prev.filter(function(p){return p.userAdded;});
-        var withDist=allPlaces.map(function(p){return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});});
-        return withDist.concat(userAdded);
-      });
-      setBusy(false);
-      var remainingCats=cats.slice(3);
-      for(var ri=0;ri<remainingCats.length;ri++){
-        var morePlaces=await fetchNearbyPlaces(lat,lng,remainingCats[ri]);
-        if(morePlaces.length>0){
-          var localMore=morePlaces;
-          setPL(function(prev){
-            var ids=new Set(prev.map(function(x){return x.id;}));
-            var newOnes=localMore.filter(function(x){return !ids.has(x.id);}).map(function(p){return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});});
-            return prev.concat(newOnes);
-          });
+      // Load all categories in parallel for speed
+      var promises=cats.map(function(cat){return fetchNearbyPlaces(lat,lng,cat);});
+      var results=await Promise.all(promises);
+      for(var ri=0;ri<results.length;ri++){
+        if(results[ri]&&results[ri].length>0){
+          allPlaces=allPlaces.concat(results[ri]);
         }
       }
+      if(allPlaces.length>0){
+        setPL(function(prev){
+          var userAdded=prev.filter(function(p){return p.userAdded;});
+          var ids=new Set(userAdded.map(function(x){return x.id;}));
+          var withDist=allPlaces
+            .filter(function(p){return !ids.has(p.id);})
+            .map(function(p){return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});});
+          return withDist.concat(userAdded);
+        });
+      }
+      setBusy(false);
     }catch(e){setBusy(false);console.log('Load places error:',e);}
   };
 
