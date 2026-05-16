@@ -816,58 +816,75 @@ function App(){
   var CAT_BG={restaurants:'#f97316',dhabas:'#f59e0b',clinics:'#ef4444',pharmacy:'#14b8a6',grocery:'#f97316',salons:'#a855f7',atm:'#3b82f6',mosque:'#16a34a',petrol:'#eab308'};
   var CAT_LT={restaurants:'#fff7ed',dhabas:'#fffbeb',clinics:'#fef2f2',pharmacy:'#f0fdfa',grocery:'#fff7ed',salons:'#faf5ff',atm:'#eff6ff',mosque:'#f0fdf4',petrol:'#fefce8'};
 
+  // OpenStreetMap Overpass API - Bilkul FREE!
+  var OSM_CAT={
+    restaurants:'"amenity"="restaurant"|"amenity"="fast_food"|"amenity"="food_court"',
+    dhabas:'"amenity"="cafe"|"amenity"="tea_house"',
+    clinics:'"amenity"="clinic"|"amenity"="hospital"|"amenity"="doctors"',
+    pharmacy:'"amenity"="pharmacy"',
+    grocery:'"shop"="supermarket"|"shop"="grocery"|"shop"="general"',
+    salons:'"shop"="hairdresser"|"shop"="beauty"',
+    atm:'"amenity"="atm"|"amenity"="bank"',
+    mosque:'"amenity"="place_of_worship"["religion"="muslim"]',
+    petrol:'"amenity"="fuel"'
+  };
+  var CAT_ICONS2={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
+
   var fetchNearbyPlaces=async function(lat,lng,category){
-    var gtype=CAT_TO_GTYPE[category]||'point_of_interest';
-    var url='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+lat+','+lng+'&radius=5000&type='+gtype+'&key='+GKEY;
-    var proxies=[
-      'https://api.allorigins.win/get?url='+encodeURIComponent(url),
-      'https://corsproxy.io/?'+encodeURIComponent(url),
-      'https://thingproxy.freeboard.io/fetch/'+url
-    ];
-    var data=null;
-    for(var pi=0;pi<proxies.length;pi++){
-      try{
-        var res=await fetch(proxies[pi],{headers:{'Accept':'application/json'}});
-        var raw=await res.json();
-        // allorigins wraps in {contents: "..."}
-        if(raw.contents){
-          try{data=JSON.parse(raw.contents);}catch(pe){data=raw;}
-        } else {
-          data=raw;
-        }
-        if(data&&data.results&&data.results.length>0)break;
-      }catch(pe){console.log('Proxy '+pi+' failed:',pe);data=null;}
-    }
-    if(!data||!data.results)return [];
-    return data.results.slice(0,15).map(function(p){
-      var glat=p.geometry&&p.geometry.location?p.geometry.location.lat:lat;
-      var glng=p.geometry&&p.geometry.location?p.geometry.location.lng:lng;
-      var dist=+haversine(lat,lng,glat,glng).toFixed(1);
-      var isOpen=p.opening_hours?p.opening_hours.open_now!==false:true;
-      return {
-        id:'g_'+p.place_id,
-        name:p.name,
-        cat:category,
-        loc:p.vicinity||'',
-        lat:glat,
-        lng:glng,
-        dist:dist,
-        rating:p.rating||0,
-        reviews:p.user_ratings_total||0,
-        open:isOpen,
-        icon:CAT_ICONS[category]||'📍',
-        trend:p.rating>=4.5&&p.user_ratings_total>100,
-        ver:true,
-        bg:CAT_BG[category]||'#16a34a',
-        lt:CAT_LT[category]||'#f0fdf4',
-        ph:p.formatted_phone_number||'',
-        hrs:isOpen?'Khula':'Band',
-        desc:p.name+(p.vicinity?' — '+p.vicinity:''),
-        wait:'N/A',
-        placeId:p.place_id,
-        googleData:true
-      };
-    });
+    try{
+      var rad=10000;
+      var osmFilter=OSM_CAT[category]||'"amenity"="restaurant"';
+      var filters=osmFilter.split('|');
+      var unionParts=filters.map(function(f){
+        return 'node['+f+'](around:'+rad+','+lat+','+lng+');way['+f+'](around:'+rad+','+lat+','+lng+');';
+      }).join('');
+      var query='[out:json][timeout:25];('+unionParts+');out body center 20;';
+      var res=await fetch('https://overpass-api.de/api/interpreter',{
+        method:'POST',
+        body:'data='+encodeURIComponent(query),
+        headers:{'Content-Type':'application/x-www-form-urlencoded'}
+      });
+      var data=await res.json();
+      if(!data||!data.elements||data.elements.length===0)return [];
+      var seen={};
+      var results=[];
+      for(var i=0;i<data.elements.length;i++){
+        var el=data.elements[i];
+        var name=el.tags&&el.tags.name;
+        if(!name)continue;
+        if(seen[name])continue;
+        seen[name]=true;
+        var elat=el.lat||(el.center&&el.center.lat)||lat;
+        var elng=el.lon||(el.center&&el.center.lon)||lng;
+        var dist=+haversine(lat,lng,elat,elng).toFixed(1);
+        var phone=el.tags['contact:phone']||el.tags.phone||el.tags['phone']||'';
+        var addr=el.tags['addr:street']||el.tags['addr:city']||el.tags['is_in']||'';
+        results.push({
+          id:'osm_'+el.id,
+          name:name,
+          cat:category,
+          loc:addr||name,
+          lat:elat,
+          lng:elng,
+          dist:dist,
+          rating:0,
+          reviews:0,
+          open:true,
+          icon:CAT_ICONS2[category]||'📍',
+          trend:false,
+          ver:true,
+          bg:CAT_BG[category]||'#16a34a',
+          lt:CAT_LT[category]||'#f0fdf4',
+          ph:phone,
+          hrs:'N/A',
+          desc:name+(addr?' — '+addr:''),
+          wait:'N/A',
+          osmData:true
+        });
+        if(results.length>=15)break;
+      }
+      return results;
+    }catch(e){console.log('OSM error:',e);return [];}
   };
 
   var loadGooglePlaces=async function(lat,lng){
