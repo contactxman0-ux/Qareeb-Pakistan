@@ -819,41 +819,55 @@ function App(){
   var fetchNearbyPlaces=async function(lat,lng,category){
     var gtype=CAT_TO_GTYPE[category]||'point_of_interest';
     var url='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+lat+','+lng+'&radius=5000&type='+gtype+'&key='+GKEY;
-    try{
-      var proxyUrl='https://corsproxy.io/?'+encodeURIComponent(url);
-      var res=await fetch(proxyUrl);
-      var data=await res.json();
-      if(!data.results)return [];
-      return data.results.slice(0,10).map(function(p){
-        var glat=p.geometry&&p.geometry.location?p.geometry.location.lat:lat;
-        var glng=p.geometry&&p.geometry.location?p.geometry.location.lng:lng;
-        var dist=+haversine(lat,lng,glat,glng).toFixed(1);
-        var isOpen=p.opening_hours?p.opening_hours.open_now!==false:true;
-        return {
-          id:'g_'+p.place_id,
-          name:p.name,
-          cat:category,
-          loc:p.vicinity||'',
-          lat:glat,
-          lng:glng,
-          dist:dist,
-          rating:p.rating||0,
-          reviews:p.user_ratings_total||0,
-          open:isOpen,
-          icon:CAT_ICONS[category]||'📍',
-          trend:p.rating>=4.5&&p.user_ratings_total>100,
-          ver:true,
-          bg:CAT_BG[category]||'#16a34a',
-          lt:CAT_LT[category]||'#f0fdf4',
-          ph:p.formatted_phone_number||'',
-          hrs:isOpen?'Khula':'Band',
-          desc:p.name+(p.vicinity?' — '+p.vicinity:''),
-          wait:'N/A',
-          placeId:p.place_id,
-          googleData:true
-        };
-      });
-    }catch(e){console.log('Places API error:',e);return [];}
+    var proxies=[
+      'https://api.allorigins.win/get?url='+encodeURIComponent(url),
+      'https://corsproxy.io/?'+encodeURIComponent(url),
+      'https://thingproxy.freeboard.io/fetch/'+url
+    ];
+    var data=null;
+    for(var pi=0;pi<proxies.length;pi++){
+      try{
+        var res=await fetch(proxies[pi],{headers:{'Accept':'application/json'}});
+        var raw=await res.json();
+        // allorigins wraps in {contents: "..."}
+        if(raw.contents){
+          try{data=JSON.parse(raw.contents);}catch(pe){data=raw;}
+        } else {
+          data=raw;
+        }
+        if(data&&data.results&&data.results.length>0)break;
+      }catch(pe){console.log('Proxy '+pi+' failed:',pe);data=null;}
+    }
+    if(!data||!data.results)return [];
+    return data.results.slice(0,15).map(function(p){
+      var glat=p.geometry&&p.geometry.location?p.geometry.location.lat:lat;
+      var glng=p.geometry&&p.geometry.location?p.geometry.location.lng:lng;
+      var dist=+haversine(lat,lng,glat,glng).toFixed(1);
+      var isOpen=p.opening_hours?p.opening_hours.open_now!==false:true;
+      return {
+        id:'g_'+p.place_id,
+        name:p.name,
+        cat:category,
+        loc:p.vicinity||'',
+        lat:glat,
+        lng:glng,
+        dist:dist,
+        rating:p.rating||0,
+        reviews:p.user_ratings_total||0,
+        open:isOpen,
+        icon:CAT_ICONS[category]||'📍',
+        trend:p.rating>=4.5&&p.user_ratings_total>100,
+        ver:true,
+        bg:CAT_BG[category]||'#16a34a',
+        lt:CAT_LT[category]||'#f0fdf4',
+        ph:p.formatted_phone_number||'',
+        hrs:isOpen?'Khula':'Band',
+        desc:p.name+(p.vicinity?' — '+p.vicinity:''),
+        wait:'N/A',
+        placeId:p.place_id,
+        googleData:true
+      };
+    });
   };
 
   var loadGooglePlaces=async function(lat,lng){
