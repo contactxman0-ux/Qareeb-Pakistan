@@ -816,75 +816,66 @@ function App(){
   var CAT_BG={restaurants:'#f97316',dhabas:'#f59e0b',clinics:'#ef4444',pharmacy:'#14b8a6',grocery:'#f97316',salons:'#a855f7',atm:'#3b82f6',mosque:'#16a34a',petrol:'#eab308'};
   var CAT_LT={restaurants:'#fff7ed',dhabas:'#fffbeb',clinics:'#fef2f2',pharmacy:'#f0fdfa',grocery:'#fff7ed',salons:'#faf5ff',atm:'#eff6ff',mosque:'#f0fdf4',petrol:'#fefce8'};
 
-  // OpenStreetMap Overpass API - Bilkul FREE!
-  var OSM_CAT={
-    restaurants:'"amenity"="restaurant"|"amenity"="fast_food"|"amenity"="food_court"',
-    dhabas:'"amenity"="cafe"|"amenity"="tea_house"',
-    clinics:'"amenity"="clinic"|"amenity"="hospital"|"amenity"="doctors"',
-    pharmacy:'"amenity"="pharmacy"',
-    grocery:'"shop"="supermarket"|"shop"="grocery"|"shop"="general"',
-    salons:'"shop"="hairdresser"|"shop"="beauty"',
-    atm:'"amenity"="atm"|"amenity"="bank"',
-    mosque:'"amenity"="place_of_worship"["religion"="muslim"]',
-    petrol:'"amenity"="fuel"'
+  // Foursquare Places API - Free & Pakistan mein best data!
+  var FSQ_KEY="SISPMZLV3PBD0K4RDL2AWKUYK5W2PMJIMSIKZ3QSTVGWFW0U";
+  var FSQ_CAT={
+    restaurants:'13065',
+    dhabas:'13032,13276',
+    clinics:'15014,15000',
+    pharmacy:'17069',
+    grocery:'17069,17018',
+    salons:'11010,11039',
+    atm:'18021',
+    mosque:'12116',
+    petrol:'19014'
   };
   var CAT_ICONS2={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
 
   var fetchNearbyPlaces=async function(lat,lng,category){
     try{
-      var rad=10000;
-      var osmFilter=OSM_CAT[category]||'"amenity"="restaurant"';
-      var filters=osmFilter.split('|');
-      var unionParts=filters.map(function(f){
-        return 'node['+f+'](around:'+rad+','+lat+','+lng+');way['+f+'](around:'+rad+','+lat+','+lng+');';
-      }).join('');
-      var query='[out:json][timeout:25];('+unionParts+');out body center 20;';
-      var res=await fetch('https://overpass-api.de/api/interpreter',{
-        method:'POST',
-        body:'data='+encodeURIComponent(query),
-        headers:{'Content-Type':'application/x-www-form-urlencoded'}
+      var cats=FSQ_CAT[category]||'13065';
+      var rad=15000;
+      var url='https://api.foursquare.com/v3/places/search?ll='+lat+','+lng+'&radius='+rad+'&categories='+cats+'&limit=15&fields=fsq_id,name,location,geocodes,rating,stats,hours,tel,categories';
+      var res=await fetch(url,{
+        headers:{
+          'Authorization':FSQ_KEY,
+          'Accept':'application/json'
+        }
       });
       var data=await res.json();
-      if(!data||!data.elements||data.elements.length===0)return [];
-      var seen={};
-      var results=[];
-      for(var i=0;i<data.elements.length;i++){
-        var el=data.elements[i];
-        var name=el.tags&&el.tags.name;
-        if(!name)continue;
-        if(seen[name])continue;
-        seen[name]=true;
-        var elat=el.lat||(el.center&&el.center.lat)||lat;
-        var elng=el.lon||(el.center&&el.center.lon)||lng;
-        var dist=+haversine(lat,lng,elat,elng).toFixed(1);
-        var phone=el.tags['contact:phone']||el.tags.phone||el.tags['phone']||'';
-        var addr=el.tags['addr:street']||el.tags['addr:city']||el.tags['is_in']||'';
-        results.push({
-          id:'osm_'+el.id,
-          name:name,
+      if(!data||!data.results||data.results.length===0)return [];
+      return data.results.map(function(p){
+        var plat=p.geocodes&&p.geocodes.main?p.geocodes.main.latitude:lat;
+        var plng=p.geocodes&&p.geocodes.main?p.geocodes.main.longitude:lng;
+        var dist=+haversine(lat,lng,plat,plng).toFixed(1);
+        var addr=p.location?(p.location.address||p.location.locality||p.location.region||''):'';
+        var isOpen=p.hours?p.hours.open_now!==false:true;
+        var rating=p.rating?+(p.rating/2).toFixed(1):0;
+        var reviews=p.stats?p.stats.total_ratings||0:0;
+        return {
+          id:'fsq_'+p.fsq_id,
+          name:p.name,
           cat:category,
-          loc:addr||name,
-          lat:elat,
-          lng:elng,
+          loc:addr,
+          lat:plat,
+          lng:plng,
           dist:dist,
-          rating:0,
-          reviews:0,
-          open:true,
+          rating:rating,
+          reviews:reviews,
+          open:isOpen,
           icon:CAT_ICONS2[category]||'📍',
-          trend:false,
+          trend:rating>=4.0&&reviews>50,
           ver:true,
           bg:CAT_BG[category]||'#16a34a',
           lt:CAT_LT[category]||'#f0fdf4',
-          ph:phone,
-          hrs:'N/A',
-          desc:name+(addr?' — '+addr:''),
+          ph:p.tel||'',
+          hrs:isOpen?'Khula':'Band',
+          desc:p.name+(addr?' — '+addr:''),
           wait:'N/A',
-          osmData:true
-        });
-        if(results.length>=15)break;
-      }
-      return results;
-    }catch(e){console.log('OSM error:',e);return [];}
+          fsqData:true
+        };
+      });
+    }catch(e){console.log('Foursquare error:',e);return [];}
   };
 
   var loadGooglePlaces=async function(lat,lng){
