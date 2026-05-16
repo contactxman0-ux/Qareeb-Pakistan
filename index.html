@@ -128,7 +128,7 @@ var T={
     searchNotif:'Notifications mein dhundhein...',noNotifSearch:q=>`'${q}' se koi notification match nahi ki`,noNotifSearchTitle:'Koi result nahi',
     notifCount:n=>n+' notification'+(n>1?'':''),
     waqaiSignout:'Waqai sign out karna chahte hain?',
-    okBtn:'OK ✓',listBtn:'List',userAdded:'User Added',quickSelect:'⚡ Quick select',optionalLabel:'Optional',optionalLabel:'Optional',
+    okBtn:'OK ✓',listBtn:'List',userAdded:'User Added',quickSelect:'⚡ Quick select',optionalLabel:'Optional',saveBtn:'✓ Save Karein',cancelBtn:'Wapas',editBtn:'✏️ Edit',photoSaved:'✅ Photo lag gayi!',profileSaved:'✅ Profile save ho gaya!',
     authGetStarted:'Shuru Karein',authSub:'Account banayein ya sign in karein',
     authGoogle:'Google se jaari rakhein',authSigningIn:'Sign in ho raha hai...',
     authOrEmail:'YA EMAIL SE',authLoginBtn:'Email se Login',authSignupBtn:'Naya Account Banayein',
@@ -192,7 +192,7 @@ var T={
     searchNotif:'Search notifications...',noNotifSearch:q=>`No notifications match '${q}'`,noNotifSearchTitle:'No results found',
     notifCount:n=>n+' notification'+(n>1?'s':''),
     waqaiSignout:'Are you sure you want to sign out?',
-    okBtn:'OK ✓',listBtn:'List',userAdded:'User Added',quickSelect:'⚡ Quick select',optionalLabel:'Optional',optionalLabel:'Optional',
+    okBtn:'OK ✓',listBtn:'List',userAdded:'User Added',quickSelect:'⚡ Quick select',optionalLabel:'Optional',saveBtn:'✓ Save',cancelBtn:'Cancel',editBtn:'✏️ Edit',photoSaved:'✅ Photo updated!',profileSaved:'✅ Profile saved!',
     authGetStarted:'Get Started',authSub:'Create an account or sign in',
     authGoogle:'Continue with Google',authSigningIn:'Signing in...',
     authOrEmail:'OR USE EMAIL',authLoginBtn:'Login with Email',authSignupBtn:'Create New Account',
@@ -256,7 +256,7 @@ var T={
     searchNotif:'اطلاعات تلاش کریں...',noNotifSearch:q=>`'${q}' سے کوئی اطلاع نہیں ملی`,noNotifSearchTitle:'کوئی نتیجہ نہیں',
     notifCount:n=>n+' اطلاع'+(n>1?'ات':''),
     waqaiSignout:'کیا آپ واقعی سائن آؤٹ کرنا چاہتے ہیں؟',
-    okBtn:'ٹھیک ہے ✓',listBtn:'شامل کریں',userAdded:'صارف کا اضافہ',quickSelect:'⚡ فوری انتخاب',optionalLabel:'اختیاری',
+    okBtn:'ٹھیک ہے ✓',listBtn:'شامل کریں',userAdded:'صارف کا اضافہ',quickSelect:'⚡ فوری انتخاب',optionalLabel:'اختیاری',saveBtn:'✓ محفوظ کریں',cancelBtn:'منسوخ',editBtn:'✏️ ترمیم',photoSaved:'✅ تصویر لگ گئی!',profileSaved:'✅ پروفائل محفوظ ہو گیا!',
     authGetStarted:'شروع کریں',authSub:'اکاؤنٹ بنائیں یا سائن ان کریں',
     authGoogle:'گوگل سے جاری رکھیں',authSigningIn:'سائن ان ہو رہا ہے...',
     authOrEmail:'یا ای میل سے',authLoginBtn:'ای میل سے لاگ ان',authSignupBtn:'نیا اکاؤنٹ بنائیں',
@@ -799,20 +799,106 @@ function App(){
   };
 
   // ── GPS Location ──
+  // ── Google Places API Integration ──
+  var GKEY="AIzaSyB4NPA5Gh2pLGshvMgcEu1dI7air8ztmMo";
+  var CAT_TO_GTYPE={
+    restaurants:'restaurant',
+    dhabas:'cafe',
+    clinics:'hospital|doctor',
+    pharmacy:'pharmacy',
+    grocery:'grocery_or_supermarket|supermarket',
+    salons:'beauty_salon|hair_care',
+    atm:'atm',
+    mosque:'mosque',
+    petrol:'gas_station'
+  };
+  var CAT_ICONS={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
+  var CAT_BG={restaurants:'#f97316',dhabas:'#f59e0b',clinics:'#ef4444',pharmacy:'#14b8a6',grocery:'#f97316',salons:'#a855f7',atm:'#3b82f6',mosque:'#16a34a',petrol:'#eab308'};
+  var CAT_LT={restaurants:'#fff7ed',dhabas:'#fffbeb',clinics:'#fef2f2',pharmacy:'#f0fdfa',grocery:'#fff7ed',salons:'#faf5ff',atm:'#eff6ff',mosque:'#f0fdf4',petrol:'#fefce8'};
+
+  var fetchNearbyPlaces=async function(lat,lng,category){
+    var gtype=CAT_TO_GTYPE[category]||'point_of_interest';
+    var url='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+lat+','+lng+'&radius=5000&type='+gtype+'&key='+GKEY;
+    try{
+      var proxyUrl='https://corsproxy.io/?'+encodeURIComponent(url);
+      var res=await fetch(proxyUrl);
+      var data=await res.json();
+      if(!data.results)return [];
+      return data.results.slice(0,10).map(function(p){
+        var glat=p.geometry&&p.geometry.location?p.geometry.location.lat:lat;
+        var glng=p.geometry&&p.geometry.location?p.geometry.location.lng:lng;
+        var dist=+haversine(lat,lng,glat,glng).toFixed(1);
+        var isOpen=p.opening_hours?p.opening_hours.open_now!==false:true;
+        return {
+          id:'g_'+p.place_id,
+          name:p.name,
+          cat:category,
+          loc:p.vicinity||'',
+          lat:glat,
+          lng:glng,
+          dist:dist,
+          rating:p.rating||0,
+          reviews:p.user_ratings_total||0,
+          open:isOpen,
+          icon:CAT_ICONS[category]||'📍',
+          trend:p.rating>=4.5&&p.user_ratings_total>100,
+          ver:true,
+          bg:CAT_BG[category]||'#16a34a',
+          lt:CAT_LT[category]||'#f0fdf4',
+          ph:p.formatted_phone_number||'',
+          hrs:isOpen?'Khula':'Band',
+          desc:p.name+(p.vicinity?' — '+p.vicinity:''),
+          wait:'N/A',
+          placeId:p.place_id,
+          googleData:true
+        };
+      });
+    }catch(e){console.log('Places API error:',e);return [];}
+  };
+
+  var loadGooglePlaces=async function(lat,lng){
+    setBusy(true);
+    try{
+      var cats=['restaurants','clinics','pharmacy','dhabas','grocery','mosque','petrol','atm','salons'];
+      var allPlaces=[];
+      var places0=await fetchNearbyPlaces(lat,lng,cats[0]);
+      var places1=await fetchNearbyPlaces(lat,lng,cats[1]);
+      var places2=await fetchNearbyPlaces(lat,lng,cats[2]);
+      allPlaces=allPlaces.concat(places0,places1,places2);
+      setPL(function(prev){
+        var userAdded=prev.filter(function(p){return p.userAdded;});
+        var withDist=allPlaces.map(function(p){return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});});
+        return withDist.concat(userAdded);
+      });
+      setBusy(false);
+      var remainingCats=cats.slice(3);
+      for(var ri=0;ri<remainingCats.length;ri++){
+        var morePlaces=await fetchNearbyPlaces(lat,lng,remainingCats[ri]);
+        if(morePlaces.length>0){
+          var localMore=morePlaces;
+          setPL(function(prev){
+            var ids=new Set(prev.map(function(x){return x.id;}));
+            var newOnes=localMore.filter(function(x){return !ids.has(x.id);}).map(function(p){return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});});
+            return prev.concat(newOnes);
+          });
+        }
+      }
+    }catch(e){setBusy(false);console.log('Load places error:',e);}
+  };
+
   var getLoc=()=>{
     if(!navigator.geolocation){showT('⚠️ Browser GPS support nahi');return;}
     setLocLoading(true);
     showT(t.locGetting);
     navigator.geolocation.getCurrentPosition(
-      pos=>{
+      async pos=>{
         var lat=pos.coords.latitude;
         var lng=pos.coords.longitude;
         setUserLat(lat);
         setUserLng(lng);
         setLocLoading(false);
-        // Update all distances
-        setPL(prev=>prev.map(p=>({...p,dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)})));
-        // Reverse geocode city name (simple approach)
+        showT(t.locDone);
+        // Reverse geocode
         fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
           .then(r=>r.json())
           .then(d=>{
@@ -820,13 +906,14 @@ function App(){
             if(city)setLocLabel(city);
           })
           .catch(()=>{});
-        showT(t.locDone);
+        // Load REAL nearby places from Google
+        await loadGooglePlaces(lat,lng);
       },
       err=>{
         setLocLoading(false);
         showT(t.locFail);
       },
-      {timeout:10000,enableHighAccuracy:true}
+      {timeout:15000,enableHighAccuracy:true}
     );
   };
 
