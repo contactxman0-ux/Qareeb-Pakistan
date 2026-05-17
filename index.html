@@ -307,26 +307,7 @@ var CATS=[
 ];
 
 // ── Base places data ──────────────────────────────────────────────────────────
-var BASE_PL=[
-  // ── Lahore ──
-  {id:1,name:'Data Darbar',cat:'restaurants',loc:'Bhati Gate, Lahore',lat:31.5827,lng:74.3109,dist:0.5,rating:4.9,reviews:5421,open:true,icon:'🍽️',trend:true,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-42-37241512',hrs:'11am–11pm',desc:'Famous traditional Pakistani restaurant with authentic flavors.',wait:'20 mins'},
-  {id:2,name:'Butt Karahi',cat:'restaurants',loc:'Lakshmi Chowk, Lahore',lat:31.5703,lng:74.3183,dist:0.8,rating:4.7,reviews:1284,open:true,icon:'🍽️',trend:true,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-42-37112233',hrs:'1pm–12am',desc:'Best karahi in town — must try! Fresh meat daily.',wait:'25 mins'},
-  {id:3,name:'Shifa Family Clinic',cat:'clinics',loc:'Johar Town, Lahore',lat:31.4695,lng:74.2628,dist:2.1,rating:4.8,reviews:213,open:true,icon:'🩺',trend:false,ver:true,bg:'#ef4444',lt:'#fef2f2',ph:'+92-42-35121234',hrs:'9am–9pm',desc:'Modern clinic with experienced doctors and advanced facilities.',wait:'15 mins'},
-  {id:4,name:'Sehat Pharmacy',cat:'pharmacy',loc:'DHA Phase 5, Lahore',lat:31.4812,lng:74.3906,dist:0.5,rating:4.6,reviews:389,open:true,icon:'💊',trend:false,ver:true,bg:'#14b8a6',lt:'#f0fdfa',ph:'+92-21-35121234',hrs:'8am–10pm',desc:'Trusted pharmacy with quality medicines and health products.',wait:'5 mins'},
-  {id:5,name:'Quetta Chai Wala',cat:'dhabas',loc:'Gulberg, Lahore',lat:31.5093,lng:74.3292,dist:1.4,rating:4.5,reviews:542,open:true,icon:'☕',trend:false,ver:true,bg:'#f59e0b',lt:'#fffbeb',ph:'+92-42-35556677',hrs:'6am–11pm',desc:'Traditional chai with fresh bakery items. Kahwa bhi milti hai.',wait:'10 mins'},
-  {id:6,name:'Masjid-e-Quba',cat:'mosque',loc:'Old City, Lahore',lat:31.5851,lng:74.3090,dist:1.2,rating:4.9,reviews:891,open:true,icon:'🕌',trend:true,ver:true,bg:'#16a34a',lt:'#f0fdf4',ph:'+92-42-37114455',hrs:'Prayer times',desc:'Historic mosque with peaceful atmosphere. Jummah prayers at 1:15pm.',wait:'N/A'},
-  {id:7,name:'HBL ATM Mall Road',cat:'atm',loc:'Mall Road, Lahore',lat:31.5561,lng:74.3210,dist:0.3,rating:4.0,reviews:67,open:true,icon:'🏧',trend:false,ver:true,bg:'#3b82f6',lt:'#eff6ff',ph:'+92-21-111-425-888',hrs:'24/7',desc:'HBL ATM with cash withdrawal and balance inquiry services.',wait:'0 mins'},
-  {id:8,name:'PSO Petrol Pump',cat:'petrol',loc:'Main Boulevard, Lahore',lat:31.5234,lng:74.3289,dist:0.6,rating:4.2,reviews:312,open:true,icon:'⛽',trend:false,ver:true,bg:'#eab308',lt:'#fefce8',ph:'+92-21-111-786-786',hrs:'24/7',desc:'PSO fuel station — petrol, diesel, CNG. Tyre air and water free.',wait:'0 mins'},
-  {id:9,name:'Al-Fatah Super Store',cat:'grocery',loc:'Markaz DHA, Lahore',lat:31.4801,lng:74.3892,dist:3.2,rating:4.4,reviews:921,open:false,icon:'🏪',trend:false,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-42-35883838',hrs:'7am–11pm',desc:'One-stop grocery shop with quality imported and local products.',wait:'N/A'},
-  {id:10,name:'Taj Mahal Salon',cat:'salons',loc:'Saddar, Lahore',lat:31.5497,lng:74.3118,dist:1.8,rating:4.3,reviews:156,open:true,icon:'💇',trend:false,ver:true,bg:'#a855f7',lt:'#faf5ff',ph:'+92-91-25121234',hrs:'10am–8pm',desc:'Professional salon with expert stylists. Haircut, color, shaving.',wait:'30 mins'},
-  // ── Karachi ──
-  {id:11,name:'Burns Road Nihari',cat:'restaurants',loc:'Burns Road, Karachi',lat:24.8607,lng:67.0100,dist:1.2,rating:4.9,reviews:7823,open:true,icon:'🍽️',trend:true,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-21-32761234',hrs:'6am–4pm',desc:'Original Burns Road nihari — famous since 1947. Long queues but worth every minute!',wait:'40 mins'},
-  {id:12,name:'Agha Khan Hospital',cat:'clinics',loc:'Stadium Road, Karachi',lat:24.9008,lng:67.0820,dist:4.1,rating:4.9,reviews:3241,open:true,icon:'🩺',trend:false,ver:true,bg:'#ef4444',lt:'#fef2f2',ph:'+92-21-34864000',hrs:'24/7',desc:'World-class hospital with all specialties, labs, and pharmacy under one roof.',wait:'60 mins'},
-  {id:13,name:'Irani Chai House',cat:'dhabas',loc:'Saddar, Karachi',lat:24.8553,lng:67.0101,dist:1.9,rating:4.7,reviews:1432,open:true,icon:'☕',trend:true,ver:true,bg:'#f59e0b',lt:'#fffbeb',ph:'+92-21-32212233',hrs:'6am–1am',desc:'Famous Irani chai and bun maska. 70+ years old institution of Saddar.',wait:'8 mins'},
-  // ── Islamabad ──
-  {id:14,name:'Monal Restaurant',cat:'restaurants',loc:'Margalla Hills, Islamabad',lat:33.7467,lng:73.0567,dist:6.1,rating:4.8,reviews:4512,open:true,icon:'🍽️',trend:true,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-51-2896000',hrs:'1pm–12am',desc:'Iconic hilltop restaurant with stunning views of Islamabad. Best barbecue in the city.',wait:'45 mins'},
-  {id:15,name:'Faisal Mosque',cat:'mosque',loc:'Shah Faisal Ave, Islamabad',lat:33.7295,lng:73.0368,dist:5.0,rating:5.0,reviews:8901,open:true,icon:'🕌',trend:true,ver:true,bg:'#16a34a',lt:'#f0fdf4',ph:'+92-51-9261234',hrs:'Prayer times',desc:'One of the largest mosques in the world. Iconic tent-shaped design. Must visit landmark.',wait:'N/A'},
-];
+var BASE_PL=[];
 
 // ── haversine distance ────────────────────────────────────────────────────────
 function haversine(lat1,lon1,lat2,lon2){
@@ -695,35 +676,6 @@ function App(){
   // ── Scroll to top on profile sub-page change ──
   useEffect(()=>{if(profScrollRef.current)profScrollRef.current.scrollTop=0;},[profPage]);
 
-  // ── Auto GPS on app load ──
-  useEffect(()=>{
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(
-        async function(pos){
-          var lat=pos.coords.latitude;
-          var lng=pos.coords.longitude;
-          setUserLat(lat);
-          setUserLng(lng);
-          setRad(15);
-          // Reverse geocode city name
-          fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json')
-            .then(function(r){return r.json();})
-            .then(function(d){
-              var city=d.address&&(d.address.city||d.address.town||d.address.village||d.address.county||'');
-              if(city)setLocLabel(city);
-            })
-            .catch(function(){});
-          // Auto load real places - wait 500ms for state to update
-          setTimeout(async function(){
-            await loadGooglePlaces(lat,lng);
-          },500);
-        },
-        function(err){console.log('Auto GPS failed:',err);},
-        {timeout:15000,enableHighAccuracy:true}
-      );
-    }
-  },[]);
-
   // ── Supabase session check on load ──
   useEffect(()=>{
     sb.auth.getSession().then(({data:{session}})=>{
@@ -745,6 +697,27 @@ function App(){
     });
     return ()=>subscription.unsubscribe();
   },[]);
+  // ── Auto GPS on app load ──
+  useEffect(function(){
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        async function(pos){
+          var lat=pos.coords.latitude;
+          var lng=pos.coords.longitude;
+          setUserLat(lat);setUserLng(lng);
+          fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json')
+            .then(function(r){return r.json();})
+            .then(function(d){var city=d.address&&(d.address.city||d.address.town||d.address.village||'');if(city)setLocLabel(city);})
+            .catch(function(){});
+          await loadNearbyPlaces(lat,lng);
+        },
+        function(){},
+        {timeout:15000,enableHighAccuracy:true}
+      );
+    }
+  },[]);
+
+
   function handleAuth(u){
     setUser(u);
     if(u.name&&u.name!=='Guest'){setProfName(p=>p||u.name);}
@@ -828,145 +801,72 @@ function App(){
   };
 
   // ── GPS Location ──
-  // ── Google Places API Integration ──
-  var GKEY="AIzaSyB4NPA5Gh2pLGshvMgcEu1dI7air8ztmMo";
-  var CAT_TO_GTYPE={
-    restaurants:'restaurant',
-    dhabas:'cafe',
-    clinics:'hospital|doctor',
-    pharmacy:'pharmacy',
-    grocery:'grocery_or_supermarket|supermarket',
-    salons:'beauty_salon|hair_care',
-    atm:'atm',
-    mosque:'mosque',
-    petrol:'gas_station'
-  };
-  var CAT_ICONS={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
+
+  // ── Places API via Supabase Edge Function ──
   var CAT_BG={restaurants:'#f97316',dhabas:'#f59e0b',clinics:'#ef4444',pharmacy:'#14b8a6',grocery:'#f97316',salons:'#a855f7',atm:'#3b82f6',mosque:'#16a34a',petrol:'#eab308'};
   var CAT_LT={restaurants:'#fff7ed',dhabas:'#fffbeb',clinics:'#fef2f2',pharmacy:'#f0fdfa',grocery:'#fff7ed',salons:'#faf5ff',atm:'#eff6ff',mosque:'#f0fdf4',petrol:'#fefce8'};
-
-  // Foursquare Places API - Free & Pakistan mein best data!
-  var FSQ_KEY="SISPMZLV3PBD0K4RDL2AWKUYK5W2PMJIMSIKZ3QSTVGWFW0U";
-  var FSQ_CAT={
-    restaurants:'13065,13064,13003',
-    dhabas:'13032,13276,13040',
-    clinics:'15014,15013,15000,15002',
-    pharmacy:'17069,17114',
-    grocery:'17069,17018,17034',
-    salons:'11010,11039,11052',
-    atm:'18021,18062',
-    mosque:'12116,12100',
-    petrol:'19014,19006'
-  };
-  var CAT_ICONS2={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
+  var CAT_ICONS={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
 
   var fetchNearbyPlaces=async function(lat,lng,category){
     try{
-      // Supabase Edge Function - server side, no CORS issues
       var res=await fetch('https://fwxvaemhheoscqwiqajz.supabase.co/functions/v1/places-nearby',{
         method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'Authorization':'Bearer '+SUPA_KEY,
-          'apikey':SUPA_KEY
-        },
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPA_KEY,'apikey':SUPA_KEY},
         body:JSON.stringify({lat:lat,lng:lng,category:category,radius:15000})
       });
-      if(!res.ok){console.log('Edge error:',res.status);return [];}
       var data=await res.json();
       if(!data||!data.results||data.results.length===0)return [];
       return data.results.map(function(p){
         var glat=p.geometry&&p.geometry.location?p.geometry.location.lat:lat;
         var glng=p.geometry&&p.geometry.location?p.geometry.location.lng:lng;
-        var dist=+haversine(lat,lng,glat,glng).toFixed(1);
-        var isOpen=p.opening_hours?p.opening_hours.open_now!==false:true;
         return {
-          id:'g_'+p.place_id,
-          name:p.name,
-          cat:category,
-          loc:p.vicinity||'',
-          lat:glat,lng:glng,dist:dist,
-          rating:p.rating||0,
-          reviews:p.user_ratings_total||0,
-          open:isOpen,
-          icon:CAT_ICONS2[category]||'📍',
-          trend:p.rating>=4.0&&p.user_ratings_total>10,
-          ver:true,
-          bg:CAT_BG[category]||'#16a34a',
-          lt:CAT_LT[category]||'#f0fdf4',
-          ph:p.formatted_phone_number||'',
-          hrs:isOpen?'Khula':'Band',
-          desc:p.name+(p.vicinity?' — '+p.vicinity:''),
-          wait:'N/A',
-          googleData:true
+          id:'r_'+p.place_id,name:p.name,cat:category,
+          loc:p.vicinity||'',lat:glat,lng:glng,
+          dist:+haversine(lat,lng,glat,glng).toFixed(1),
+          rating:p.rating||0,reviews:p.user_ratings_total||0,
+          open:true,icon:CAT_ICONS[category]||'📍',trend:false,ver:true,
+          bg:CAT_BG[category]||'#16a34a',lt:CAT_LT[category]||'#f0fdf4',
+          ph:p.formatted_phone_number||'',hrs:'Khula',
+          desc:p.name+(p.vicinity?' — '+p.vicinity:''),wait:'N/A'
         };
       });
-    }catch(e){console.log('Places error:',e);return [];}
+    }catch(e){return [];}
   };
 
-  var loadGooglePlaces=async function(lat,lng){
-    setBusy(true);
-    // Make sure userLat/userLng are set
-    setUserLat(lat);
-    setUserLng(lng);
-    try{
-      var cats=['restaurants','dhabas','clinics','pharmacy','grocery','mosque','petrol','atm','salons'];
-      var allPlaces=[];
-      var promises=cats.map(function(cat){return fetchNearbyPlaces(lat,lng,cat);});
-      var results=await Promise.all(promises);
-      for(var ri=0;ri<results.length;ri++){
-        if(results[ri]&&results[ri].length>0){
-          allPlaces=allPlaces.concat(results[ri]);
-        }
-      }
-      if(allPlaces.length>0){
-        var withDist=allPlaces.map(function(p){
-          return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});
-        });
-        setPL(function(prev){
-          var userAdded=prev.filter(function(p){return p.userAdded;});
-          var ids=new Set(userAdded.map(function(x){return x.id;}));
-          var newOnes=withDist.filter(function(p){return !ids.has(p.id);});
-          return newOnes.concat(userAdded);
-        });
-        // Force display update with correct distances
-        setTimeout(function(){
-          setDP(function(prev){
-            var filtered=withDist.filter(function(p){return p.dist<=15;});
-            return filtered.sort(function(a,b){return a.dist-b.dist;});
-          });
-          setBusy(false);
-        },300);
-      } else {
-        setBusy(false);
-      }
-    }catch(e){setBusy(false);console.log('Load places error:',e);}
+  var loadNearbyPlaces=async function(lat,lng){
+    var cats=['restaurants','dhabas','clinics','pharmacy','grocery','mosque','petrol','atm','salons'];
+    var all=[];
+    var promises=cats.map(function(c){return fetchNearbyPlaces(lat,lng,c);});
+    var res=await Promise.all(promises);
+    for(var i=0;i<res.length;i++){if(res[i].length>0)all=all.concat(res[i]);}
+    if(all.length>0){
+      setPL(all);
+      setDP(all.sort(function(a,b){return a.dist-b.dist;}));
+    }
   };
 
-  var getLoc=()=>{
+  var getLoc=async function(){
     if(!navigator.geolocation){showT('⚠️ Browser GPS support nahi');return;}
     setLocLoading(true);
     showT(t.locGetting);
     navigator.geolocation.getCurrentPosition(
-      async pos=>{
+      async function(pos){
         var lat=pos.coords.latitude;
         var lng=pos.coords.longitude;
         setUserLat(lat);
         setUserLng(lng);
         setLocLoading(false);
         showT(t.locDone);
-        // Reverse geocode
-        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
-          .then(r=>r.json())
-          .then(d=>{
+        fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json')
+          .then(function(r){return r.json();})
+          .then(function(d){
             var city=d.address&&(d.address.city||d.address.town||d.address.village||d.address.county||'');
             if(city)setLocLabel(city);
           })
-          .catch(()=>{});
-        // Load REAL nearby places from Google
-        await loadGooglePlaces(lat,lng);
+          .catch(function(){});
+        await loadNearbyPlaces(lat,lng);
       },
-      err=>{
+      function(err){
         setLocLoading(false);
         showT(t.locFail);
       },
