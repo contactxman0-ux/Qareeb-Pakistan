@@ -1,76 +1,2215 @@
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>Qareeb Pakistan</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;max-width:100vw;overflow-x:hidden;font-family:'Segoe UI',system-ui,sans-serif;background:#0d7a3e;overflow:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}
+input,select,textarea{font-family:inherit}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes slideInL{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInR{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInU{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes barSlide{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+@keyframes bellRing{0%,100%{transform:rotate(0) scale(1)}15%{transform:rotate(-20deg) scale(1.1)}30%{transform:rotate(20deg) scale(1.1)}45%{transform:rotate(-15deg)}60%{transform:rotate(15deg)}75%{transform:rotate(-5deg)}90%{transform:rotate(5deg)}}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@keyframes bellRing{0%,100%{transform:rotate(0)}10%,30%{transform:rotate(-15deg)}20%,40%{transform:rotate(15deg)}50%{transform:rotate(-10deg)}60%{transform:rotate(10deg)}70%{transform:rotate(-5deg)}80%{transform:rotate(5deg)}90%{transform:rotate(0)}}
+@keyframes notifPop{0%{transform:translateY(-100%);opacity:0}15%{transform:translateY(0);opacity:1}80%{transform:translateY(0);opacity:1}100%{transform:translateY(-120%);opacity:0}}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+@keyframes splashRing{0%{transform:scale(.7);opacity:0}60%{transform:scale(1.15);opacity:.5}100%{transform:scale(1.4);opacity:0}}
+@keyframes authUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.aFI{animation:fadeIn .3s ease-out}
+.aSU{animation:slideUp .3s cubic-bezier(.34,1.56,.64,1)}
+.ur-font *{font-family:'Noto Nastaliq Urdu','Arial Unicode MS',serif!important;line-height:2!important}
+.hc p,.hc span,.hc label{color:#000!important;font-weight:700!important}
+.hc button{border:2px solid #000!important}
+.hc input{border:2px solid #000!important}
+input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:#e5e7eb;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#16a34a;cursor:pointer;box-shadow:0 1px 4px rgba(22,163,74,.4)}
+/* ── Premium Dark Mode ── */
+.dm-card{
+  background:#141824!important;
+  border:1px solid rgba(255,255,255,0.08)!important;
+  box-shadow:0 4px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.05)!important;
+}
+.dm-nav{
+  background:#0e1120!important;
+  border-top:1px solid rgba(255,255,255,0.07)!important;
+  box-shadow:0 -4px 30px rgba(0,0,0,0.6)!important;
+}
+.dm-header{
+  background:linear-gradient(145deg,#091a0e 0%,#0c2614 60%,#071a0c 100%)!important;
+  border-bottom:1px solid rgba(22,163,74,0.18)!important;
+  box-shadow:0 4px 30px rgba(0,0,0,0.6),0 0 40px rgba(22,163,74,0.06)!important;
+}
+.dm-place-card{
+  background:#141824!important;
+  border:1px solid rgba(255,255,255,0.07)!important;
+  box-shadow:0 2px 16px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04)!important;
+}
+.dm-glow-green{
+  box-shadow:0 0 24px rgba(34,197,94,0.35),0 4px 16px rgba(0,0,0,0.5)!important;
+}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.pc-even{animation:slideInL .45s ease-out both}
+.pc-odd{animation:slideInR .45s ease-out both}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+function _ob(e){for(var r=1;r<arguments.length;r++){var t=arguments[r]!=null?arguments[r]:{};Object.keys(t).forEach(function(k){e[k]=t[k];});}return e;}
+var _R=React,useState=_R.useState,useEffect=_R.useEffect,useMemo=_R.useMemo,useCallback=_R.useCallback,useRef=_R.useRef;
+var h=React.createElement;
+
+// ── Supabase Setup ────────────────────────────────────────────────────────────
+var SUPA_URL="https://fwxvaemhheoscqwiqajz.supabase.co";
+var SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3eHZhZW1oaGVvc2Nxd2lxYWp6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NDE4MTcsImV4cCI6MjA5NDUxNzgxN30.FzLcUk1TTEHQk9JLHsxaRf96LpzlW9Lti8PlRPu11Zo";
+var sb=supabase.createClient(SUPA_URL,SUPA_KEY);
+
+// ── localStorage helpers ─────────────────────────────────────────────────────
+function lsGet(k,def){try{var v=localStorage.getItem(k);return v!==null?JSON.parse(v):def;}catch(e){return def;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+// ── SVG icons ─────────────────────────────────────────────────────────────────
+function SVG(p){return h("svg",{width:p.size||18,height:p.size||18,viewBox:p.vb||"0 0 24 24",fill:p.fill||"none",stroke:p.color||p.stroke||"currentColor",strokeWidth:p.sw||2,strokeLinecap:"round",strokeLinejoin:"round",style:{flexShrink:0,display:'inline-block',...p.style},className:p.className},p.children);}
+var MapPin=p=>h(SVG,p,h("path",{d:"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"}),h("circle",{cx:"12",cy:"10",r:"3"}));
+var Phone=p=>h(SVG,p,h("path",{d:"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"}));
+var Heart=({size=18,filled,color})=>h(SVG,{size,fill:filled?"#ef4444":"none",stroke:filled?"#ef4444":color||"#9ca3af",sw:2},h("path",{d:"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"}));
+var Compass=p=>h(SVG,p,h("circle",{cx:"12",cy:"12",r:"10"}),h("polygon",{points:"16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"}));
+var Grid=p=>h(SVG,p,h("rect",{x:"3",y:"3",width:"7",height:"7"}),h("rect",{x:"14",y:"3",width:"7",height:"7"}),h("rect",{x:"3",y:"14",width:"7",height:"7"}),h("rect",{x:"14",y:"14",width:"7",height:"7"}));
+var User=p=>h(SVG,p,h("path",{d:"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"}),h("circle",{cx:"12",cy:"7",r:"4"}));
+var Search=p=>h(SVG,p,h("circle",{cx:"11",cy:"11",r:"8"}),h("path",{d:"m21 21-4.35-4.35"}));
+var ChevR=p=>h(SVG,p,h("polyline",{points:"9 18 15 12 9 6"}));
+var Star=({size=14,filled,color})=>h(SVG,{size,fill:filled?"#fbbf24":"none",stroke:filled?"#fbbf24":color||"#d1d5db",sw:2},h("polygon",{points:"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"}));
+var NavArrow=p=>h(SVG,p,h("polygon",{points:"12 2 19 21 12 17 5 21 12 2"}));
+var Clock=p=>h(SVG,p,h("circle",{cx:"12",cy:"12",r:"10"}),h("polyline",{points:"12 6 12 12 16 14"}));
+var X=({size=16,color})=>h(SVG,{size,color},h("line",{x1:"18",y1:"6",x2:"6",y2:"18"}),h("line",{x1:"6",y1:"6",x2:"18",y2:"18"}));
+var Plus=({size=24,sw=2.8})=>h(SVG,{size,sw},h("line",{x1:"12",y1:"5",x2:"12",y2:"19"}),h("line",{x1:"5",y1:"12",x2:"19",y2:"12"}));
+var Check=({size=44})=>h(SVG,{size},h("circle",{cx:"12",cy:"12",r:"10"}),h("path",{d:"m9 12 2 2 4-4"}));
+var LocIcon=p=>h(SVG,p,h("circle",{cx:"12",cy:"12",r:"3"}),h("path",{d:"M12 2v3M12 19v3M2 12h3M19 12h3"}));
+
+// ── Translations ──────────────────────────────────────────────────────────────
+var T={
+  roman:{dir:'ltr',sp:'Karahi, chai, doctor...',cats:'Categories',seeAll:'Sab dekhein',trending:'Trending',nearYou:'Aap ke qareeb',pFound:(n,k)=>`${n} jagah ${k}km mein`,pFoundB:n=>`${n} jagah mili`,noPlace:'Koi jagah nahi mili',adjF:'Filters adjust karein',noHere:'Kuch nahi mila',noCat:'Is category mein koi jagah nahi',recS:'Haaliya Searches',browse:'Browse',browseS:'Category select karein',saved:'Saved',savedS:'Bookmark kiye businesses',noSaved:'Koi saved jagah nahi',noSavedS:'Pasand ki jagahein save karein',explore:'Explore Karein',savedC:n=>`${n} saved`,dist:'FASLA',stat:'HALAT',open:'🟢 Khula',closed:'🔴 Band',rating:'RATING',reviews:'reviews',hw:'Awqat',wait:'⏱️ Intezar',contact:'Rabta',call:'Call',nav:'Rasta',header:'Kya dhundhna hai?',profile:'Profile',privacy:'Privacy',help:'Madad',signout:'Sign out',ver:'Qareeb Pakistan v2.0',slogan:'Apne qareeb, apni zindagi',nDisc:'Discover',nBrowse:'Browse',nSaved:'Saved',nProf:'Profile',all:'Sab',copied:'Copied!',sortD:'Fasla',sortR:'Rating',lang:'Zaban',locBtn:'📍 Location lein',locGetting:'📡 Dhundh raha hai...',locDone:'✅ Location mili!',locFail:'⚠️ Location nahi mili',
+    tapRefresh:'tap to refresh',openOnly:'Sirf khule dikhayein',trending2:'Trending',
+    darkMode:'Dark Mode',darkOn:'On — Dark theme active',darkOff:'Off — Light theme',
+    language:'Language',langName:'Roman Urdu',
+    notifications:'Notifications',notifActive:'Active hain',notifOff:'Band hain',notifUnread:n=>n+' unread',
+    privacy2:'Privacy',privacyS:'Data & permissions',help2:'Help',helpS:'FAQ & Support',
+    clearHistory:'Search History Clear',clearHistoryS:n=>n+' searches hain',
+    addBusiness:'Apna Business Add Karein',addBusinessS:'Bilkul FREE — abhi list karein',addBtn:'Add →',
+    signoutS:'Account se bahar jayein',
+    editProfile:'Profile Edit Karein',photoBtnChange:'📷 Photo Badlein',photoBtnAdd:'📷 Gallery se Photo Lagaein',
+    profileComplete:'🎉 Profile mukammal hai!',profileFill:'Naam, Phone, Email aur City bharein',
+    profName:'Pura Naam',profPhone:'Phone Number',profEmail:'Email Address',profCity:'Shehar / City',
+    profNamePh:'Aapka naam',profPhonePh:'+92 3XX XXXXXXX',profEmailPh:'aap@email.com',profCityPh:'Lahore, Karachi...',
+    profNoName:'Apna naam likhein...',profNoEmail:'Email nahi diya',profNoCity:'📍 Shehar batayein',trendingLabel:'⭐ Trending',bizPhotoHint:'Dobara tapein to change karein',bizPhotoOpt:'Business ki photo (Optional)',
+    bizType:'Business Type',bizTypeSub:'Category select karein',
+    bizDetails:'Business Details',bizDetailsSub:'Tamam fields * zaruri hain',
+    bizTimings:'Business Timings',bizTimingsSub:'Opening & closing time',
+    bizReview:'Review & Submit',bizReviewSub:'Details check karein',
+    bizNext:'Aage Barein →',bizSetTime:'Awqat Set Karein →',bizReviewBtn:'Review Karein →',bizSubmitBtn:'✅ Submit Karein',
+    bizAlways:'24/7 Open',bizAlwaysS:'Hamesha khula',
+    bizCatErr:'⚠️ Category chunein',bizFieldErr:'⚠️ Sab fields bharein',bizSubmitErr:'⚠️ Fields bharein',
+    bizSuccess:'Shukriya! 🎉',bizSuccessS1:n=>`${n} successfully add ho gaya!`,bizSuccessS2:'Aap Discover tab mein dekh saktay hain',
+    bizDiscoverBtn:'Discover mein dekhein →',
+    searchClear:'Search clear karein',browseAll:'Sab Dekhein',
+    markRead:'Mark all read',clearAll:'Sab mitaein',noNotif:'Koi notification nahi',noNotifS:'Jab aap ke qareeb nai jagahein shaamil hongi, yahan dikhengi.',
+    searchNotif:'Notifications mein dhundhein...',noNotifSearch:q=>`'${q}' se koi notification match nahi ki`,noNotifSearchTitle:'Koi result nahi',
+    notifCount:n=>n+' notification'+(n>1?'':''),
+    waqaiSignout:'Waqai sign out karna chahte hain?',
+    okBtn:'OK ✓',listBtn:'List',userAdded:'User Added',quickSelect:'⚡ Quick select',optionalLabel:'Optional',saveBtn:'✓ Save Karein',cancelBtn:'Wapas',editBtn:'✏️ Edit',photoSaved:'✅ Photo lag gayi!',profileSaved:'✅ Profile save ho gaya!',
+    authGetStarted:'Shuru Karein',authSub:'Account banayein ya sign in karein',
+    authGoogle:'Google se jaari rakhein',authSigningIn:'Sign in ho raha hai...',
+    authOrEmail:'YA EMAIL SE',authLoginBtn:'Email se Login',authSignupBtn:'Naya Account Banayein',
+    authGuest:'Guest ke taur par jaari rakhein →',
+    authWelcome:'Khosh Aamdeed 👋',authCreateAcc:'Account Banayein 🌿',
+    authLoginSub:'Email se sign in karein',authSignupSub:'Bilkul FREE — abhi shuru karein',
+    authFullName:'Pura Naam *',authEmail:'Email Address *',authPassword:'Password *',
+    authPassPh6:'6+ characters',authPassPh:'Password',
+    authPleaseWait:'Intezar karein...',authSignIn:'🔐 Sign In',authCreateAccBtn:'✅ Account Banayein',
+    authNoAcc:"Account nahi hai? ",authHaveAcc:'Account hai? ',
+    authSignup:'Sign up →',authSignin:'Sign in →',
+    authErrEmail:'Sahih email address likhein',authErrPass:'Password kam az kam 6 characters ka hona chahiye',authErrName:'Apna naam likhein',
+    notifHeader:'Notifications',langLabel:'Language',
+    privData:[
+      ['📍 Location Data','Aapki location sirf nearby places dhundhne ke liye use hoti hai. Hum location kabhi store ya share nahi karte. Har session ke baad automatically delete ho jati hai.'],
+      ['📞 Phone Number','Phone number sirf aapke account verification ke liye use hota hai. Kisi third party ko share nahi kiya jata. Aap kabhi bhi number remove kar sakte hain.'],
+      ['🔒 Data Security','Aapka sara data industry-standard SSL encryption se protect hai. Passwords hashed store hote hain — plain text mein kabhi nahi. Regular security audits hote hain.'],
+      ['👤 Account Data','Aapka naam, email aur preferences sirf app experience behtar karne ke liye save hote hain. Hum kabhi data sell nahi karte.'],
+      ['🍪 No Tracking','Hum koi third-party tracking ya advertising cookies use nahi karte. Aapki browsing history private rehti hai.'],
+      ['❌ Data Delete','Aap kabhi bhi Profile > Settings se apna account aur sara data permanently delete kar sakte hain. 24 ghante mein sab kuch remove ho jata hai.'],
+      ['📧 Contact Us','Privacy concerns ke liye: privacy@qareeb.pk — hum 48 ghante mein jawab dete hain.'],
+    ],
+    helpData:[
+      ['App kaise use karein?','Discover tab mein apni location enable karein, phir search karein ya category select karein. Results apne aap distance ke hisaab se sort ho jaate hain.'],
+      ['Location kaise enable karein?','Header mein "📍 Location lein" button tap karein. Browser permission maange to Allow karein. Location milne ke baad sab places aapke qareeb se sort ho jaayenge.'],
+      ['Business add karein?','Neeche "+" (List) button dabayein. Category chunein, details bharein, timings set karein aur submit karein — bilkul FREE. Foran list ho jata hai.'],
+      ['Search kaise karein?','Discover tab mein search bar mein business naam, category ya area type karein. Roman Urdu, English ya Urdu mein search kar sakte hain.'],
+      ['Place save kaise karein?','Kisi bhi place card par ❤️ button dabayein. Saved places "Saved" tab mein milenge. Internet ke baghair bhi accessible hain.'],
+      ['Dark mode kaise chalayein?','Profile page mein seedha Dark Mode toggle karein. Setting save rehti hai.'],
+      ['Radius kaise change karein?','Discover tab mein 0.5km se 15km tak buttons hain. Ya Profile > Settings mein slider se 1-25km tak set karein.'],
+      ['Galat information hai?','Place open karein, "Navigate" se Google Maps par jaayein aur wahan report karein. Ya hamein email karein: support@qareeb.pk'],
+      ['App slow hai?','Browser cache clear karein. Chrome ya Firefox latest version use karein. Location permission allow karein — isse search fast hoti hai.'],
+      ['Account delete karna hai?','Profile > Sign Out se logout karein. Data delete ke liye: support@qareeb.pk par email karein subject "Delete Account" ke saath.'],
+    ],
+    cn:{restaurants:'Restaurants',dhabas:'Dhaba & Chai',clinics:'Clinics',pharmacy:'Pharmacy',grocery:'Grocery',salons:'Salons',atm:'ATM',mosque:'Masajid',petrol:'Petrol'}},
+  en:{dir:'ltr',sp:'Karahi, chai, doctor...',cats:'Categories',seeAll:'See all',trending:'Trending in',nearYou:'Near you',pFound:(n,k)=>`${n} place${n!==1?'s':''} within ${k}km`,pFoundB:n=>`${n} place${n!==1?'s':''} found`,noPlace:'No place found',adjF:'Adjust filters',noHere:'Nothing here',noCat:'No places in this category',recS:'Recent Searches',browse:'Browse',browseS:'Select a category',saved:'Saved Places',savedS:'Your bookmarked businesses',noSaved:'No saved places',noSavedS:'Save your favourite places',explore:'Explore Places',savedC:n=>`${n} saved place${n!==1?'s':''}`,dist:'DISTANCE',stat:'STATUS',open:'🟢 Open',closed:'🔴 Closed',rating:'RATING',reviews:'reviews',hw:'Hours & Wait Time',wait:'⏱️ Wait time',contact:'Contact',call:'Call',nav:'Navigate',header:"What's near you?",profile:'Profile',privacy:'Privacy',help:'Help & Support',signout:'Sign out',ver:'Qareeb Pakistan v2.0',slogan:'Apne qareeb, apni zindagi',nDisc:'Discover',nBrowse:'Browse',nSaved:'Saved',nProf:'Profile',all:'All',copied:'Copied!',sortD:'Distance',sortR:'Rating',lang:'Language',locBtn:'📍 Get Location',locGetting:'📡 Getting location...',locDone:'✅ Location found!',locFail:'⚠️ Could not get location',
+    tapRefresh:'tap to refresh',openOnly:'Show open only',trending2:'Trending',
+    darkMode:'Dark Mode',darkOn:'On — Dark theme active',darkOff:'Off — Light theme',
+    language:'Language',langName:'English',
+    notifications:'Notifications',notifActive:'Active',notifOff:'Disabled',notifUnread:n=>n+' unread',
+    privacy2:'Privacy',privacyS:'Data & permissions',help2:'Help',helpS:'FAQ & Support',
+    clearHistory:'Clear Search History',clearHistoryS:n=>n+' searches saved',
+    addBusiness:'List Your Business',addBusinessS:'Completely FREE — list now',addBtn:'Add →',
+    signoutS:'Sign out of your account',
+    editProfile:'Edit Profile',photoBtnChange:'📷 Change Photo',photoBtnAdd:'📷 Upload from Gallery',
+    profileComplete:'🎉 Profile complete!',profileFill:'Add Name, Phone, Email and City',
+    profName:'Full Name',profPhone:'Phone Number',profEmail:'Email Address',profCity:'City',
+    profNamePh:'Your name',profPhonePh:'+92 3XX XXXXXXX',profEmailPh:'you@email.com',profCityPh:'Lahore, Karachi...',
+    profNoName:'Enter your name...',profNoEmail:'Email not provided',profNoCity:'📍 Add your city',trendingLabel:'⭐ Trending',bizPhotoHint:'Tap again to change',bizPhotoOpt:'Business photo (Optional)',
+    bizType:'Business Type',bizTypeSub:'Select a category',
+    bizDetails:'Business Details',bizDetailsSub:'All fields marked * are required',
+    bizTimings:'Business Timings',bizTimingsSub:'Opening & closing time',
+    bizReview:'Review & Submit',bizReviewSub:'Check your details',
+    bizNext:'Continue →',bizSetTime:'Set Timings →',bizReviewBtn:'Review →',bizSubmitBtn:'✅ Submit',
+    bizAlways:'24/7 Open',bizAlwaysS:'Always open',
+    bizCatErr:'⚠️ Please select a category',bizFieldErr:'⚠️ Please fill all fields',bizSubmitErr:'⚠️ Fill required fields',
+    bizSuccess:'Thank you! 🎉',bizSuccessS1:n=>`${n} successfully added!`,bizSuccessS2:'You can see it in the Discover tab',
+    bizDiscoverBtn:'View in Discover →',
+    searchClear:'Clear search',browseAll:'See All',
+    markRead:'Mark all read',clearAll:'Clear all',noNotif:'No notifications yet',noNotifS:"When new places are added near you, they'll show here.",
+    searchNotif:'Search notifications...',noNotifSearch:q=>`No notifications match '${q}'`,noNotifSearchTitle:'No results found',
+    notifCount:n=>n+' notification'+(n>1?'s':''),
+    waqaiSignout:'Are you sure you want to sign out?',
+    okBtn:'OK ✓',listBtn:'List',userAdded:'User Added',quickSelect:'⚡ Quick select',optionalLabel:'Optional',saveBtn:'✓ Save',cancelBtn:'Cancel',editBtn:'✏️ Edit',photoSaved:'✅ Photo updated!',profileSaved:'✅ Profile saved!',
+    authGetStarted:'Get Started',authSub:'Create an account or sign in',
+    authGoogle:'Continue with Google',authSigningIn:'Signing in...',
+    authOrEmail:'OR USE EMAIL',authLoginBtn:'Login with Email',authSignupBtn:'Create New Account',
+    authGuest:'Continue as Guest →',
+    authWelcome:'Welcome Back 👋',authCreateAcc:'Create Account 🌿',
+    authLoginSub:'Sign in with your email',authSignupSub:'Free forever — get started now',
+    authFullName:'Full Name *',authEmail:'Email Address *',authPassword:'Password *',
+    authPassPh6:'6+ characters',authPassPh:'Password',
+    authPleaseWait:'Please wait...',authSignIn:'🔐 Sign In',authCreateAccBtn:'✅ Create Account',
+    authNoAcc:"Don't have an account? ",authHaveAcc:'Already have an account? ',
+    authSignup:'Sign up →',authSignin:'Sign in →',
+    authErrEmail:'Please enter a valid email',authErrPass:'Password must be at least 6 characters',authErrName:'Please enter your name',
+    notifHeader:'Notifications',langLabel:'Language',
+    privData:[
+      ['📍 Location Data','Your location is only used to find nearby places. We never store or share your location. It is automatically deleted after each session.'],
+      ['📞 Phone Number','Your phone number is only used for account verification. It is never shared with any third party. You can remove it at any time.'],
+      ['🔒 Data Security','All your data is protected with industry-standard SSL encryption. Passwords are stored hashed — never in plain text. Regular security audits are conducted.'],
+      ['👤 Account Data','Your name, email and preferences are saved only to improve your app experience. We never sell your data.'],
+      ['🍪 No Tracking','We do not use any third-party tracking or advertising cookies. Your browsing history remains private.'],
+      ['❌ Data Delete','You can permanently delete your account and all data anytime via Profile > Settings. Everything is removed within 24 hours.'],
+      ['📧 Contact Us','For privacy concerns: privacy@qareeb.pk — we respond within 48 hours.'],
+    ],
+    helpData:[
+      ['How to use the app?','Enable your location in the Discover tab, then search or select a category. Results automatically sort by distance.'],
+      ['How to enable location?','Tap the "📍 Get Location" button in the header. Allow the browser permission when prompted. Once found, all places will sort by proximity.'],
+      ['How to add a business?','Tap the "+" (List) button at the bottom. Choose a category, fill in details, set timings and submit — completely FREE. It goes live instantly.'],
+      ['How to search?','Type a business name, category or area in the search bar in the Discover tab. You can search in Roman Urdu, English or Urdu.'],
+      ['How to save a place?','Tap the ❤️ button on any place card. Saved places appear in the "Saved" tab. They are accessible even without internet.'],
+      ['How to enable dark mode?','Go to the Profile page and toggle Dark Mode directly. The setting is saved automatically.'],
+      ['How to change the radius?','Use the 0.5km–15km buttons in the Discover tab. Or use the slider in Profile > Settings to set 1–25km.'],
+      ['Wrong information?','Open the place, go to Google Maps via "Navigate" and report it there. Or email us: support@qareeb.pk'],
+      ['App running slow?','Clear your browser cache. Use the latest version of Chrome or Firefox. Allow location permission — it speeds up search.'],
+      ['How to delete my account?','Sign out via Profile > Sign Out. To delete data: email support@qareeb.pk with subject "Delete Account".'],
+    ],
+    cn:{restaurants:'Restaurants',dhabas:'Dhabas & Chai',clinics:'Clinics',pharmacy:'Pharmacies',grocery:'Grocery',salons:'Salons',atm:'ATM',mosque:'Mosques',petrol:'Petrol'}},
+  ur:{dir:'rtl',sp:'کڑاہی، چائے، ڈاکٹر...',cats:'زمرے',seeAll:'سب دیکھیں',trending:'ٹرینڈنگ',nearYou:'آپ کے قریب',pFound:(n,k)=>`${k}km میں ${n} جگہ`,pFoundB:n=>`${n} جگہ ملی`,noPlace:'کوئی جگہ نہیں',adjF:'فلٹر تبدیل کریں',noHere:'کچھ نہیں ملا',noCat:'اس زمرے میں کچھ نہیں',recS:'حالیہ تلاشیں',browse:'براؤز',browseS:'زمرہ منتخب کریں',saved:'محفوظ',savedS:'بک مارک کردہ',noSaved:'کوئی محفوظ نہیں',noSavedS:'پسندیدہ جگہیں محفوظ کریں',explore:'دریافت کریں',savedC:n=>`${n} محفوظ`,dist:'فاصلہ',stat:'حالت',open:'🟢 کھلا',closed:'🔴 بند',rating:'ریٹنگ',reviews:'جائزے',hw:'اوقات',wait:'⏱️ انتظار',contact:'رابطہ',call:'کال',nav:'راستہ',header:'آپ کے قریب کیا ہے؟',profile:'پروفائل',privacy:'رازداری',help:'مدد',signout:'سائن آؤٹ',ver:'قریب پاکستان v2.0',slogan:'اپنے قریب، اپنی زندگی',nDisc:'دریافت',nBrowse:'براؤز',nSaved:'محفوظ',nProf:'پروفائل',all:'سب',copied:'کاپی!',sortD:'فاصلہ',sortR:'ریٹنگ',lang:'زبان',locBtn:'📍 لوکیشن لیں',locGetting:'📡 تلاش جاری...',locDone:'✅ لوکیشن مل گئی!',locFail:'⚠️ لوکیشن نہیں ملی',
+    tapRefresh:'تازہ کریں',openOnly:'صرف کھلی جگہیں دکھائیں',trending2:'ٹرینڈنگ',
+    darkMode:'ڈارک موڈ',darkOn:'آن — ڈارک تھیم فعال',darkOff:'آف — لائٹ تھیم',
+    language:'زبان',langName:'اردو',
+    notifications:'اطلاعات',notifActive:'فعال ہیں',notifOff:'بند ہیں',notifUnread:n=>n+' غیر پڑھی',
+    privacy2:'رازداری',privacyS:'ڈیٹا اور اجازتیں',help2:'مدد',helpS:'سوالات اور سپورٹ',
+    clearHistory:'تلاش کی تاریخ صاف کریں',clearHistoryS:n=>n+' تلاشیں محفوظ ہیں',
+    addBusiness:'اپنا کاروبار شامل کریں',addBusinessS:'بالکل مفت — ابھی لسٹ کریں',addBtn:'شامل کریں ←',
+    signoutS:'اکاؤنٹ سے باہر جائیں',
+    editProfile:'پروفائل ترمیم کریں',photoBtnChange:'📷 تصویر بدلیں',photoBtnAdd:'📷 گیلری سے تصویر لگائیں',
+    profileComplete:'🎉 پروفائل مکمل ہے!',profileFill:'نام، فون، ای میل اور شہر بھریں',
+    profName:'پورا نام',profPhone:'فون نمبر',profEmail:'ای میل',profCity:'شہر',
+    profNamePh:'آپ کا نام',profPhonePh:'+92 3XX XXXXXXX',profEmailPh:'aap@email.com',profCityPh:'لاہور، کراچی...',
+    profNoName:'اپنا نام لکھیں...',profNoEmail:'ای میل نہیں دی',profNoCity:'📍 شہر بتائیں',trendingLabel:'⭐ ٹرینڈنگ',bizPhotoHint:'دوبارہ دبائیں تبدیل کریں',bizPhotoOpt:'کاروبار کی تصویر (اختیاری)',
+    bizType:'کاروبار کی قسم',bizTypeSub:'زمرہ منتخب کریں',
+    bizDetails:'کاروبار کی تفصیل',bizDetailsSub:'تمام * فیلڈز ضروری ہیں',
+    bizTimings:'کاروبار کے اوقات',bizTimingsSub:'کھلنے اور بند ہونے کا وقت',
+    bizReview:'جائزہ اور جمع کریں',bizReviewSub:'تفصیلات چیک کریں',
+    bizNext:'آگے بڑھیں ←',bizSetTime:'اوقات مقرر کریں ←',bizReviewBtn:'جائزہ لیں ←',bizSubmitBtn:'✅ جمع کریں',
+    bizAlways:'24/7 کھلا',bizAlwaysS:'ہمیشہ کھلا',
+    bizCatErr:'⚠️ زمرہ منتخب کریں',bizFieldErr:'⚠️ تمام فیلڈز بھریں',bizSubmitErr:'⚠️ ضروری فیلڈز بھریں',
+    bizSuccess:'شکریہ! 🎉',bizSuccessS1:n=>`${n} کامیابی سے شامل ہو گیا!`,bizSuccessS2:'آپ ڈسکور ٹیب میں دیکھ سکتے ہیں',
+    bizDiscoverBtn:'ڈسکور میں دیکھیں ←',
+    searchClear:'تلاش صاف کریں',browseAll:'سب دیکھیں',
+    markRead:'سب پڑھی نشان لگائیں',clearAll:'سب صاف کریں',noNotif:'ابھی کوئی اطلاع نہیں',noNotifS:'جب آپ کے قریب نئی جگہیں شامل ہوں گی تو یہاں دکھیں گی۔',
+    searchNotif:'اطلاعات تلاش کریں...',noNotifSearch:q=>`'${q}' سے کوئی اطلاع نہیں ملی`,noNotifSearchTitle:'کوئی نتیجہ نہیں',
+    notifCount:n=>n+' اطلاع'+(n>1?'ات':''),
+    waqaiSignout:'کیا آپ واقعی سائن آؤٹ کرنا چاہتے ہیں؟',
+    okBtn:'ٹھیک ہے ✓',listBtn:'شامل کریں',userAdded:'صارف کا اضافہ',quickSelect:'⚡ فوری انتخاب',optionalLabel:'اختیاری',saveBtn:'✓ محفوظ کریں',cancelBtn:'منسوخ',editBtn:'✏️ ترمیم',photoSaved:'✅ تصویر لگ گئی!',profileSaved:'✅ پروفائل محفوظ ہو گیا!',
+    authGetStarted:'شروع کریں',authSub:'اکاؤنٹ بنائیں یا سائن ان کریں',
+    authGoogle:'گوگل سے جاری رکھیں',authSigningIn:'سائن ان ہو رہا ہے...',
+    authOrEmail:'یا ای میل سے',authLoginBtn:'ای میل سے لاگ ان',authSignupBtn:'نیا اکاؤنٹ بنائیں',
+    authGuest:'مہمان کے طور پر جاری رکھیں ←',
+    authWelcome:'خوش آمدید 👋',authCreateAcc:'اکاؤنٹ بنائیں 🌿',
+    authLoginSub:'ای میل سے سائن ان کریں',authSignupSub:'بالکل مفت — ابھی شروع کریں',
+    authFullName:'پورا نام *',authEmail:'ای میل ایڈریس *',authPassword:'پاس ورڈ *',
+    authPassPh6:'6+ حروف',authPassPh:'پاس ورڈ',
+    authPleaseWait:'انتظار کریں...',authSignIn:'🔐 سائن ان',authCreateAccBtn:'✅ اکاؤنٹ بنائیں',
+    authNoAcc:'اکاؤنٹ نہیں ہے؟ ',authHaveAcc:'اکاؤنٹ ہے؟ ',
+    authSignup:'سائن اپ ←',authSignin:'سائن ان ←',
+    authErrEmail:'درست ای میل لکھیں',authErrPass:'پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے',authErrName:'اپنا نام لکھیں',
+    notifHeader:'اطلاعات',langLabel:'زبان',
+    privData:[
+      ['📍 لوکیشن ڈیٹا','آپ کی لوکیشن صرف قریبی جگہیں ڈھونڈنے کے لیے استعمال ہوتی ہے۔ ہم لوکیشن کبھی محفوظ یا شیئر نہیں کرتے۔ ہر سیشن کے بعد خود بخود حذف ہو جاتی ہے۔'],
+      ['📞 فون نمبر','فون نمبر صرف اکاؤنٹ تصدیق کے لیے استعمال ہوتا ہے۔ کسی تیسرے فریق کو شیئر نہیں کیا جاتا۔ آپ کبھی بھی نمبر ہٹا سکتے ہیں۔'],
+      ['🔒 ڈیٹا سیکیورٹی','آپ کا تمام ڈیٹا SSL انکرپشن سے محفوظ ہے۔ پاس ورڈ ہیش کر کے محفوظ ہوتے ہیں۔ باقاعدہ سیکیورٹی آڈٹ ہوتے ہیں۔'],
+      ['👤 اکاؤنٹ ڈیٹا','آپ کا نام، ای میل اور ترجیحات صرف ایپ کا تجربہ بہتر بنانے کے لیے محفوظ ہوتی ہیں۔ ہم کبھی ڈیٹا فروخت نہیں کرتے۔'],
+      ['🍪 کوئی ٹریکنگ نہیں','ہم کوئی تھرڈ پارٹی ٹریکنگ یا اشتہاری کوکیز استعمال نہیں کرتے۔ آپ کی براؤزنگ نجی رہتی ہے۔'],
+      ['❌ ڈیٹا حذف کریں','آپ پروفائل > سیٹنگز سے اپنا اکاؤنٹ اور تمام ڈیٹا مستقل حذف کر سکتے ہیں۔ 24 گھنٹوں میں سب ہٹا دیا جاتا ہے۔'],
+      ['📧 ہم سے رابطہ','رازداری کے بارے میں: privacy@qareeb.pk — ہم 48 گھنٹوں میں جواب دیتے ہیں۔'],
+    ],
+    helpData:[
+      ['ایپ کیسے استعمال کریں؟','ڈسکور ٹیب میں لوکیشن آن کریں، پھر تلاش کریں یا زمرہ منتخب کریں۔ نتائج خود بخود فاصلے کے مطابق ترتیب پاتے ہیں۔'],
+      ['لوکیشن کیسے آن کریں؟','ہیڈر میں "📍 لوکیشن لیں" کا بٹن دبائیں۔ براؤزر اجازت مانگے تو Allow کریں۔ لوکیشن ملنے کے بعد تمام جگہیں قریب سے ترتیب ہوں گی۔'],
+      ['کاروبار کیسے شامل کریں؟','نیچے "+" (List) بٹن دبائیں۔ زمرہ منتخب کریں، تفصیلات بھریں، اوقات مقرر کریں اور جمع کریں — بالکل مفت۔ فوری شامل ہو جاتا ہے۔'],
+      ['تلاش کیسے کریں؟','ڈسکور ٹیب میں سرچ بار میں کاروبار کا نام، زمرہ یا علاقہ لکھیں۔ رومن اردو، انگریزی یا اردو میں تلاش کر سکتے ہیں۔'],
+      ['جگہ کیسے محفوظ کریں؟','کسی بھی جگہ کے کارڈ پر ❤️ بٹن دبائیں۔ محفوظ جگہیں "محفوظ" ٹیب میں ملیں گی۔ انٹرنیٹ کے بغیر بھی قابل رسائی ہیں۔'],
+      ['ڈارک موڈ کیسے آن کریں؟','پروفائل صفحے پر جا کر ڈارک موڈ ٹوگل کریں۔ ترتیب خود بخود محفوظ ہو جاتی ہے۔'],
+      ['دائرہ کیسے بدلیں؟','ڈسکور ٹیب میں 0.5km سے 15km تک بٹن ہیں۔ یا پروفائل > سیٹنگز میں سلائیڈر سے 1-25km مقرر کریں۔'],
+      ['غلط معلومات ہے؟','جگہ کھولیں، "راستہ" سے گوگل میپس پر جائیں اور وہاں رپورٹ کریں۔ یا ہمیں ای میل کریں: support@qareeb.pk'],
+      ['ایپ سست ہے؟','براؤزر کیش صاف کریں۔ Chrome یا Firefox کا تازہ ترین ورژن استعمال کریں۔ لوکیشن کی اجازت دیں — اس سے تلاش تیز ہوتی ہے۔'],
+      ['اکاؤنٹ حذف کرنا ہے؟','پروفائل > سائن آؤٹ سے لاگ آؤٹ کریں۔ ڈیٹا حذف کے لیے: support@qareeb.pk پر ای میل کریں موضوع "Delete Account" کے ساتھ۔'],
+    ],
+    cn:{restaurants:'ریستوراں',dhabas:'ڈھابہ',clinics:'کلینک',pharmacy:'فارمیسی',grocery:'گروسری',salons:'سیلون',atm:'اے ٹی ایم',mosque:'مساجد',petrol:'پیٹرول'}}
 };
 
-const OSM_TAGS: Record<string, string> = {
-  restaurants: '["amenity"~"restaurant|fast_food|food_court|eating_house"]',
-  dhabas: '["amenity"~"cafe|tea_house|dhaba"]',
-  clinics: '["amenity"~"clinic|hospital|doctors|health_post|pharmacy"]',
-  pharmacy: '["amenity"="pharmacy"]',
-  grocery: '["shop"~"supermarket|grocery|general|convenience|department_store"]',
-  salons: '["shop"~"hairdresser|beauty|cosmetics|barber"]',
-  atm: '["amenity"~"atm|bank"]',
-  mosque: '["amenity"="place_of_worship"]["religion"="muslim"]',
-  petrol: '["amenity"="fuel"]',
-};
+var CATS=[
+  {id:'restaurants',icon:'🍽️',bg:'#f97316',lt:'#fff7ed',sub:'Khana & Karahi'},
+  {id:'dhabas',icon:'☕',bg:'#f59e0b',lt:'#fffbeb',sub:'Chai & Nashta'},
+  {id:'clinics',icon:'🩺',bg:'#ef4444',lt:'#fef2f2',sub:'Doctor & Ilaj'},
+  {id:'pharmacy',icon:'💊',bg:'#14b8a6',lt:'#f0fdfa',sub:'Dawa & Health'},
+  {id:'grocery',icon:'🏪',bg:'#f97316',lt:'#fff7ed',sub:'Roz Marra Samaan'},
+  {id:'salons',icon:'💇',bg:'#a855f7',lt:'#faf5ff',sub:'Baal & Beauty'},
+  {id:'atm',icon:'🏧',bg:'#3b82f6',lt:'#eff6ff',sub:'Paise & Banking'},
+  {id:'mosque',icon:'🕌',bg:'#16a34a',lt:'#f0fdf4',sub:'Namaz & Ibadat'},
+  {id:'petrol',icon:'⛽',bg:'#eab308',lt:'#fefce8',sub:'Fuel & CNG'},
+];
 
-Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+// ── Base places data ──────────────────────────────────────────────────────────
+var BASE_PL=[
+  // ── Lahore ──
+  {id:1,name:'Data Darbar',cat:'restaurants',loc:'Bhati Gate, Lahore',lat:31.5827,lng:74.3109,dist:0.5,rating:4.9,reviews:5421,open:true,icon:'🍽️',trend:true,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-42-37241512',hrs:'11am–11pm',desc:'Famous traditional Pakistani restaurant with authentic flavors.',wait:'20 mins'},
+  {id:2,name:'Butt Karahi',cat:'restaurants',loc:'Lakshmi Chowk, Lahore',lat:31.5703,lng:74.3183,dist:0.8,rating:4.7,reviews:1284,open:true,icon:'🍽️',trend:true,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-42-37112233',hrs:'1pm–12am',desc:'Best karahi in town — must try! Fresh meat daily.',wait:'25 mins'},
+  {id:3,name:'Shifa Family Clinic',cat:'clinics',loc:'Johar Town, Lahore',lat:31.4695,lng:74.2628,dist:2.1,rating:4.8,reviews:213,open:true,icon:'🩺',trend:false,ver:true,bg:'#ef4444',lt:'#fef2f2',ph:'+92-42-35121234',hrs:'9am–9pm',desc:'Modern clinic with experienced doctors and advanced facilities.',wait:'15 mins'},
+  {id:4,name:'Sehat Pharmacy',cat:'pharmacy',loc:'DHA Phase 5, Lahore',lat:31.4812,lng:74.3906,dist:0.5,rating:4.6,reviews:389,open:true,icon:'💊',trend:false,ver:true,bg:'#14b8a6',lt:'#f0fdfa',ph:'+92-21-35121234',hrs:'8am–10pm',desc:'Trusted pharmacy with quality medicines and health products.',wait:'5 mins'},
+  {id:5,name:'Quetta Chai Wala',cat:'dhabas',loc:'Gulberg, Lahore',lat:31.5093,lng:74.3292,dist:1.4,rating:4.5,reviews:542,open:true,icon:'☕',trend:false,ver:true,bg:'#f59e0b',lt:'#fffbeb',ph:'+92-42-35556677',hrs:'6am–11pm',desc:'Traditional chai with fresh bakery items. Kahwa bhi milti hai.',wait:'10 mins'},
+  {id:6,name:'Masjid-e-Quba',cat:'mosque',loc:'Old City, Lahore',lat:31.5851,lng:74.3090,dist:1.2,rating:4.9,reviews:891,open:true,icon:'🕌',trend:true,ver:true,bg:'#16a34a',lt:'#f0fdf4',ph:'+92-42-37114455',hrs:'Prayer times',desc:'Historic mosque with peaceful atmosphere. Jummah prayers at 1:15pm.',wait:'N/A'},
+  {id:7,name:'HBL ATM Mall Road',cat:'atm',loc:'Mall Road, Lahore',lat:31.5561,lng:74.3210,dist:0.3,rating:4.0,reviews:67,open:true,icon:'🏧',trend:false,ver:true,bg:'#3b82f6',lt:'#eff6ff',ph:'+92-21-111-425-888',hrs:'24/7',desc:'HBL ATM with cash withdrawal and balance inquiry services.',wait:'0 mins'},
+  {id:8,name:'PSO Petrol Pump',cat:'petrol',loc:'Main Boulevard, Lahore',lat:31.5234,lng:74.3289,dist:0.6,rating:4.2,reviews:312,open:true,icon:'⛽',trend:false,ver:true,bg:'#eab308',lt:'#fefce8',ph:'+92-21-111-786-786',hrs:'24/7',desc:'PSO fuel station — petrol, diesel, CNG. Tyre air and water free.',wait:'0 mins'},
+  {id:9,name:'Al-Fatah Super Store',cat:'grocery',loc:'Markaz DHA, Lahore',lat:31.4801,lng:74.3892,dist:3.2,rating:4.4,reviews:921,open:false,icon:'🏪',trend:false,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-42-35883838',hrs:'7am–11pm',desc:'One-stop grocery shop with quality imported and local products.',wait:'N/A'},
+  {id:10,name:'Taj Mahal Salon',cat:'salons',loc:'Saddar, Lahore',lat:31.5497,lng:74.3118,dist:1.8,rating:4.3,reviews:156,open:true,icon:'💇',trend:false,ver:true,bg:'#a855f7',lt:'#faf5ff',ph:'+92-91-25121234',hrs:'10am–8pm',desc:'Professional salon with expert stylists. Haircut, color, shaving.',wait:'30 mins'},
+  // ── Karachi ──
+  {id:11,name:'Burns Road Nihari',cat:'restaurants',loc:'Burns Road, Karachi',lat:24.8607,lng:67.0100,dist:1.2,rating:4.9,reviews:7823,open:true,icon:'🍽️',trend:true,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-21-32761234',hrs:'6am–4pm',desc:'Original Burns Road nihari — famous since 1947. Long queues but worth every minute!',wait:'40 mins'},
+  {id:12,name:'Agha Khan Hospital',cat:'clinics',loc:'Stadium Road, Karachi',lat:24.9008,lng:67.0820,dist:4.1,rating:4.9,reviews:3241,open:true,icon:'🩺',trend:false,ver:true,bg:'#ef4444',lt:'#fef2f2',ph:'+92-21-34864000',hrs:'24/7',desc:'World-class hospital with all specialties, labs, and pharmacy under one roof.',wait:'60 mins'},
+  {id:13,name:'Irani Chai House',cat:'dhabas',loc:'Saddar, Karachi',lat:24.8553,lng:67.0101,dist:1.9,rating:4.7,reviews:1432,open:true,icon:'☕',trend:true,ver:true,bg:'#f59e0b',lt:'#fffbeb',ph:'+92-21-32212233',hrs:'6am–1am',desc:'Famous Irani chai and bun maska. 70+ years old institution of Saddar.',wait:'8 mins'},
+  // ── Islamabad ──
+  {id:14,name:'Monal Restaurant',cat:'restaurants',loc:'Margalla Hills, Islamabad',lat:33.7467,lng:73.0567,dist:6.1,rating:4.8,reviews:4512,open:true,icon:'🍽️',trend:true,ver:true,bg:'#f97316',lt:'#fff7ed',ph:'+92-51-2896000',hrs:'1pm–12am',desc:'Iconic hilltop restaurant with stunning views of Islamabad. Best barbecue in the city.',wait:'45 mins'},
+  {id:15,name:'Faisal Mosque',cat:'mosque',loc:'Shah Faisal Ave, Islamabad',lat:33.7295,lng:73.0368,dist:5.0,rating:5.0,reviews:8901,open:true,icon:'🕌',trend:true,ver:true,bg:'#16a34a',lt:'#f0fdf4',ph:'+92-51-9261234',hrs:'Prayer times',desc:'One of the largest mosques in the world. Iconic tent-shaped design. Must visit landmark.',wait:'N/A'},
+];
+
+// ── haversine distance ────────────────────────────────────────────────────────
+function haversine(lat1,lon1,lat2,lon2){
+  var R=6371;
+  var dLat=(lat2-lat1)*Math.PI/180;
+  var dLon=(lon2-lon1)*Math.PI/180;
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+// ── Dark mode palette ────────────────────────────────────────────────────────
+function getD(dm){return{
+  bg:       dm?'#0a0d16':'#f8fafc',
+  card:     dm?'#141824':'#ffffff',
+  card2:    dm?'#1a1f2e':'#f9fafb',
+  border:   dm?'rgba(255,255,255,0.09)':'#e5e7eb',
+  border2:  dm?'rgba(255,255,255,0.05)':'#f3f4f6',
+  text:     dm?'#e8eaf6':'#111111',
+  sub:      dm?'#8892b0':'#6b7280',
+  muted:    dm?'#4a5568':'#9ca3af',
+  input:    dm?'#0d1120':'#f9fafb',
+  glass:    dm?'#141824':'rgba(0,0,0,0.02)',
+  glow:     dm?'rgba(22,163,74,0.12)':'transparent',
+};}
+
+// ── Toggle switch ─────────────────────────────────────────────────────────────
+function Toggle({val,fn,accent='#16a34a'}){
+  return h("div",{onClick:fn,style:{width:44,height:24,borderRadius:12,background:val?accent:'#d1d5db',display:'flex',alignItems:'center',padding:2,cursor:'pointer',transition:'background .2s',flexShrink:0}},
+    h("div",{style:{width:20,height:20,background:'white',borderRadius:'50%',boxShadow:'0 1px 3px rgba(0,0,0,.2)',transform:val?'translateX(20px)':'translateX(0)',transition:'transform .22s'}})
+  );
+}
+
+// ── Bottom sheet overlay ──────────────────────────────────────────────────────
+function Overlay({show,onClose,title,icon,col,children,darkMode,okLabel}){
+  if(!show)return null;
+  var D=getD(darkMode);
+  return h("div",{style:{position:'fixed',inset:0,background:'rgba(0,0,0,.5)',display:'flex',alignItems:'flex-end',zIndex:50},className:"aFI",onClick:onClose},
+    h("div",{style:{width:'100%',background:darkMode?'#141824':D.card,borderRadius:'22px 22px 0 0',maxHeight:'75vh',overflowY:'auto',padding:20},className:"aSU",onClick:e=>e.stopPropagation()},
+      h("div",{style:{width:36,height:4,background:'#e5e7eb',borderRadius:2,margin:'0 auto 14px'}}),
+      h("div",{style:{display:'flex',alignItems:'center',gap:8,marginBottom:14}},
+        h("span",{style:{fontSize:22}},icon),
+        h("span",{style:{fontWeight:700,fontSize:16,color:D.text}},title)
+      ),
+      children,
+      h("button",{onClick:onClose,style:{width:'100%',marginTop:10,padding:12,borderRadius:14,fontSize:13,fontWeight:700,background:col,color:'white',border:'none',cursor:'pointer'}},okLabel||"OK ✓")
+    )
+  );
+}
+
+// ── Sub-page back header ──────────────────────────────────────────────────────
+function SubHeader({title,emoji,onBack}){
+  return h("div",{style:{background:'linear-gradient(135deg,#16a34a,#15803d)',padding:'14px 16px',display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:10}},
+    h("button",{onClick:onBack,style:{background:'rgba(255,255,255,.18)',border:'none',borderRadius:'50%',width:34,height:34,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',fontSize:16,color:'white',flexShrink:0}},"←"),
+    h("span",{style:{fontSize:18}},emoji),
+    h("p",{style:{fontWeight:700,fontSize:15,color:'white',margin:0}},title)
+  );
+}
+
+// ── Place card ────────────────────────────────────────────────────────────────
+function PlaceCard({p,idx,saved,onSelect,onSave,t,darkMode}){
+  var cardBg=darkMode?'#1e293b':p.lt;
+  var textCol=darkMode?'#f1f5f9':'#111';
+  var subCol=darkMode?'#94a3b8':'#6b7280';
+  var ratingBg=darkMode?'#1e2438':'white';
+  return h("div",{onClick:()=>onSelect(p),className:(darkMode?'dm-place-card ':'')+(idx%2===0?'pc-even':'pc-odd'),style:{background:darkMode?'#141824':cardBg,borderRadius:14,padding:12,marginBottom:10,boxShadow:darkMode?'none':'0 2px 8px rgba(0,0,0,.08)',border:darkMode?'none':'1px solid rgba(0,0,0,.05)',cursor:'pointer',display:'flex',gap:12,animationDelay:`${idx*40}ms`}},
+    h("div",{style:{width:54,height:54,background:p.bg,borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0,overflow:'hidden'}},
+      p.customImg
+        ?h("img",{src:p.customImg,style:{width:'100%',height:'100%',objectFit:'cover',borderRadius:12}})
+        :p.icon
+    ),
+    h("div",{style:{flex:1,minWidth:0}},
+      h("div",{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}},
+        h("div",{style:{flex:1,minWidth:0}},
+          h("div",{style:{display:'flex',alignItems:'center',gap:4}},
+            h("span",{style:{fontWeight:700,fontSize:14,color:textCol,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},p.name),
+            p.ver&&h("span",{style:{color:'#3b82f6',fontSize:11,flexShrink:0}},"✓")
+          ),
+          h("div",{style:{display:'flex',alignItems:'center',gap:4,fontSize:11,color:subCol,marginTop:2}},
+            h(MapPin,{size:11,color:"#9ca3af"}),
+            h("span",{style:{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},p.loc.split(',')[0]),
+            h("span",{style:{color:'#d1d5db',flexShrink:0}},"•"),
+            h("span",{style:{fontWeight:600,color:darkMode?'#cbd5e1':'#374151',flexShrink:0}},p.dist.toFixed(1),"km")
+          )
+        ),
+        h("button",{onClick:e=>{e.stopPropagation();onSave(p.id);},style:{background:'transparent',border:'none',cursor:'pointer',padding:'2px 4px',marginTop:2}},
+          h(Heart,{size:16,filled:saved})
+        )
+      ),
+      h("div",{style:{display:'flex',gap:6,flexWrap:'wrap',marginTop:4}},
+        h("div",{style:{display:'flex',alignItems:'center',gap:3,background:ratingBg,padding:'2px 7px',borderRadius:6,fontSize:11}},
+          h(Star,{size:11,filled:true}),
+          h("span",{style:{fontWeight:700,color:textCol}},p.rating),
+          h("span",{style:{color:'#9ca3af'}},"(",p.reviews,")")
+        ),
+        h("span",{style:{fontSize:11,fontWeight:600,padding:'2px 7px',borderRadius:6,background:p.open?'#dcfce7':'#fee2e2',color:p.open?'#16a34a':'#dc2626'}},p.open?t.open:t.closed),
+        p.trend&&h("span",{style:{fontSize:11,fontWeight:600,padding:'2px 7px',borderRadius:6,background:'#fef9c3',color:'#92400e'}},t.trendingLabel)
+      )
+    )
+  );
+}
+
+// ── Main App ──────────────────────────────────────────────────────────────────
+// Google SVG
+var GLogo=h("svg",{width:20,height:20,viewBox:"0 0 48 48"},h("path",{fill:"#FFC107",d:"M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s8.9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"}),h("path",{fill:"#FF3D00",d:"m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4c-7.7 0-14.4 4.3-17.7 10.7z"}),h("path",{fill:"#4CAF50",d:"M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2A12 12 0 0 1 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"}),h("path",{fill:"#1976D2",d:"M43.6 20.1H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C36.9 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"}));
+
+// ── SPLASH ──────────────────────────────────────────────────────────────────
+function Splash({onDone}){
+  var [visible,setVisible]=useState(false);
+  var [fadeOut,setFadeOut]=useState(false);
+  useEffect(()=>{
+    var t1=setTimeout(()=>setVisible(true),100);
+    var t2=setTimeout(()=>setFadeOut(true),2600);
+    var t3=setTimeout(onDone,3200);
+    return()=>{clearTimeout(t1);clearTimeout(t2);clearTimeout(t3);};
+  },[]);
+  return h("div",{style:{
+    position:'fixed',inset:0,
+    width:'100%',height:'100dvh',
+    background:'linear-gradient(145deg,#064e24,#0d7a3e,#0a5c2e)',
+    display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',
+    zIndex:9999,opacity:fadeOut?0:1,transition:'opacity .6s ease',
+    overflow:'hidden'
+  }},
+    // Logo + Pakistan text
+    h("div",{style:{
+      display:'flex',flexDirection:'column',alignItems:'center',gap:10,
+      opacity:visible?1:0,transform:visible?'translateY(0)':'translateY(16px)',
+      transition:'opacity .8s ease,transform .8s ease'
+    }},
+      h("div",{style:{
+        fontSize:58,fontWeight:900,
+        fontFamily:"'Arial Black',sans-serif",
+        letterSpacing:-2,color:'white',textTransform:'uppercase',
+        textShadow:'0 2px 20px rgba(0,0,0,.2)'
+      }},"QARE",h("span",{style:{color:'#4ade80'}},"EB")),
+      h("div",{style:{width:40,height:2,background:'rgba(255,255,255,.25)',borderRadius:2}}),
+      h("p",{style:{color:'rgba(255,255,255,.45)',fontSize:11,letterSpacing:4,textTransform:'uppercase',fontWeight:600,margin:0}},"Pakistan")
+    ),
+    // Animated loading bar at bottom
+    h("div",{style:{
+      position:'absolute',bottom:'max(48px, calc(env(safe-area-inset-bottom) + 32px))',
+      width:160,
+      opacity:visible?1:0,transition:'opacity .5s .4s'
+    }},
+      h("div",{style:{width:'100%',height:3,background:'rgba(255,255,255,.15)',borderRadius:10,overflow:'hidden'}},
+        h("div",{style:{
+          height:'100%',
+          background:'linear-gradient(90deg,transparent,#4ade80,white,#4ade80,transparent)',
+          borderRadius:10,
+          animation:'barSlide 1.4s ease-in-out infinite'
+        }})
+      )
+    )
+  );
+}
+
+
+// ── AUTH ────────────────────────────────────────────────────────────────────
+function Auth({onAuth,lang}){
+  var t=T[lang]||T['roman'];
+  var [mode,setMode]=useState('welcome');
+  var [nm,setNm]=useState('');
+  var [em,setEm]=useState('');
+  var [pw,setPw]=useState('');
+  var [showPw,setShowPw]=useState(false);
+  var [loading,setLoading]=useState(false);
+  var [err,setErr]=useState('');
+  var IS={width:'100%',border:'2px solid #e5e7eb',borderRadius:12,padding:'12px 14px',fontSize:14,outline:'none',background:'white',color:'#111',boxSizing:'border-box',fontFamily:'inherit'};
+  async function doGoogle(){
+    setLoading(true);setErr('');
+    try{
+      var {data,error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.href}});
+      if(error)throw error;
+    }catch(e){setErr(e.message||'Google sign in failed');setLoading(false);}
+  }
+  async function doEmail(){
+    setErr('');
+    if(!em.trim()||!/\S+@\S+\.\S+/.test(em)){setErr(t.authErrEmail);return;}
+    if(pw.length<6){setErr(t.authErrPass);return;}
+    if(mode==='signup'&&!nm.trim()){setErr(t.authErrName);return;}
+    setLoading(true);
+    try{
+      var res,error;
+      if(mode==='signup'){
+        ({data:res,error}=await sb.auth.signUp({email:em.toLowerCase(),password:pw,options:{data:{name:nm.trim()}}}));
+      } else {
+        ({data:res,error}=await sb.auth.signInWithPassword({email:em.toLowerCase(),password:pw}));
+      }
+      if(error)throw error;
+      var u={id:res.user.id,name:res.user.user_metadata?.name||em.split('@')[0],email:res.user.email,provider:'email'};
+      lsSet('qb_user',u);
+      setLoading(false);
+      onAuth(u);
+    }catch(e){
+      setLoading(false);
+      if(e.message.includes('Invalid login'))setErr('Email ya password galat hai');
+      else if(e.message.includes('already registered'))setErr('Yeh email pehle se registered hai');
+      else setErr(e.message||'Kuch masla hua, dobara koshish karein');
+    }
+  }
+  if(mode==='welcome') return h("div",{style:{position:'fixed',inset:0,display:'flex',flexDirection:'column',background:'linear-gradient(145deg,#064e24,#0d7a3e,#0a5c2e)',overflow:'hidden'},className:"aFI"},
+    h("div",{style:{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 28px 20px',position:'relative',zIndex:2}},
+      h("div",{style:{
+        fontSize:48,fontWeight:900,
+        fontFamily:"'Arial Black',sans-serif",
+        letterSpacing:-2,color:'white',
+        textTransform:'uppercase',
+        marginBottom:4,
+        textShadow:'0 4px 20px rgba(0,0,0,.2)'
+      }},
+        "QARE",h("span",{style:{color:'#4ade80'}},"EB")
+      ),
+
+      h("div",{style:{display:'flex',gap:7,flexWrap:'wrap',justifyContent:'center'}},
+        ['Restaurants','Clinics','Pharmacy','Mosques','Petrol'].map(f=>h("span",{key:f,style:{background:'rgba(255,255,255,.1)',border:'1px solid rgba(255,255,255,.15)',borderRadius:20,padding:'5px 12px',color:'rgba(255,255,255,.8)',fontSize:12,fontWeight:600}},f))
+      )
+    ),
+    h("div",{style:{background:'white',borderRadius:'28px 28px 0 0',padding:'28px 24px max(44px, calc(env(safe-area-inset-bottom) + 28px))',animation:'authUp .5s cubic-bezier(.34,1.2,.64,1)',marginTop:'auto'}},
+      h("div",{style:{width:36,height:4,background:'#e5e7eb',borderRadius:2,margin:'0 auto 22px'}}),
+      h("h2",{style:{fontSize:20,fontWeight:800,color:'#111',textAlign:'center',margin:'0 0 4px'}},t.authGetStarted),
+      h("p",{style:{fontSize:13,color:'#9ca3af',textAlign:'center',margin:'0 0 20px'}},t.authSub),
+      h("button",{onClick:doGoogle,disabled:loading,style:{display:'flex',alignItems:'center',justifyContent:'center',gap:10,width:'100%',padding:'13px 16px',background:'white',border:'1.5px solid #e5e7eb',borderRadius:14,fontSize:14,fontWeight:600,color:'#374151',cursor:'pointer',boxShadow:'0 1px 6px rgba(0,0,0,.08)',marginBottom:12,opacity:loading?.7:1}},
+        loading?h("div",{style:{width:20,height:20,border:'2px solid #e5e7eb',borderTopColor:'#4285f4',borderRadius:'50%',animation:'spin .7s linear infinite'}}):GLogo,
+        loading?t.authSigningIn:t.authGoogle
+      ),
+      h("div",{style:{display:'flex',alignItems:'center',gap:10,margin:'14px 0'}},
+        h("div",{style:{flex:1,height:1,background:'#f0f0f0'}}),
+        h("span",{style:{fontSize:11,color:'#ccc',fontWeight:600}},"OR"),
+        h("div",{style:{flex:1,height:1,background:'#f0f0f0'}})
+      ),
+      h("button",{onClick:()=>setMode('login'),style:{width:'100%',padding:'13px',background:'#16a34a',color:'white',border:'none',borderRadius:14,fontSize:14,fontWeight:700,cursor:'pointer',marginBottom:10,boxShadow:'0 3px 12px rgba(22,163,74,.3)'}},t.authLoginBtn),
+      h("button",{onClick:()=>setMode('signup'),style:{width:'100%',padding:'13px',background:'#f0fdf4',color:'#16a34a',border:'1.5px solid #bbf7d0',borderRadius:14,fontSize:14,fontWeight:700,cursor:'pointer',marginBottom:14}},t.authSignupBtn),
+      h("button",{onClick:()=>{var g={name:'Guest',email:'',provider:'guest'};lsSet('qb_user',g);onAuth(g);},style:{width:'100%',padding:10,background:'transparent',color:'#9ca3af',border:'none',fontSize:12,fontWeight:600,cursor:'pointer'}},t.authGuest)
+    )
+  );
+  return h("div",{style:{position:'fixed',inset:0,display:'flex',flexDirection:'column',background:'#f8fafc',overflow:'hidden'},className:"aFI"},
+    h("div",{style:{background:'linear-gradient(145deg,#064e24,#0d7a3e)',padding:'52px 24px 32px',position:'relative',flexShrink:0}},
+      h("button",{onClick:()=>{setMode('welcome');setErr('');},style:{position:'absolute',top:16,left:16,background:'rgba(255,255,255,.15)',border:'none',borderRadius:'50%',width:36,height:36,color:'white',fontSize:18,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}},"←"),
+      h("h1",{style:{color:'white',fontSize:24,fontWeight:800,margin:'0 0 4px'}},mode==='login'?t.authWelcome:t.authCreateAcc),
+      h("p",{style:{color:'rgba(255,255,255,.65)',fontSize:13}},mode==='login'?t.authLoginSub:t.authSignupSub)
+    ),
+    h("div",{style:{flex:1,padding:'24px 20px 40px',overflowY:'auto'}},
+      h("button",{onClick:doGoogle,disabled:loading,style:{display:'flex',alignItems:'center',justifyContent:'center',gap:10,width:'100%',padding:'13px',background:'white',border:'1.5px solid #e5e7eb',borderRadius:14,fontSize:14,fontWeight:600,color:'#374151',cursor:'pointer',boxShadow:'0 1px 6px rgba(0,0,0,.08)',marginBottom:16,opacity:loading?.7:1}},
+        loading?h("div",{style:{width:20,height:20,border:'2px solid #e5e7eb',borderTopColor:'#4285f4',borderRadius:'50%',animation:'spin .7s linear infinite'}}):GLogo,
+        loading?t.authSigningIn:t.authGoogle
+      ),
+      h("div",{style:{display:'flex',alignItems:'center',gap:10,marginBottom:16}},
+        h("div",{style:{flex:1,height:1,background:'#e5e7eb'}}),
+        h("span",{style:{fontSize:11,color:'#ccc',fontWeight:600}},t.authOrEmail),
+        h("div",{style:{flex:1,height:1,background:'#e5e7eb'}})
+      ),
+      mode==='signup'&&h("div",{style:{marginBottom:12}},
+        h("label",{style:{fontSize:12,fontWeight:700,color:'#6b7280',display:'block',marginBottom:5}},t.authFullName),
+        h("input",{type:"text",placeholder:t.profNamePh,value:nm,onChange:e=>setNm(e.target.value),style:IS})
+      ),
+      h("div",{style:{marginBottom:12}},
+        h("label",{style:{fontSize:12,fontWeight:700,color:'#6b7280',display:'block',marginBottom:5}},t.authEmail),
+        h("input",{type:"email",placeholder:t.profEmailPh,value:em,onChange:e=>setEm(e.target.value),style:IS})
+      ),
+      h("div",{style:{marginBottom:16,position:'relative'}},
+        h("label",{style:{fontSize:12,fontWeight:700,color:'#6b7280',display:'block',marginBottom:5}},t.authPassword),
+        h("input",{type:showPw?"text":"password",placeholder:mode==='signup'?t.authPassPh6:t.authPassPh,value:pw,onChange:e=>setPw(e.target.value),onKeyDown:e=>e.key==='Enter'&&doEmail(),style:{...IS,paddingRight:44}}),
+        h("button",{onClick:()=>setShowPw(v=>!v),style:{position:'absolute',right:12,bottom:12,background:'transparent',border:'none',cursor:'pointer',fontSize:16,color:'#9ca3af'}},showPw?"🙈":"👁️")
+      ),
+      err&&h("div",{style:{background:'#fef2f2',border:'1px solid #fecaca',borderRadius:10,padding:'10px 12px',marginBottom:12}},
+        h("p",{style:{fontSize:12,color:'#dc2626',fontWeight:600,margin:0}},"⚠️ "+err)
+      ),
+      h("button",{onClick:doEmail,disabled:loading,style:{width:'100%',padding:14,background:loading?'#86efac':'#16a34a',color:'white',border:'none',borderRadius:14,fontSize:15,fontWeight:700,cursor:'pointer',boxShadow:'0 3px 12px rgba(22,163,74,.3)',marginBottom:14}},
+        loading?h("div",{style:{display:'flex',alignItems:'center',justifyContent:'center',gap:8}},h("div",{style:{width:16,height:16,border:'2px solid rgba(255,255,255,.4)',borderTopColor:'white',borderRadius:'50%',animation:'spin .7s linear infinite'}}),t.authPleaseWait):
+        (mode==='login'?t.authSignIn:t.authCreateAccBtn)
+      ),
+      h("p",{style:{textAlign:'center',fontSize:13,color:'#6b7280'}},
+        mode==='login'?t.authNoAcc:t.authHaveAcc,
+        h("button",{onClick:()=>{setMode(mode==='login'?'signup':'login');setErr('');},style:{color:'#16a34a',fontWeight:700,background:'transparent',border:'none',cursor:'pointer',fontSize:13}},
+          mode==='login'?t.authSignup:t.authSignin
+        )
+      )
+    )
+  );
+}
+
+function App(){
+  var [splashDone,setSplashDone]=useState(false);
+  var [user,setUser]=useState(()=>lsGet('qb_user',null));
+  var [dbReady,setDbReady]=useState(false);
+  var scrollRef=useRef(null);
+  var profScrollRef=useRef(null);
+  // ── State ──
+  var [tab,setTab]=useState('discover');
+  var [sel,setSel]=useState(null);
+  var [dCat,setDCat]=useState('all');
+  var [bCat,setBCat]=useState('all');
+  var [dQ,setDQ]=useState('');
+  var [bQ,setBQ]=useState('');
+  var [saved,setSaved]=useState(()=>new Set(lsGet('qareeb_saved',[])));
+  var [rad,setRad]=useState(()=>{var v=lsGet('qareeb_rad',15);return v<5?15:v;});
+  var [sort,setSort]=useState('dist');
+  var [toast,setToast]=useState('');
+  var [lang,setLang]=useState(()=>lsGet('qareeb_lang','roman'));
+  var [darkMode,setDarkMode]=useState(()=>lsGet('qareeb_dark',false));
+  var [highContrast,setHighContrast]=useState(()=>lsGet('qareeb_hc',false));
+  var [showOpenOnly,setShowOpenOnly]=useState(false);
+  var [notif,setNotif]=useState(()=>lsGet('qareeb_notif',true));
+  var [notifSound,setNotifSound]=useState(()=>lsGet('qareeb_notif_sound',true));
+  var [notifSearch,setNotifSearch]=useState('');
+  var [highlightId,setHighlightId]=useState(null);
+  var [popNotif,setPopNotif]=useState(null);
+  function showPopNotif(title,body,type){
+    if(!notif)return;
+    setPopNotif({title:title,body:body,type:type,id:Date.now()});
+    playBell();
+    setTimeout(function(){setPopNotif(null);},4000);
+  }
+  var [busy,setBusy]=useState(false);
+  var [dP,setDP]=useState([]);
+  var [bP,setBP]=useState([]);
+  var [qFoc,setQFoc]=useState(false);
+  var [recs,setRecs]=useState(()=>lsGet('qareeb_recs',[]));
+  // GPS state
+  var [userLat,setUserLat]=useState(null);
+  var [userLng,setUserLng]=useState(null);
+  var [locLabel,setLocLabel]=useState('Lahore');
+  var [locLoading,setLocLoading]=useState(false);
+  // Place list (can have user-added)
+  var [PL,setPL]=useState(()=>{
+    var added=lsGet('qareeb_added',[]);
+    var safeAdded=Array.isArray(added)?added:[];
+    return [...BASE_PL,...safeAdded];
+  });
+  // Profile state (persisted)
+  var [profPage,setProfPage]=useState('main');
+  var [profPic,setProfPic]=useState(()=>lsGet('qareeb_profpic',null));
+  var [profName,setProfName]=useState(()=>lsGet('qareeb_profname',''));
+  var [profPhone,setProfPhone]=useState(()=>lsGet('qareeb_profphone',''));
+  var [profCity,setProfCity]=useState(()=>lsGet('qareeb_profcity',''));
+  var [profEmail,setProfEmail]=useState(()=>lsGet('qareeb_profemail',''));
+  // Modals
+  var [showPr,setShowPr]=useState(false);
+  var [showHl,setShowHl]=useState(false);
+  var [showSO,setShowSO]=useState(false);
+  var [showBiz,setShowBiz]=useState(false);
+  // Add Business form
+  var [step,setStep]=useState(1);
+  var [bizT,setBizT]=useState('');
+  var [bizImg,setBizImg]=useState(null);
+  var [bizErrs,setBizErrs]=useState({});
+  var [bizF,setBizF]=useState({name:'',phone:'',loc:'',addr:'',desc:'',oh:'09',om:'00',op:'AM',ch:'22',cm:'00',cp:'PM',always:false});
+
+  var t=T[lang];
+  var D=getD(darkMode);
+
+  // ── Persist preferences ──
+  useEffect(()=>{lsSet('qareeb_lang',lang);},[lang]);
+  useEffect(()=>{lsSet('qareeb_dark',darkMode);},[darkMode]);
+  useEffect(()=>{lsSet('qareeb_hc',highContrast);},[highContrast]);
+  useEffect(()=>{lsSet('qareeb_notif',notif);},[notif]);
+  useEffect(()=>{lsSet('qareeb_notif_sound',notifSound);},[notifSound]);
+  useEffect(()=>{lsSet('qareeb_rad',rad);},[rad]);
+  useEffect(()=>{lsSet('qareeb_saved',Array.from(saved));},[saved]);
+  useEffect(()=>{lsSet('qareeb_recs',recs);},[recs]);
+  useEffect(()=>{lsSet('qareeb_profname',profName);},[profName]);
+  useEffect(()=>{lsSet('qareeb_profphone',profPhone);},[profPhone]);
+  useEffect(()=>{lsSet('qareeb_profcity',profCity);},[profCity]);
+  useEffect(()=>{lsSet('qareeb_profemail',profEmail);},[profEmail]);
+  useEffect(()=>{lsSet('qareeb_profpic',profPic);},[profPic]);
+  // ── Scroll to top on profile sub-page change ──
+  useEffect(()=>{if(profScrollRef.current)profScrollRef.current.scrollTop=0;},[profPage]);
+
+  // ── Auto GPS on app load ──
+  useEffect(()=>{
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        async function(pos){
+          var lat=pos.coords.latitude;
+          var lng=pos.coords.longitude;
+          setUserLat(lat);
+          setUserLng(lng);
+          // Reverse geocode city name
+          fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              var city=d.address&&(d.address.city||d.address.town||d.address.village||d.address.county||'');
+              if(city)setLocLabel(city);
+            })
+            .catch(function(){});
+          // Auto load real places
+          await loadGooglePlaces(lat,lng);
+        },
+        function(err){console.log('Auto GPS failed:',err);},
+        {timeout:10000,enableHighAccuracy:true}
+      );
+    }
+  },[]);
+
+  // ── Supabase session check on load ──
+  useEffect(()=>{
+    sb.auth.getSession().then(({data:{session}})=>{
+      if(session&&session.user){
+        var u={id:session.user.id,name:session.user.user_metadata?.name||session.user.email.split('@')[0],email:session.user.email,provider:session.user.app_metadata?.provider||'email'};
+        setUser(u);lsSet('qb_user',u);
+        setProfName(p=>p||u.name);
+        setProfEmail(p=>p||u.email);
+        loadProfile(session.user.id);
+      } else {setDbReady(true);}
+    });
+    var {data:{subscription}}=sb.auth.onAuthStateChange((event,session)=>{
+      if(event==='SIGNED_IN'&&session){
+        var u={id:session.user.id,name:session.user.user_metadata?.name||session.user.email.split('@')[0],email:session.user.email,provider:'email'};
+        setUser(u);lsSet('qb_user',u);
+        loadProfile(session.user.id);
+      }
+      if(event==='SIGNED_OUT'){setUser(null);lsSet('qb_user',null);}
+    });
+    return ()=>subscription.unsubscribe();
+  },[]);
+  function handleAuth(u){
+    setUser(u);
+    if(u.name&&u.name!=='Guest'){setProfName(p=>p||u.name);}
+    if(u.email){setProfEmail(p=>p||u.email);}
+    // Load profile from Supabase
+    if(u.id){loadProfile(u.id);}
+  }
+  async function loadProfile(uid){
+    try{
+      var {data}=await sb.from('profiles').select('*').eq('id',uid).single();
+      if(data){
+        if(data.name)setProfName(data.name);
+        if(data.phone)setProfPhone(data.phone);
+        if(data.city)setProfCity(data.city);
+        if(data.email)setProfEmail(data.email);
+        if(data.profile_pic)setProfPic(data.profile_pic);
+        if(data.lang)setLang(data.lang);
+        if(data.dark_mode!==null)setDarkMode(data.dark_mode);
+      }
+      // Load saved places from Supabase
+      var {data:sv}=await sb.from('saved_places').select('business_id').eq('user_id',uid);
+      if(sv&&sv.length>0){setSaved(new Set(sv.map(x=>String(x.business_id))));}
+      // Load user-added businesses
+      var {data:biz}=await sb.from('businesses').select('*').eq('added_by',uid);
+      if(biz&&biz.length>0){
+        var mapped=biz.map(b=>({id:'sb_'+b.id,name:b.name,cat:b.category,loc:b.city,lat:b.lat||31.5,lng:b.lng||74.3,dist:0,rating:b.rating||0,reviews:b.review_count||0,open:true,icon:'🏪',trend:false,ver:false,bg:'#16a34a',lt:'#f0fdf4',ph:b.phone||'',hrs:b.always_open?'24/7':(b.open_time+'-'+b.close_time),desc:b.description||'',wait:'N/A',userAdded:true}));
+        setPL(prev=>{var ids=new Set(prev.map(x=>x.id));var newOnes=mapped.filter(x=>!ids.has(x.id));return [...prev,...newOnes];});
+      }
+      setDbReady(true);
+    }catch(e){console.log('Profile load error:',e);setDbReady(true);}
+  }
+  async function saveProfileToDb(){
+    var {data:{user:u}}=await sb.auth.getUser();
+    if(!u)return;
+    await sb.from('profiles').upsert({id:u.id,name:profName,phone:profPhone,city:profCity,email:profEmail,lang,dark_mode:darkMode,updated_at:new Date().toISOString()});
+  }
+  async function handleSignout(){
+    await sb.auth.signOut();
+    setUser(null);lsSet('qb_user',null);setShowSO(false);
+    setSaved(new Set());setProfName('');setProfPhone('');setProfCity('');setProfEmail('');setProfPic(null);
   }
 
-  try {
-    const { lat, lng, category, radius } = await req.json();
-    const r = radius || 15000;
-    const tag = OSM_TAGS[category] || '["amenity"="restaurant"]';
+  // ── Helpers ──
+  var showT=msg=>{setToast(msg);setTimeout(()=>setToast(''),2200);};
 
-    const query = `[out:json][timeout:30];(node${tag}(around:${r},${lat},${lng});way${tag}(around:${r},${lat},${lng}););out body center 25;`;
 
-    const res = await fetch("https://overpass-api.de/api/interpreter", {
-      method: "POST",
-      body: "data=" + encodeURIComponent(query),
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  function playBell(){
+    if(!notifSound)return;
+    try{
+      var ctx=new(window.AudioContext||window.webkitAudioContext)();
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.setValueAtTime(880,ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(440,ctx.currentTime+0.5);
+      g.gain.setValueAtTime(0.3,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.6);
+      o.start();o.stop(ctx.currentTime+0.6);
+    }catch(e){}
+    navigator.vibrate&&navigator.vibrate([120,60,120]);
+  }
+
+  var srt=(arr,s)=>[...arr].sort((a,b)=>s==='dist'?a.dist-b.dist:b.rating-a.rating);
+  var toggleSave=async id=>{
+    setSaved(prev=>{
+      var n=new Set(prev);
+      if(n.has(id)){n.delete(id);showT('💔 Removed');}
+      else{n.add(id);showT('❤️ Saved!');}
+      return n;
     });
+    // Sync with Supabase
+    try{
+      var {data:{user:u}}=await sb.auth.getUser();
+      if(!u)return;
+      var sid=saved.has(id);
+      if(!sid){
+        await sb.from('saved_places').upsert({user_id:u.id,business_id:String(id)});
+      } else {
+        await sb.from('saved_places').delete().eq('user_id',u.id).eq('business_id',String(id));
+      }
+    }catch(e){console.log('Save sync error:',e);}
+  };
 
-    const data = await res.json();
-    const elements = data.elements || [];
+  // ── GPS Location ──
+  // ── Google Places API Integration ──
+  var GKEY="AIzaSyB4NPA5Gh2pLGshvMgcEu1dI7air8ztmMo";
+  var CAT_TO_GTYPE={
+    restaurants:'restaurant',
+    dhabas:'cafe',
+    clinics:'hospital|doctor',
+    pharmacy:'pharmacy',
+    grocery:'grocery_or_supermarket|supermarket',
+    salons:'beauty_salon|hair_care',
+    atm:'atm',
+    mosque:'mosque',
+    petrol:'gas_station'
+  };
+  var CAT_ICONS={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
+  var CAT_BG={restaurants:'#f97316',dhabas:'#f59e0b',clinics:'#ef4444',pharmacy:'#14b8a6',grocery:'#f97316',salons:'#a855f7',atm:'#3b82f6',mosque:'#16a34a',petrol:'#eab308'};
+  var CAT_LT={restaurants:'#fff7ed',dhabas:'#fffbeb',clinics:'#fef2f2',pharmacy:'#f0fdfa',grocery:'#fff7ed',salons:'#faf5ff',atm:'#eff6ff',mosque:'#f0fdf4',petrol:'#fefce8'};
 
-    // Convert OSM format to Google Places-like format
-    const seen = new Set();
-    const results = [];
+  // Foursquare Places API - Free & Pakistan mein best data!
+  var FSQ_KEY="SISPMZLV3PBD0K4RDL2AWKUYK5W2PMJIMSIKZ3QSTVGWFW0U";
+  var FSQ_CAT={
+    restaurants:'13065,13064,13003',
+    dhabas:'13032,13276,13040',
+    clinics:'15014,15013,15000,15002',
+    pharmacy:'17069,17114',
+    grocery:'17069,17018,17034',
+    salons:'11010,11039,11052',
+    atm:'18021,18062',
+    mosque:'12116,12100',
+    petrol:'19014,19006'
+  };
+  var CAT_ICONS2={restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽'};
 
-    for (const el of elements) {
-      const name = el.tags?.name || el.tags?.["name:en"] || el.tags?.["name:ur"];
-      if (!name || seen.has(name)) continue;
-      seen.add(name);
-
-      const elat = el.lat ?? el.center?.lat ?? lat;
-      const elng = el.lon ?? el.center?.lon ?? lng;
-      const phone = el.tags?.["contact:phone"] || el.tags?.phone || "";
-      const addr = el.tags?.["addr:street"] || el.tags?.["addr:city"] || el.tags?.["addr:full"] || "";
-
-      results.push({
-        place_id: `osm_${el.id}`,
-        name: name,
-        vicinity: addr || name,
-        geometry: { location: { lat: elat, lng: elng } },
-        rating: 0,
-        user_ratings_total: 0,
-        opening_hours: { open_now: true },
-        formatted_phone_number: phone,
+  var fetchNearbyPlaces=async function(lat,lng,category){
+    try{
+      // Supabase Edge Function - server side, no CORS issues
+      var res=await fetch('https://fwxvaemhheoscqwiqajz.supabase.co/functions/v1/places-nearby',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+SUPA_KEY,
+          'apikey':SUPA_KEY
+        },
+        body:JSON.stringify({lat:lat,lng:lng,category:category,radius:15000})
       });
+      if(!res.ok){console.log('Edge error:',res.status);return [];}
+      var data=await res.json();
+      if(!data||!data.results||data.results.length===0)return [];
+      return data.results.map(function(p){
+        var glat=p.geometry&&p.geometry.location?p.geometry.location.lat:lat;
+        var glng=p.geometry&&p.geometry.location?p.geometry.location.lng:lng;
+        var dist=+haversine(lat,lng,glat,glng).toFixed(1);
+        var isOpen=p.opening_hours?p.opening_hours.open_now!==false:true;
+        return {
+          id:'g_'+p.place_id,
+          name:p.name,
+          cat:category,
+          loc:p.vicinity||'',
+          lat:glat,lng:glng,dist:dist,
+          rating:p.rating||0,
+          reviews:p.user_ratings_total||0,
+          open:isOpen,
+          icon:CAT_ICONS2[category]||'📍',
+          trend:p.rating>=4.0&&p.user_ratings_total>10,
+          ver:true,
+          bg:CAT_BG[category]||'#16a34a',
+          lt:CAT_LT[category]||'#f0fdf4',
+          ph:p.formatted_phone_number||'',
+          hrs:isOpen?'Khula':'Band',
+          desc:p.name+(p.vicinity?' — '+p.vicinity:''),
+          wait:'N/A',
+          googleData:true
+        };
+      });
+    }catch(e){console.log('Places error:',e);return [];}
+  };
 
-      if (results.length >= 20) break;
+  var loadGooglePlaces=async function(lat,lng){
+    setBusy(true);
+    try{
+      var cats=['restaurants','dhabas','clinics','pharmacy','grocery','mosque','petrol','atm','salons'];
+      var allPlaces=[];
+      // Load all categories in parallel for speed
+      var promises=cats.map(function(cat){return fetchNearbyPlaces(lat,lng,cat);});
+      var results=await Promise.all(promises);
+      for(var ri=0;ri<results.length;ri++){
+        if(results[ri]&&results[ri].length>0){
+          allPlaces=allPlaces.concat(results[ri]);
+        }
+      }
+      if(allPlaces.length>0){
+        setPL(function(prev){
+          var userAdded=prev.filter(function(p){return p.userAdded;});
+          var ids=new Set(userAdded.map(function(x){return x.id;}));
+          var withDist=allPlaces
+            .filter(function(p){return !ids.has(p.id);})
+            .map(function(p){return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});});
+          return withDist.concat(userAdded);
+        });
+      }
+      setBusy(false);
+    }catch(e){setBusy(false);console.log('Load places error:',e);}
+  };
+
+  var getLoc=()=>{
+    if(!navigator.geolocation){showT('⚠️ Browser GPS support nahi');return;}
+    setLocLoading(true);
+    showT(t.locGetting);
+    navigator.geolocation.getCurrentPosition(
+      async pos=>{
+        var lat=pos.coords.latitude;
+        var lng=pos.coords.longitude;
+        setUserLat(lat);
+        setUserLng(lng);
+        setLocLoading(false);
+        showT(t.locDone);
+        // Reverse geocode
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+          .then(r=>r.json())
+          .then(d=>{
+            var city=d.address&&(d.address.city||d.address.town||d.address.village||d.address.county||'');
+            if(city)setLocLabel(city);
+          })
+          .catch(()=>{});
+        // Load REAL nearby places from Google
+        await loadGooglePlaces(lat,lng);
+      },
+      err=>{
+        setLocLoading(false);
+        showT(t.locFail);
+      },
+      {timeout:15000,enableHighAccuracy:true}
+    );
+  };
+
+  var profCompletion=useMemo(()=>{
+    var s=0;
+    if(profName.trim())s+=25;
+    if(profPhone.trim())s+=25;
+    if(profEmail.trim())s+=25;
+    if(profCity.trim())s+=25;
+    return s;
+  },[profName,profPhone,profEmail,profCity]);
+
+  var profInitials=profName.trim()?profName.trim().split(' ').filter(w=>w.length>0).map(w=>w[0]).join('').substring(0,2).toUpperCase():'👤';
+
+  // ── Filter effects ──
+  var prevRadRef=React.useRef(rad);
+  useEffect(()=>{
+    var radChanged=prevRadRef.current!==rad;
+    prevRadRef.current=rad;
+    if(radChanged){
+      var mapped=PL.map(p=>{
+        var realDist=userLat&&userLng?+haversine(userLat,userLng,p.lat,p.lng).toFixed(1):p.dist;
+        return _ob({},p,{dist:realDist});
+      });
+      var r=mapped.filter(p=>{
+        if(p.dist>rad)return false;
+        if(showOpenOnly&&!p.open)return false;
+        if(dQ.trim()){var q=dQ.toLowerCase();return p.name.toLowerCase().includes(q)||p.loc.toLowerCase().includes(q)||p.cat.includes(q);}
+        return true;
+      });
+      setDP(srt(r,sort));
+      return;
     }
+    setBusy(true);
+    var tm=setTimeout(()=>{
+      var mapped=PL.map(p=>{
+        var realDist=userLat&&userLng?+haversine(userLat,userLng,p.lat,p.lng).toFixed(1):p.dist;
+        return _ob({},p,{dist:realDist});
+      });
+      var r=mapped.filter(p=>{
+        if(p.dist>rad)return false;
+        if(showOpenOnly&&!p.open)return false;
+        if(dQ.trim()){var q=dQ.toLowerCase();return p.name.toLowerCase().includes(q)||p.loc.toLowerCase().includes(q)||p.cat.includes(q);}
+        return true;
+      });
+      setDP(srt(r,sort));
+      setBusy(false);
+    },250);
+    return()=>clearTimeout(tm);
+  },[dQ,sort,showOpenOnly,PL,userLat,userLng,rad]);
 
-    return new Response(JSON.stringify({ results, status: "OK" }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+  useEffect(()=>{
+    var mapped=PL.map(p=>{
+      var realDist=userLat&&userLng?+haversine(userLat,userLng,p.lat,p.lng).toFixed(1):p.dist;
+      return _ob({},p,{dist:realDist});
     });
-  } catch (e) {
-    return new Response(
-      JSON.stringify({ error: e.message, results: [], status: "ERROR" }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+    var r=mapped.filter(p=>{
+      if(bCat!=='all'&&p.cat!==bCat)return false;
+      if(showOpenOnly&&!p.open)return false;
+      if(bQ.trim()){var q=bQ.toLowerCase();return p.name.toLowerCase().includes(q)||p.loc.toLowerCase().includes(q);}
+      return true;
+    });
+    setBP(srt(r,sort));
+  },[bCat,bQ,sort,showOpenOnly,PL,userLat,userLng]);
+
+  var savedL=useMemo(()=>PL.filter(p=>saved.has(p.id)),[saved,PL]);
+  var trends=useMemo(()=>PL.filter(p=>p.trend),[PL]);
+
+  // ── Card renderer ──
+  var cards=arr=>arr.map((p,i)=>h(PlaceCard,{key:p.id+'-'+rad,p,idx:i,saved:saved.has(p.id),onSelect:setSel,onSave:toggleSave,t,darkMode,highlighted:highlightId===p.id}));
+
+  // ── Biz form helpers ──
+  var CAT_PLACEHOLDERS={
+    restaurants:'e.g. Butt Karahi House',
+    dhabas:'e.g. Quetta Chai Dhaba',
+    clinics:'e.g. Al-Shifa Family Clinic',
+    pharmacy:'e.g. Sehat Medical Store',
+    grocery:'e.g. Green Mart Grocery',
+    salons:'e.g. Style Zone Salon',
+    atm:'e.g. HBL ATM Branch',
+    mosque:'e.g. Masjid-e-Noor',
+    petrol:'e.g. PSO Fuel Station',
+  };
+  var FLDS=[
+    {k:'name',l:lang==='ur'?'کاروبار کا نام':lang==='en'?'Business Name':'Business Name',ph:lang==='ur'?'مثلاً: بٹ کڑاہی':lang==='en'?'e.g. Butt Karahi House':'e.g. Business ka naam',ty:'text',ic:'🏷️',min:3,hint:lang==='ur'?'کم از کم 3 حروف':lang==='en'?'At least 3 characters':'Kam az kam 3 haroof'},
+    {k:'phone',l:lang==='ur'?'فون نمبر':'Phone Number',ph:'+92 3XX XXXXXXX',ty:'tel',ic:'📞',min:10,hint:lang==='ur'?'درست فون نمبر':'Valid phone number'},
+    {k:'loc',l:lang==='ur'?'شہر / علاقہ':lang==='en'?'City / Area':'City / Area',ph:lang==='ur'?'مثلاً: گلبرگ، لاہور':'e.g. Gulberg, Lahore',ty:'text',ic:'📍',min:3,hint:lang==='ur'?'شہر یا علاقہ':'Shehar ya area'},
+    {k:'addr',l:lang==='ur'?'مکمل پتہ':lang==='en'?'Full Address':'Full Address',ph:lang==='ur'?'مثلاً: پلاٹ 5، مین بلوارڈ':'e.g. Plot 5, Main Blvd',ty:'text',ic:'🗺️',min:5,hint:lang==='ur'?'مکمل پتہ':'Mukammal pata'},
+    {k:'desc',l:lang==='ur'?'تفصیل':lang==='en'?'Description':'Description',ph:lang==='ur'?'اپنے کاروبار کے بارے میں...':lang==='en'?'About your business...':'Apne business ke baare mein...',ty:'textarea',ic:'✏️',min:0,hint:'',optional:true},
+  ];
+  var validate=(k,v)=>{
+    var fl=FLDS.find(x=>x.k===k);
+    if(!fl)return null;
+    if(fl.optional)return null;
+    var val=(v||'').trim();
+    if(!val)return fl.l+(lang==='ur'?' ضروری ہے':lang==='en'?' is required':' zaruri hai');
+    if(fl.min&&val.length<fl.min)return fl.hint;
+    return null;
+  };
+  var handleBizNext=()=>{
+    var e={};
+    FLDS.forEach(fl=>{var er=validate(fl.k,bizF[fl.k]);if(er)e[fl.k]=er;});
+    if(Object.keys(e).length){setBizErrs(e);showT(t.bizFieldErr);return;}
+    setBizErrs({});setStep(3);
+  };
+  var resetBiz=()=>{setStep(1);setBizT('');setBizImg(null);setBizErrs({});setBizF({name:'',phone:'',loc:'',addr:'',desc:'',oh:'09',om:'00',op:'AM',ch:'22',cm:'00',cp:'PM',always:false});};
+  var fmtT=(h2,m,p)=>`${String(+h2%12||12).padStart(2,'0')}:${m} ${p}`;
+  var oT=fmtT(bizF.oh,bizF.om,bizF.op),cT=fmtT(bizF.ch,bizF.cm,bizF.cp);
+
+  // ── Submit business ──
+  var submitBiz=async()=>{
+    if(!bizF.name||!bizF.phone||!bizF.loc){showT(t.bizSubmitErr);setStep(2);return;}
+    var cat=CATS.find(c=>c.id===bizT)||CATS[0];
+    var localId=Date.now();
+    var newBiz={
+      id:localId,
+      name:bizF.name,
+      cat:bizT||'restaurants',
+      loc:bizF.loc+(bizF.addr?', '+bizF.addr:''),
+      lat:userLat||31.5204,
+      lng:userLng||74.3587,
+      dist:0.5,
+      rating:0,
+      reviews:0,
+      open:true,
+      icon:cat.icon,
+      trend:false,
+      ver:false,
+      bg:cat.bg,
+      lt:cat.lt,
+      ph:bizF.phone,
+      hrs:bizF.always?'24/7':`${oT}–${cT}`,
+      desc:bizF.desc||'New business on Qareeb Pakistan.',
+      wait:'N/A',
+      userAdded:true,
+      customImg:bizImg||null
+    };
+    // Save to Supabase
+    try{
+      var {data:{user:u}}=await sb.auth.getUser();
+      var dbPayload={
+        name:bizF.name,
+        category:bizT||'restaurants',
+        phone:bizF.phone,
+        city:bizF.loc,
+        address:bizF.addr||'',
+        description:bizF.desc||'',
+        lat:userLat||31.5204,
+        lng:userLng||74.3587,
+        open_time:oT,
+        close_time:cT,
+        always_open:bizF.always||false,
+        added_by:u?u.id:null
+      };
+      var {data:dbBiz}=await sb.from('businesses').insert(dbPayload).select().single();
+      if(dbBiz){newBiz.id='sb_'+dbBiz.id;newBiz.sbId=dbBiz.id;}
+    }catch(e){console.log('Business save error:',e);}
+    setPL(prev=>{
+      var updated=[...prev,newBiz];
+      var added=updated.filter(p=>p.userAdded);
+      lsSet('qareeb_added',added);
+      return updated;
+    });
+    setStep(5);
+  };
+
+  // ── Step header ──
+  var STEPS=['Type','Details','Timings','Review'];
+  function StepHdr({s,title,sub}){
+    return h("div",{style:{padding:'12px 16px 10px',borderBottom:'1px solid #f3f4f6',flexShrink:0}},
+      h("div",{style:{display:'flex',alignItems:'center',gap:6,marginBottom:8}},
+        STEPS.map((st,i)=>h(React.Fragment,{key:st},
+          h("div",{style:{width:22,height:22,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,fontSize:11,background:step>i+1?'#16a34a':step===i+1?'#16a34a':'#f3f4f6',color:step>=i+1?'white':'#9ca3af',outline:step===i+1?'2px solid #bbf7d0':'none',outlineOffset:1}},step>i+1?'✓':i+1),
+          i<STEPS.length-1&&h("div",{style:{flex:1,height:2,borderRadius:2,background:step>i+1?'#16a34a':'#e5e7eb'}})
+        ))
+      ),
+      h("div",{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
+        h("div",null,
+          h("p",{style:{fontWeight:700,fontSize:15,color:D.text,margin:0}},title),
+          sub&&h("p",{style:{fontSize:11,color:'#9ca3af',margin:'2px 0 0'}},sub)
+        ),
+        h("div",{style:{display:'flex',gap:6}},
+          s>1&&h("button",{onClick:()=>setStep(p=>p-1),style:{width:32,height:32,borderRadius:'50%',background:'#f3f4f6',border:'none',cursor:'pointer',fontSize:15,color:'#374151'}},"←"),
+          h("button",{onClick:()=>{setShowBiz(false);resetBiz();},style:{width:32,height:32,borderRadius:'50%',background:'#f3f4f6',border:'none',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}},
+            h(X,{size:14,color:"#6b7280"})
+          )
+        )
+      )
     );
   }
-});
+
+  // ── Sort bar ──
+  function SortBar(){
+    return h("div",{style:{display:'flex',background:'#f3f4f6',borderRadius:8,padding:2,gap:1}},
+      [{k:'dist',l:t.sortD},{k:'rating',l:t.sortR}].map(s=>h("button",{key:s.k,onClick:()=>setSort(s.k),style:{padding:'4px 9px',borderRadius:6,fontSize:11,fontWeight:600,border:'none',cursor:'pointer',background:sort===s.k?'white':'transparent',color:sort===s.k?'#16a34a':'#6b7280'}},s.l))
+    );
+  }
+
+  // ── HEADER ──
+  var Header=h("div",{className:darkMode?'dm-header':'',style:{background:darkMode?'transparent':'linear-gradient(145deg,#064e24 0%,#0d7a3e 50%,#0a5c2e 100%)',borderRadius:'0 0 24px 24px',boxShadow:darkMode?'none':'0 6px 24px rgba(6,78,36,.35)',position:'relative',overflow:'hidden',width:'100%',boxSizing:'border-box'}},
+    h("svg",{style:{position:'absolute',top:0,left:0,width:'100%',height:'100%',opacity:.1},viewBox:"0 0 360 200",preserveAspectRatio:"xMidYMid slice"},
+      Array.from({length:60},(_,i)=>h("circle",{key:i,cx:i%10*40+10,cy:Math.floor(i/10)*35+10,r:"1.5",fill:"white"}))
+    ),
+    h("div",{style:{padding:'16px 16px 0',position:'relative',zIndex:2}},
+      h("div",{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}},
+        h("div",null,
+          h("div",{style:{display:'flex',flexDirection:'column',gap:2}},
+            h("div",{style:{fontSize:22,fontWeight:900,fontFamily:"'Arial Black',sans-serif",letterSpacing:-1,lineHeight:1,color:'white',textTransform:'uppercase'}},
+              "QARE",h("span",{style:{color:'#4ade80'}},"EB")
+            ),
+            h("p",{style:{fontSize:11,color:'rgba(255,255,255,.6)',margin:0,fontWeight:600,dir:t.dir}},t.header)
+          )
+        ),
+        h("div",{style:{display:'flex',background:'rgba(255,255,255,.12)',borderRadius:20,padding:2,gap:1,border:'1px solid rgba(255,255,255,.18)'}},
+          [{k:'roman',l:'رو'},{k:'en',l:'EN'},{k:'ur',l:'UR'}].map(o=>h("button",{key:o.k,onClick:()=>setLang(o.k),style:{padding:'4px 8px',borderRadius:16,fontSize:10,fontWeight:700,border:'none',cursor:'pointer',background:lang===o.k?'white':'transparent',color:lang===o.k?'#15803d':'rgba(255,255,255,.85)'}},o.l))
+        )
+      ),
+      // search bar
+      h("div",{style:{position:'relative',marginBottom:10}},
+        h("div",{style:{background:darkMode?'#0d1120':D.card,borderRadius:13,display:'flex',alignItems:'center',boxShadow:darkMode?'0 4px 20px rgba(0,0,0,.5)':'0 4px 16px rgba(0,0,0,.18)',overflow:'hidden',border:darkMode?'1px solid rgba(255,255,255,0.08)':'none'}},
+          h("div",{style:{padding:'11px 13px',display:'flex'}},h(Search,{size:17,color:"#9ca3af"})),
+          h("input",{type:"search",placeholder:t.sp,value:dQ,onChange:e=>setDQ(e.target.value),onFocus:()=>setQFoc(true),onBlur:()=>{setTimeout(()=>setQFoc(false),200);if(dQ.trim()){setRecs(p=>{var updated=p.includes(dQ)?p:[dQ,...p].slice(0,5);return updated;});}},style:{flex:1,border:'none',outline:'none',fontSize:14,fontWeight:500,color:D.text,background:'transparent',padding:'11px 0',minWidth:0},dir:t.dir}),
+          dQ&&h("button",{onClick:()=>setDQ(''),style:{padding:'11px 13px',background:'transparent',border:'none',cursor:'pointer'}},h(X,{size:14,color:"#9ca3af"}))
+        ),
+        qFoc&&!dQ&&recs.length>0&&h("div",{style:{position:'absolute',top:'100%',left:0,right:0,marginTop:6,background:darkMode?'#141824':D.card,borderRadius:12,boxShadow:darkMode?'0 6px 24px rgba(0,0,0,.6)':'0 6px 20px rgba(0,0,0,.14)',padding:6,zIndex:30,border:darkMode?'1px solid rgba(255,255,255,0.07)':'none'}},
+          h("p",{style:{fontSize:11,color:'#6b7280',fontWeight:600,padding:'4px 10px 5px'}},t.recS),
+          recs.map((s,i)=>h("button",{key:i,onClick:()=>setDQ(s),style:{width:'100%',textAlign:'left',padding:'7px 10px',fontSize:12,color:'#374151',background:'transparent',border:'none',borderRadius:8,cursor:'pointer',display:'flex',alignItems:'center',gap:8}},
+            h(Clock,{size:12,color:"#9ca3af"}),s
+          ))
+        )
+      ),
+      // GPS location button - FUNCTIONAL
+      h("button",{
+        onClick:getLoc,
+        disabled:locLoading,
+        style:{display:'flex',alignItems:'center',justifyContent:'center',gap:6,width:'100%',padding:9,borderRadius:10,background:userLat?'rgba(74,222,128,.15)':'rgba(255,255,255,.1)',border:userLat?'1px solid rgba(74,222,128,.4)':'1px solid rgba(255,255,255,.15)',color:'rgba(255,255,255,.9)',fontSize:12,fontWeight:600,cursor:locLoading?'wait':'pointer',boxSizing:'border-box',transition:'all .3s'}
+      },
+        locLoading
+          ? h("span",{style:{width:12,height:12,border:'2px solid rgba(255,255,255,.3)',borderTopColor:'white',borderRadius:'50%',display:'inline-block',animation:'spin .7s linear infinite'}})
+          : h(MapPin,{size:13,color:userLat?"#86efac":"rgba(255,255,255,.8)"}),
+        locLoading?t.locGetting:(userLat?("✅ "+locLabel):t.locBtn),
+        userLat&&h("span",{style:{marginLeft:'auto',fontSize:10,color:'rgba(255,255,255,.5)'}},t.tapRefresh)
+      ),
+      h("div",{style:{height:28}})
+    )
+  );
+
+  // ── DISCOVER TAB ──
+  var Discover=h("div",{style:{paddingBottom:90}},
+    Header,
+    h("div",{style:{padding:'14px 14px 8px'},dir:t.dir},
+      h("div",{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}},
+        h("span",{style:{fontWeight:700,fontSize:14,color:D.text}},t.cats),
+        h("button",{onClick:()=>{setTab('browse');setBCat('all');},style:{display:'flex',alignItems:'center',gap:2,color:'#16a34a',fontSize:12,fontWeight:600,background:'transparent',border:'none',cursor:'pointer'}},t.seeAll,h(ChevR,{size:14}))
+      ),
+      h("div",{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:14}},
+        CATS.map(c=>{
+          return h("button",{key:c.id,onClick:()=>{setBCat(c.id);setTab('browse');},style:{display:'flex',flexDirection:'column',alignItems:'center',gap:5,padding:'10px 4px',borderRadius:14,border:`2px solid ${D.border}`,background:darkMode?'#141824':D.card,cursor:'pointer',boxShadow:darkMode?'0 2px 12px rgba(0,0,0,.4)':'0 1px 4px rgba(0,0,0,.06)',transition:'all .2s'}},
+            h("span",{style:{fontSize:20}},c.icon),
+            h("span",{style:{fontSize:11,fontWeight:600,color:D.text,textAlign:'center',lineHeight:1.2}},t.cn[c.id])
+          );
+        })
+      ),
+      h("div",{style:{display:'flex',alignItems:'center',justifyContent:'space-between',background:darkMode?'#0d1f14':'#f0fdf4',borderRadius:10,padding:'8px 12px',marginBottom:10,border:darkMode?'1px solid #166534':'1px solid #bbf7d0'}},
+        h("span",{style:{fontSize:12,fontWeight:600,color:'#16a34a'}},"🟢 "+t.openOnly),
+        h(Toggle,{val:showOpenOnly,fn:()=>setShowOpenOnly(v=>!v),accent:'#16a34a'})
+      )
+    ),
+    trends.length>0&&h("div",{style:{margin:'0 14px 14px',background:darkMode?'#13151f':'#fefce8',borderRadius:14,padding:'12px 12px 8px',border:darkMode?'1px solid #713f12':'1px solid #fde68a'},dir:t.dir},
+      h("p",{style:{fontWeight:700,fontSize:13,color:D.text,marginBottom:10}},"✨ ",t.trending," "+locLabel),
+      h("div",{style:{display:'flex',gap:10,overflowX:'auto',paddingBottom:4}},
+        trends.map((p,i)=>h("div",{key:p.id,onClick:()=>setSel(p),style:{background:p.bg,borderRadius:12,padding:12,flexShrink:0,width:148,cursor:'pointer',color:'white',boxShadow:`0 3px 10px ${p.bg}66`,animation:`slideInU .45s ease-out ${i*80}ms both`,display:'flex',flexDirection:'column',justifyContent:'space-between',minHeight:90}},
+          h("div",null,
+            h("div",{style:{fontSize:28,marginBottom:4}},p.icon),
+            h("p",{style:{fontWeight:700,fontSize:12,lineHeight:1.3}},p.name)
+          ),
+          h("div",{style:{display:'flex',alignItems:'center',gap:4,fontSize:11,fontWeight:600,paddingTop:6,borderTop:'1px solid rgba(255,255,255,.25)',marginTop:4}},
+            h(Star,{size:10,filled:true}),
+            h("span",null,p.rating||'New'),
+            h("span",{style:{opacity:.6}},"•"),
+            h("span",{style:{overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},p.loc.split(',')[0])
+          )
+        ))
+      )
+    ),
+    h("div",{style:{padding:'0 14px'},dir:t.dir},
+      h("div",{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}},
+        h("span",{style:{fontWeight:700,fontSize:14,color:D.text}},t.nearYou),
+        h(SortBar,null)
+      ),
+      h("div",{style:{display:'flex',gap:7,flexWrap:'wrap',marginBottom:10}},
+        [0.5,1,3,5,10,15].map(k=>h("button",{key:k,onClick:(e)=>{
+          e.preventDefault();
+          var el=scrollRef.current;
+          if(!el)return setRad(k);
+          var sy=el.scrollTop;
+          var lock=()=>{el.scrollTop=sy;};
+          var id1=requestAnimationFrame(()=>{lock();requestAnimationFrame(()=>{lock();requestAnimationFrame(lock);});});
+          setRad(k);
+        },style:{padding:'5px 12px',borderRadius:20,fontSize:11,fontWeight:600,border:'none',cursor:'pointer',background:rad===k?'#16a34a':'#e5e7eb',color:rad===k?'white':'#374151'}},k,"km"))
+      ),
+      busy?h("div",{style:{display:'flex',justifyContent:'center',gap:5,padding:'20px 0'}},
+        [0,.2,.4].map(d=>h("div",{key:d,style:{width:8,height:8,background:'#16a34a',borderRadius:'50%',animation:`bounce .8s ${d}s infinite`}}))
+      ):dP.length===0?h("div",{style:{textAlign:'center',padding:'30px 0'}},
+        h("div",{style:{fontSize:36,marginBottom:8}},"🔍"),
+        h("p",{style:{fontWeight:600,fontSize:14,color:D.text,marginBottom:4}},t.noPlace),
+        h("p",{style:{fontSize:12,color:'#6b7280',marginBottom:10}},t.adjF),
+        dQ.trim()&&h("button",{onClick:()=>setDQ(''),style:{padding:'7px 16px',background:'#16a34a',color:'white',borderRadius:8,border:'none',cursor:'pointer',fontSize:12,fontWeight:600}},t.searchClear)
+      ):h("div",null,
+        h("p",{style:{fontSize:11,color:'#6b7280',fontWeight:600,marginBottom:8}},t.pFound(dP.length,rad)),
+        cards(dP)
+      )
+    )
+  );
+
+  // ── BROWSE TAB ──
+  var Browse=h("div",{style:{paddingBottom:90}},
+    h("div",{style:{background:darkMode?'#0e1120':D.card,borderBottom:`1px solid ${D.border}`,position:'sticky',top:0,zIndex:10}},
+      h("div",{style:{padding:'14px 14px 0'},dir:t.dir},
+        h("p",{style:{fontWeight:700,fontSize:17,color:D.text,marginBottom:2}},t.browse),
+        h("p",{style:{fontSize:12,color:'#6b7280',marginBottom:8}},t.browseS),
+        h("div",{style:{background:darkMode?'#243040':'#f3f4f6',borderRadius:10,display:'flex',alignItems:'center',gap:8,padding:'8px 10px',marginBottom:8}},
+          h(Search,{size:14,color:"#9ca3af"}),
+          h("input",{type:"search",placeholder:t.sp,value:bQ,onChange:e=>setBQ(e.target.value),style:{flex:1,border:'none',outline:'none',fontSize:12,background:'transparent',color:D.text,minWidth:0},dir:t.dir}),
+          bQ&&h("button",{onClick:()=>setBQ(''),style:{background:'transparent',border:'none',cursor:'pointer'}},h(X,{size:12,color:"#9ca3af"}))
+        ),
+        h("div",{
+          id:"cat-scroll",
+          style:{display:'flex',gap:7,overflowX:'auto',paddingBottom:10,scrollBehavior:'smooth'}
+        },
+          h("button",{
+            id:"cat-all",
+            onClick:()=>setBCat('all'),
+            style:{padding:'5px 12px',borderRadius:20,fontSize:11,fontWeight:600,border:'none',cursor:'pointer',flexShrink:0,background:bCat==='all'?'#16a34a':'#e5e7eb',color:bCat==='all'?'white':'#374151'}
+          },t.all),
+          CATS.map(c=>h("button",{
+            key:c.id,
+            id:"cat-"+c.id,
+            onClick:()=>setBCat(p=>p===c.id?'all':c.id),
+            style:{display:'flex',alignItems:'center',gap:4,padding:'5px 12px',borderRadius:20,fontSize:11,fontWeight:600,
+              border:bCat===c.id?'2px solid white':'2px solid transparent',
+              cursor:'pointer',flexShrink:0,
+              background:bCat===c.id?c.bg:(darkMode?'#1e2438':'#e5e7eb'),
+              color:bCat===c.id?'white':(darkMode?'#94a3b8':'#374151'),
+              boxShadow:bCat===c.id?('0 2px 12px '+c.bg+'88'):'none',
+              transform:bCat===c.id?'scale(1.05)':'scale(1)',
+              transition:'all .2s'
+            }
+          },c.icon," ",t.cn[c.id]))
+        ),
+        useEffect(()=>{
+          if(bCat&&bCat!=='all'){
+            var el=document.getElementById('cat-'+bCat);
+            var container=document.getElementById('cat-scroll');
+            if(el&&container){
+              var elLeft=el.offsetLeft;
+              var elWidth=el.offsetWidth;
+              var containerWidth=container.offsetWidth;
+              container.scrollTo({left:elLeft-(containerWidth/2)+(elWidth/2),behavior:'smooth'});
+            }
+          } else {
+            var container2=document.getElementById('cat-scroll');
+            if(container2) container2.scrollTo({left:0,behavior:'smooth'});
+          }
+        },[bCat]),
+        null
+      )
+    ),
+    h("div",{style:{padding:'12px 14px'},dir:t.dir},
+      bCat!=='all'&&h("div",{style:{
+        display:'flex',alignItems:'center',gap:10,
+        marginBottom:12,padding:'10px 12px',
+        background:darkMode?'#141824':'#f0fdf4',
+        borderRadius:12,
+        border:darkMode?'1px solid rgba(255,255,255,0.07)':'1px solid #bbf7d0'
+      }},
+        h("span",{style:{fontSize:20}},(CATS.find(c=>c.id===bCat)||{}).icon),
+        h("div",null,
+          h("p",{style:{fontWeight:700,fontSize:13,color:D.text,margin:0}},t.cn[bCat]),
+          h("p",{style:{fontSize:11,color:'#6b7280',margin:0}},t.pFoundB(bP.length))
+        ),
+        h("button",{onClick:()=>setBCat('all'),style:{marginLeft:'auto',background:'transparent',border:'none',cursor:'pointer',fontSize:18,color:'#9ca3af'}},"✕")
+      ),
+      bP.length===0?h("div",{style:{textAlign:'center',padding:'40px 0'}},
+        h("div",{style:{fontSize:40,marginBottom:10}},"🔍"),
+        h("p",{style:{fontWeight:600,fontSize:14,color:D.text,marginBottom:4}},t.noCat),
+        h("button",{onClick:()=>setBCat('all'),style:{padding:'8px 18px',background:'#16a34a',color:'white',borderRadius:10,border:'none',cursor:'pointer',fontSize:12,fontWeight:600,marginTop:8}},t.browseAll)
+      ):h("div",null,
+        h("p",{style:{fontSize:11,color:'#6b7280',fontWeight:600,marginBottom:8}},t.pFoundB(bP.length)),
+        cards(bP)
+      )
+    )
+  );
+
+  // ── SAVED TAB ──
+  var Saved=h("div",{style:{paddingBottom:90}},
+    h("div",{style:{background:darkMode?'#0e1120':D.card,borderBottom:`1px solid ${D.border}`,padding:'14px 14px 12px',position:'sticky',top:0,zIndex:10},dir:t.dir},
+      h("p",{style:{fontWeight:700,fontSize:17,color:D.text,marginBottom:2}},t.saved),
+      h("p",{style:{fontSize:12,color:'#6b7280'}},savedL.length>0?t.savedC(savedL.length):t.savedS)
+    ),
+    h("div",{style:{padding:'12px 14px'}},
+      savedL.length===0?h("div",{style:{textAlign:'center',padding:'50px 0'}},
+        h("div",{style:{fontSize:48,marginBottom:12}},"❤️"),
+        h("p",{style:{fontWeight:700,fontSize:14,color:D.text,marginBottom:4}},t.noSaved),
+        h("p",{style:{fontSize:12,color:'#6b7280',marginBottom:14}},t.noSavedS),
+        h("button",{onClick:()=>setTab('discover'),style:{padding:'8px 18px',background:'#16a34a',color:'white',borderRadius:10,border:'none',cursor:'pointer',fontSize:12,fontWeight:600}},t.explore)
+      ):cards(savedL)
+    )
+  );
+
+  // ── PROFILE TAB ──
+  var EditProfilePage=h("div",{style:{paddingBottom:90}},
+    h(SubHeader,{title:t.editProfile,emoji:"✏️",onBack:()=>setProfPage('main')}),
+    h("div",{style:{padding:16}},
+      h("div",{style:{display:'flex',flexDirection:'column',alignItems:'center',marginBottom:20}},
+        h("label",{htmlFor:"pgallery",style:{display:'flex',flexDirection:'column',alignItems:'center',cursor:'pointer'}},
+          h("div",{style:{position:'relative',marginBottom:10}},
+            h("svg",{width:96,height:96,style:{position:'absolute',top:-4,left:-4,pointerEvents:'none'}},
+              h("circle",{cx:48,cy:48,r:44,fill:"none",stroke:"#e5e7eb",strokeWidth:4}),
+              h("circle",{cx:48,cy:48,r:44,fill:"none",stroke:"#16a34a",strokeWidth:4,strokeDasharray:"276",strokeDashoffset:(276-(276*profCompletion/100)),strokeLinecap:"round",transform:"rotate(-90 48 48)",style:{transition:"stroke-dashoffset 0.8s ease"}})
+            ),
+            profPic
+              ?h("img",{src:profPic,style:{width:88,height:88,borderRadius:'50%',objectFit:'cover',border:'3px solid white',boxShadow:'0 2px 12px rgba(22,163,74,.3)',display:'block'}})
+              :h("div",{style:{width:88,height:88,borderRadius:'50%',background:'linear-gradient(135deg,#16a34a,#15803d)',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:28,color:'white',border:'3px solid white',boxShadow:'0 2px 12px rgba(22,163,74,.3)'}},profInitials),
+            h("div",{style:{position:'absolute',bottom:2,right:2,background:'#16a34a',borderRadius:'50%',width:28,height:28,display:'flex',alignItems:'center',justifyContent:'center',border:'2px solid white',fontSize:14,boxShadow:'0 2px 6px rgba(0,0,0,.25)'}},"📷")
+          ),
+          h("div",{style:{background:'#f0fdf4',border:'1.5px solid #16a34a',borderRadius:10,padding:'7px 22px',fontSize:12,fontWeight:700,color:'#16a34a',marginBottom:8}},
+            profPic?t.photoBtnChange:t.photoBtnAdd
+          )
+        ),
+        h("input",{id:"pgallery",type:"file",accept:"image/*",style:{position:'absolute',width:0,height:0,opacity:0,pointerEvents:'none'},onChange:e=>{var fl=e.target.files&&e.target.files[0];if(!fl)return;var rd=new FileReader();rd.onload=ev=>{setProfPic(ev.target.result);showT(t.photoSaved);};rd.readAsDataURL(fl);}}),
+        h("div",{style:{width:'100%',display:'flex',alignItems:'center',gap:6,marginBottom:4}},
+          h("div",{style:{flex:1,height:6,background:'#e5e7eb',borderRadius:10,overflow:'hidden'}},
+            h("div",{style:{height:'100%',width:profCompletion+'%',background:'linear-gradient(90deg,#16a34a,#4ade80)',borderRadius:10,transition:'width .8s ease'}})
+          ),
+          h("span",{style:{fontSize:12,fontWeight:800,color:profCompletion===100?'#16a34a':'#374151',minWidth:36}},profCompletion+"%")
+        ),
+        h("p",{style:{fontSize:10,color:profCompletion===100?'#16a34a':'#9ca3af',margin:0,textAlign:'center'}},
+          profCompletion===100?t.profileComplete:t.profileFill
+        )
+      ),
+      [{label:t.profName,icon:'👤',value:profName,setter:setProfName,type:'text',ph:t.profNamePh},
+       {label:t.profPhone,icon:'📞',value:profPhone,setter:setProfPhone,type:'tel',ph:t.profPhonePh},
+       {label:t.profEmail,icon:'📧',value:profEmail,setter:setProfEmail,type:'email',ph:t.profEmailPh},
+       {label:t.profCity,icon:'📍',value:profCity,setter:setProfCity,type:'text',ph:t.profCityPh},
+      ].map(fd=>h("div",{key:fd.label,style:{marginBottom:14}},
+        h("label",{style:{display:'flex',alignItems:'center',gap:6,fontSize:12,fontWeight:700,color:D.sub,marginBottom:6}},fd.icon," ",fd.label),
+        h("input",{type:fd.type,value:fd.value,placeholder:fd.ph,onChange:e=>fd.setter(e.target.value),style:{width:'100%',border:`1px solid ${D.border}`,borderRadius:12,padding:'11px 14px',fontSize:13,outline:'none',background:darkMode?'#0d1120':D.input,boxSizing:'border-box',fontFamily:'inherit',color:D.text}})
+      )),
+      h("button",{onClick:async()=>{await saveProfileToDb();showT(t.profileSaved);setProfPage('main');},style:{width:'100%',padding:14,borderRadius:14,fontSize:14,fontWeight:700,background:'#16a34a',color:'white',border:'none',cursor:'pointer',marginTop:6,boxShadow:'0 3px 10px rgba(22,163,74,.3)'}},t.saveBtn)
+    )
+  );
+
+  // ── Professional Notification System ──────────────────────────────────────────
+
+  // Notification types config
+  var NOTIF_TYPES={
+    new_place:   {label:'New Places',    icon:'📍', color:'#16a34a'},
+    trending:    {label:'Trending',      icon:'⭐', color:'#f97316'},
+    saved_open:  {label:'Saved Places',  icon:'❤️', color:'#ef4444'},
+    my_business: {label:'My Business',   icon:'🏪', color:'#3b82f6'},
+    reminder:    {label:'Reminders',     icon:'🔔', color:'#8b5cf6'},
+    update:      {label:'Updates',       icon:'🔄', color:'#14b8a6'},
+    promo:       {label:'Offers',        icon:'🎁', color:'#f59e0b'},
+  };
+
+  // Category emoji map for notifications
+  var CAT_EMOJI={
+    restaurants:'🍽️',dhabas:'☕',clinics:'🩺',pharmacy:'💊',
+    grocery:'🏪',salons:'💇',atm:'🏧',mosque:'🕌',petrol:'⛽',
+  };
+  function getNotifIcon(item){
+    if(item.cat&&CAT_EMOJI[item.cat]) return CAT_EMOJI[item.cat];
+    var tc=NOTIF_TYPES[item.type]||{};
+    return tc.icon||'🔔';
+  }
+
+  // Notification state
+  var DEFAULT_NOTIFS=[
+    {id:1,type:'trending',   cat:'restaurants',placeId:1, title:'Data Darbar — #1 Trending Today',  body:'4.9★ • 5421 reviews • Bhati Gate • Sirf 0.5km door!',        unread:true, time:Date.now()-60000,    action:'place'},
+    {id:2,type:'trending',   cat:'restaurants',placeId:2, title:'Butt Karahi — Weekend Special',    body:'4.7★ • Lakshmi Chowk • Extra spicy available • 0.8km',       unread:true, time:Date.now()-300000,   action:'place'},
+    {id:3,type:'new_place',  cat:'mosque',     placeId:6, title:'Jummah Mubarak!',                  body:'Masjid-e-Quba • 1:15pm aaj • 1.2km • Wuzu ki jagah',        unread:true, time:Date.now()-900000,   action:'place'},
+    {id:4,type:'update',     cat:'pharmacy',   placeId:4, title:'Sehat Pharmacy — Extended Hours',  body:'Ab 8am-12am midnight • DHA Phase 5 • 0.5km',                 unread:true, time:Date.now()-1800000,  action:'place'},
+    {id:5,type:'promo',      cat:'dhabas',     placeId:5, title:'Quetta Chai Wala — Special Offer', body:'Happy Hour 3-5pm • Buy 1 Get 1 Free • Gulberg • 1.4km',      unread:false,time:Date.now()-3600000,  action:'place'},
+    {id:6,type:'saved_open', cat:'grocery',    placeId:9, title:'Al-Fatah ab khul gaya!',           body:'Aaj 7am-11pm • Markaz DHA • 3.2km',                          unread:false,time:Date.now()-7200000,  action:'place'},
+    {id:7,type:'trending',   cat:'restaurants',placeId:11,title:'Burns Road Nihari — Karachi #1',   body:'4.9★ • 7823 reviews • Famous since 1947 • Karachi',          unread:false,time:Date.now()-14400000, action:'place'},
+    {id:8,type:'promo',      cat:'dhabas',     placeId:13,title:'Irani Chai House — Trending!',     body:'4.7★ • Saddar Karachi • Bun maska + chai • 1.9km',           unread:false,time:Date.now()-86400000, action:'place'},
+    {id:9,type:'trending',   cat:'restaurants',placeId:14,title:'Monal — Islamabad Ka No.1!',       body:'4.8★ • Margalla Hills view • Best BBQ • 6.1km',              unread:false,time:Date.now()-172800000,action:'place'},
+    {id:10,type:'reminder',  cat:'mosque',     placeId:15,title:'Faisal Mosque — Reminder',         body:'5.0★ • 8901 reviews • Islamabad landmark • 5km',             unread:false,time:Date.now()-259200000,action:'place'},
+  ];
+  var [notifs,setNotifs]=useState(()=>{
+    var stored=lsGet('qb_notifs',null);
+    if(!stored||stored.length===0) return DEFAULT_NOTIFS;
+    return stored;
+  });
+
+  // Notif type preferences (which types user wants)
+
+
+  useEffect(()=>{lsSet('qb_notifs',notifs);},[notifs]);
+
+  // Helper: format time
+  function timeAgo(ts){
+    var diff=Date.now()-ts;
+    var m=Math.floor(diff/60000);
+    var h=Math.floor(diff/3600000);
+    var d=Math.floor(diff/86400000);
+    if(m<1)return'Abhi';
+    if(m<60)return m+'m pehle';
+    if(h<24)return h+'h pehle';
+    if(d<7)return d+' din pehle';
+    return new Date(ts).toLocaleDateString('en-PK');
+  }
+
+
+
+  function sendPush(title,body,type){
+    if(!notif)return;
+    var newN={id:Date.now(),type:type,title:title,body:body,unread:true,time:Date.now(),action:'discover'};
+    setNotifs(function(prev){return [newN,...prev.slice(0,49)];});
+    showPopNotif(title,body,type);
+  }
+
+  var unreadCount=notifs.filter(n=>n.unread).length;
+
+
+  var [notifs,setNotifs]=useState(()=>{
+    var stored=lsGet('qb_notifs',null);
+    if(!stored||stored.length===0) return DEFAULT_NOTIFS;
+    return stored;
+  });
+
+  // Notif type preferences (which types user wants)
+
+
+  useEffect(()=>{lsSet('qb_notifs',notifs);},[notifs]);
+
+  // Helper: format time
+  function timeAgo(ts){
+    var diff=Date.now()-ts;
+    var m=Math.floor(diff/60000);
+    var h=Math.floor(diff/3600000);
+    var d=Math.floor(diff/86400000);
+    if(m<1)return'Abhi';
+    if(m<60)return m+'m pehle';
+    if(h<24)return h+'h pehle';
+    if(d<7)return d+' din pehle';
+    return new Date(ts).toLocaleDateString('en-PK');
+  }
+
+
+
+  function sendPush(title,body,type){
+    if(!notif)return;
+    var newN={id:Date.now(),type:type,title:title,body:body,unread:true,time:Date.now(),action:'discover'};
+    setNotifs(function(prev){return [newN,...prev.slice(0,49)];});
+    showPopNotif(title,body,type);
+  }
+
+  var unreadCount=notifs.filter(n=>n.unread).length;
+
+
+  var [notifs,setNotifs]=useState(()=>{
+    var stored=lsGet('qb_notifs',null);
+    if(!stored||stored.length===0) return DEFAULT_NOTIFS;
+    return stored;
+  });
+
+  // Notif type preferences (which types user wants)
+
+
+  useEffect(()=>{lsSet('qb_notifs',notifs);},[notifs]);
+
+  // Helper: format time
+  function timeAgo(ts){
+    var diff=Date.now()-ts;
+    var m=Math.floor(diff/60000);
+    var h=Math.floor(diff/3600000);
+    var d=Math.floor(diff/86400000);
+    if(m<1)return'Abhi';
+    if(m<60)return m+'m pehle';
+    if(h<24)return h+'h pehle';
+    if(d<7)return d+' din pehle';
+    return new Date(ts).toLocaleDateString('en-PK');
+  }
+
+
+
+  function sendPush(title,body,type){
+    if(!notif)return;
+    var newN={id:Date.now(),type:type,title:title,body:body,unread:true,time:Date.now(),action:'discover'};
+    setNotifs(function(prev){return [newN,...prev.slice(0,49)];});
+    showPopNotif(title,body,type);
+  }
+
+  var unreadCount=notifs.filter(n=>n.unread).length;
+
+
+  var [notifs,setNotifs]=useState(()=>{
+    var stored=lsGet('qb_notifs',null);
+    if(!stored||stored.length===0) return DEFAULT_NOTIFS;
+    return stored;
+  });
+
+  // Notif type preferences (which types user wants)
+
+
+  useEffect(()=>{lsSet('qb_notifs',notifs);},[notifs]);
+
+  // Helper: format time
+  function timeAgo(ts){
+    var diff=Date.now()-ts;
+    var m=Math.floor(diff/60000);
+    var h=Math.floor(diff/3600000);
+    var d=Math.floor(diff/86400000);
+    if(m<1)return'Abhi';
+    if(m<60)return m+'m pehle';
+    if(h<24)return h+'h pehle';
+    if(d<7)return d+' din pehle';
+    return new Date(ts).toLocaleDateString('en-PK');
+  }
+
+
+
+  function sendPush(title,body,type){
+    if(!notif)return;
+    var newN={id:Date.now(),type:type,title:title,body:body,unread:true,time:Date.now(),action:'discover'};
+    setNotifs(function(prev){return [newN,...prev.slice(0,49)];});
+    showPopNotif(title,body,type);
+  }
+
+  var unreadCount=notifs.filter(n=>n.unread).length;
+
+
+  function markRead(id){setNotifs(prev=>prev.map(n=>n.id===id?{...n,unread:false}:n));}
+  function markAllRead(){setNotifs(prev=>prev.map(n=>({...n,unread:false})));showT('✅ Sab read ho gaye');}
+  function deleteNotif(id){setNotifs(prev=>prev.filter(n=>n.id!==id));}
+  function clearAll(){setNotifs([]);showT('🗑️ Sab clear');}
+
+  // Auto-notif when new business added
+  useEffect(()=>{
+    var added=PL.filter(p=>p.userAdded);
+    if(added.length>0){
+      var last=added[added.length-1];
+      var already=notifs.find(n=>n.title&&n.title.includes(last.name)&&n.type==='my_business');
+      if(!already){
+        sendPush('Business add hua: '+last.name, last.loc+' • Ab live hai Qareeb par','my_business');
+      }
+    }
+  },[PL.length]);
+
+  // Filtered notifications
+
+  var NotifPage=h("div",{style:{background:D.bg,minHeight:'100%',paddingBottom:20}},
+    h("div",{style:{
+      background:'linear-gradient(135deg,#16a34a,#15803d)',
+      padding:'14px 16px',
+      display:'flex',alignItems:'center',gap:12,
+      position:'sticky',top:0,zIndex:10
+    }},
+      h("button",{onClick:()=>setProfPage('main'),style:{
+        background:'rgba(255,255,255,.18)',border:'none',borderRadius:'50%',
+        width:34,height:34,display:'flex',alignItems:'center',justifyContent:'center',
+        cursor:'pointer',fontSize:16,color:'white',flexShrink:0
+      }},"←"),
+      h("span",{style:{fontSize:18}},"🔔"),
+      h("p",{style:{fontWeight:700,fontSize:15,color:'white',margin:0,flex:1}},t.notifications),
+      h("div",{style:{display:'flex',alignItems:'center',gap:8}},
+        h("span",{style:{fontSize:12,color:'rgba(255,255,255,.75)',fontWeight:600}},notifSound?'🔔':'🔕'),
+        h(Toggle,{val:notifSound,fn:function(){
+          setNotifSound(function(v){return !v;});
+          showT(notifSound?'🔕 Sound off':'🔔 Sound on');
+        },accent:notifSound?'#22c55e':'#ef4444'})
+      )
+    ),
+    h("div",{style:{padding:'16px'}},
+
+      // Search bar
+      h("div",{style:{
+        display:'flex',alignItems:'center',gap:8,
+        background:darkMode?'#1e2438':'#f3f4f6',
+        borderRadius:12,padding:'10px 14px',marginBottom:14,
+        border:'1px solid '+(darkMode?'rgba(255,255,255,.06)':'#e5e7eb')
+      }},
+        h("span",{style:{fontSize:16,flexShrink:0}},"🔍"),
+        h("input",{
+          type:"search",
+          placeholder:t.searchNotif,
+          value:notifSearch,
+          onChange:function(e){setNotifSearch(e.target.value);},
+          style:{flex:1,border:'none',outline:'none',background:'transparent',
+            fontSize:13,color:D.text,fontFamily:'inherit'}
+        }),
+        notifSearch&&h("button",{
+          onClick:function(){setNotifSearch('');},
+          style:{background:'transparent',border:'none',cursor:'pointer',color:'#9ca3af',fontSize:16}
+        },"×")
+      ),
+
+      // Top bar
+      notifs.length>0&&h("div",{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:14}},
+        h("p",{style:{fontSize:13,color:'#9ca3af',margin:0}},t.notifCount(notifs.length)),
+        h("div",{style:{display:'flex',gap:8}},
+          unreadCount>0&&h("button",{
+            onClick:markAllRead,
+            style:{background:'transparent',border:'1.5px solid #16a34a',borderRadius:10,padding:'6px 14px',fontSize:12,fontWeight:700,color:'#16a34a',cursor:'pointer'}
+          },t.markRead),
+          h("button",{
+            onClick:clearAll,
+            style:{background:'transparent',border:'1.5px solid #e5e7eb',borderRadius:10,padding:'6px 14px',fontSize:12,fontWeight:700,color:'#9ca3af',cursor:'pointer'}
+          },t.clearAll)
+        )
+      ),
+
+      // Empty state
+      notifs.length===0&&h("div",{style:{textAlign:'center',padding:'60px 0 30px'}},
+        h("div",{style:{fontSize:52,marginBottom:14}},"🔔"),
+        h("p",{style:{fontSize:16,fontWeight:700,color:D.text,margin:'0 0 6px'}},t.noNotif),
+        h("p",{style:{fontSize:13,color:'#9ca3af',lineHeight:1.5}},t.noNotifS)
+      ),
+      notifs.length>0&&notifSearch.trim()&&notifs.filter(function(n){var q=notifSearch.toLowerCase();return n.title.toLowerCase().includes(q)||n.body.toLowerCase().includes(q);}).length===0&&h("div",{style:{textAlign:'center',padding:'40px 0'}},
+        h("div",{style:{fontSize:40,marginBottom:10}},"🔍"),
+        h("p",{style:{fontSize:14,fontWeight:700,color:D.text,margin:'0 0 4px'}},t.noNotifSearchTitle),
+        h("p",{style:{fontSize:12,color:'#9ca3af'}},t.noNotifSearch(notifSearch))
+      ),
+
+      // Notification list
+      h("div",{style:{display:'flex',flexDirection:'column',gap:10}},
+        notifs.filter(function(item){
+          if(!notifSearch.trim()) return true;
+          var q=notifSearch.toLowerCase();
+          return item.title.toLowerCase().includes(q)||item.body.toLowerCase().includes(q);
+        }).map(function(item){
+          var tc=NOTIF_TYPES[item.type]||{icon:'🔔',color:'#6b7280',label:'General'};
+          return h("div",{
+            key:item.id,
+            onClick:function(){
+              markRead(item.id);
+              var place=item.placeId?PL.find(function(p){return p.id===item.placeId;}):null;
+              if(place){
+                setTab('profile');
+                setProfPage('notif');
+                setSel(place);
+              } else {
+                setProfPage('main');
+                setTab('discover');
+              }
+            },
+            style:{
+              display:'flex',alignItems:'center',gap:14,
+              padding:'14px 16px',borderRadius:16,cursor:'pointer',
+              background:item.unread?(darkMode?'#0f1e14':'#f0fdf4'):(darkMode?'#141824':'#ffffff'),
+              border:'1px solid '+(item.unread?(darkMode?'rgba(22,163,74,.2)':'#d1fae5'):(darkMode?'rgba(255,255,255,.06)':'#f0f0f0')),
+              boxShadow:item.unread?'0 2px 12px rgba(22,163,74,.08)':'0 1px 4px rgba(0,0,0,.04)'
+            }
+          },
+            // Category thumbnail
+            h("div",{style:{
+              width:46,height:46,borderRadius:13,flexShrink:0,overflow:'hidden',
+              background:(CATS.find(c=>c.id===item.cat)||{bg:tc.color+'33'}).bg,
+              display:'flex',alignItems:'center',justifyContent:'center',
+              fontSize:24,position:'relative',
+              boxShadow:'0 2px 8px rgba(0,0,0,.15)'
+            }},
+              (()=>{
+                var place=item.placeId?PL.find(function(p){return p.id===item.placeId;}):null;
+                if(place&&place.customImg) return h("img",{src:place.customImg,style:{width:'100%',height:'100%',objectFit:'cover'}});
+                return h("span",null,(CATS.find(c=>c.id===item.cat)||{icon:'🔔'}).icon);
+              })(),
+              item.unread&&h("div",{style:{
+                position:'absolute',top:-2,right:-2,
+                width:9,height:9,background:'#16a34a',borderRadius:'50%',
+                border:'2px solid '+(darkMode?'#0f1e14':'#f0fdf4')
+              }})
+            ),
+            // Text
+            h("div",{style:{flex:1,minWidth:0}},
+              h("p",{style:{fontSize:13,fontWeight:item.unread?700:500,color:D.text,margin:'0 0 2px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},item.title),
+              h("p",{style:{fontSize:11,color:'#9ca3af',margin:'0 0 4px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',lineHeight:1.4}},item.body),
+              h("p",{style:{fontSize:10,color:tc.color,fontWeight:600,margin:0}},timeAgo(item.time))
+            ),
+            // Delete
+            h("button",{
+              onClick:function(e){e.stopPropagation();deleteNotif(item.id);},
+              style:{background:'transparent',border:'none',color:'#d1d5db',fontSize:20,cursor:'pointer',flexShrink:0,padding:'4px',lineHeight:1}
+            },"×")
+          );
+        })
+      )
+    )
+  );
+
+  var Profile=profPage==='edit'?EditProfilePage
+    :profPage==='notif'?NotifPage
+    :h("div",{style:{paddingBottom:20,background:D.bg,minHeight:'100%',display:'flex',flexDirection:'column'}},
+      h("div",{style:{background:darkMode?'linear-gradient(145deg,#0a1f10,#0d2e18)':'linear-gradient(145deg,#064e24 0%,#0d7a3e 55%,#0a5c2e 100%)',padding:'20px 16px 24px',position:'relative',overflow:'hidden',borderBottom:darkMode?'1px solid rgba(22,163,74,0.15)':'none'}},
+        h("svg",{style:{position:'absolute',top:0,left:0,width:'100%',height:'100%',opacity:.07},viewBox:"0 0 360 200",preserveAspectRatio:"xMidYMid slice"},
+          Array.from({length:60},(_,i)=>h("circle",{key:i,cx:i%10*40+10,cy:Math.floor(i/10)*35+10,r:"1.5",fill:"white"}))
+        ),
+        h("div",{style:{position:'relative',zIndex:2,display:'flex',alignItems:'center',gap:14}},
+          h("div",{style:{position:'relative',flexShrink:0}},
+            h("svg",{width:84,height:84,style:{position:'absolute',top:-4,left:-4,zIndex:1}},
+              h("circle",{cx:42,cy:42,r:38,fill:"none",stroke:"rgba(255,255,255,.2)",strokeWidth:3.5}),
+              h("circle",{cx:42,cy:42,r:38,fill:"none",stroke:"#4ade80",strokeWidth:3.5,strokeDasharray:"239",strokeDashoffset:(239-(239*profCompletion/100)),strokeLinecap:"round",transform:"rotate(-90 42 42)",style:{transition:"stroke-dashoffset 0.8s ease"}})
+            ),
+            profPic
+              ?h("img",{src:profPic,style:{width:76,height:76,borderRadius:'50%',objectFit:'cover',border:'2px solid rgba(255,255,255,.4)'}})
+              :h("div",{style:{width:76,height:76,borderRadius:'50%',background:'rgba(255,255,255,.15)',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:800,fontSize:24,color:'white',border:'2px solid rgba(255,255,255,.35)'}},profInitials),
+            h("div",{style:{position:'absolute',bottom:-1,left:'50%',transform:'translateX(-50%)',background:'#4ade80',borderRadius:8,padding:'1px 7px',fontSize:8,fontWeight:800,color:'#064e24',border:'1.5px solid white',whiteSpace:'nowrap',zIndex:2}},profCompletion+"%")
+          ),
+          h("div",{style:{flex:1,minWidth:0}},
+            h("p",{style:{fontWeight:800,fontSize:17,color:'white',margin:'0 0 1px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',opacity:profName?1:0.5}},profName||t.profNoName),
+            h("p",{style:{fontSize:11,color:'rgba(255,255,255,.65)',margin:'0 0 1px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},profEmail||t.profNoEmail),
+            h("p",{style:{fontSize:11,color:'rgba(255,255,255,.5)',margin:'0 0 10px'}},profCity?"📍 "+profCity:t.profNoCity),
+            h("div",{style:{display:'flex',gap:10}},
+              [{v:saved.size,l:t.nSaved},{v:PL.length,l:'Places'},{v:recs.length,l:t.recS.split(' ')[0]}].map(s=>h("div",{key:s.l,style:{background:'rgba(255,255,255,.12)',borderRadius:8,padding:'4px 10px',textAlign:'center'}},
+                h("p",{style:{fontWeight:800,fontSize:14,color:'white',margin:0,lineHeight:1.1}},s.v),
+                h("p",{style:{fontSize:9,color:'rgba(255,255,255,.6)',margin:0,fontWeight:600}},s.l)
+              ))
+            )
+          ),
+          h("button",{onClick:()=>setProfPage('edit'),style:{flexShrink:0,background:'rgba(255,255,255,.15)',border:'1px solid rgba(255,255,255,.25)',borderRadius:10,padding:'7px 12px',color:'white',fontSize:11,fontWeight:700,cursor:'pointer'}},t.editBtn)
+        )
+      ),
+      h("div",{style:{padding:'12px 12px 6px',display:'flex',flexDirection:'column',gap:8}},
+        h("button",{onClick:()=>setProfPage('notif'),className:darkMode?'dm-card':'',style:{background:darkMode?'#141824':D.card,borderRadius:14,padding:'13px 14px',display:'flex',alignItems:'center',gap:12,border:darkMode?'1px solid rgba(255,255,255,0.07)':`1px solid ${D.border}`,cursor:'pointer',width:'100%',boxShadow:darkMode?'0 2px 12px rgba(0,0,0,.4)':'0 1px 4px rgba(0,0,0,.05)',textAlign:'left'}},
+          h("div",{style:{width:42,height:42,borderRadius:12,background:'#eff6ff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0,position:'relative'}},
+            "🔔",
+            unreadCount>0&&h("div",{style:{position:'absolute',top:-4,right:-4,width:18,height:18,background:'#ef4444',borderRadius:'50%',fontSize:9,fontWeight:800,color:'white',display:'flex',alignItems:'center',justifyContent:'center',border:'2px solid '+(darkMode?'#0a0d16':'white'),animation:'badgePulse 2s ease-in-out infinite'}},(unreadCount>9?'9+':unreadCount))
+          ),
+          h("div",{style:{flex:1}},
+            h("p",{style:{fontWeight:700,fontSize:13,color:D.text,margin:'0 0 1px'}},t.notifications),
+            h("p",{style:{fontSize:11,color:'#9ca3af',margin:0}},unreadCount>0?t.notifUnread(unreadCount):(notif?t.notifActive:t.notifOff))
+          ),
+          h(ChevR,{size:16,color:"#9ca3af"})
+        ),
+        // ── Dark Mode + Language inline in profile ──
+        h("div",{className:darkMode?'dm-card':'',style:{background:darkMode?'#141824':D.card,borderRadius:14,border:darkMode?'1px solid rgba(255,255,255,0.07)':`1px solid ${D.border}`,overflow:'hidden',marginBottom:0}},
+          // Dark Mode row
+          h("div",{style:{display:'flex',alignItems:'center',gap:12,padding:'13px 14px',borderBottom:`1px solid ${D.border2}`}},
+            h("div",{style:{width:42,height:42,borderRadius:12,background:'#6366f118',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}},"🌙"),
+            h("div",{style:{flex:1}},
+              h("p",{style:{fontWeight:700,fontSize:13,color:D.text,margin:'0 0 1px'}},t.darkMode),
+              h("p",{style:{fontSize:11,color:'#9ca3af',margin:0}},darkMode?t.darkOn:t.darkOff)
+            ),
+            h(Toggle,{val:darkMode,fn:()=>{setDarkMode(v=>!v);showT(darkMode?'☀️ Light mode':'🌙 Dark mode');},accent:'#6366f1'})
+          ),
+          // Language row
+          h("div",{style:{padding:'13px 14px'}},
+            h("div",{style:{display:'flex',alignItems:'center',gap:12,marginBottom:10}},
+              h("div",{style:{width:42,height:42,borderRadius:12,background:'#3b82f618',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}},"🌐"),
+              h("div",{style:{flex:1}},
+                h("p",{style:{fontWeight:700,fontSize:13,color:D.text,margin:'0 0 1px'}},t.langLabel),
+                h("p",{style:{fontSize:11,color:'#9ca3af',margin:0}},lang==='roman'?'Roman Urdu':lang==='ur'?'اردو':'English')
+              )
+            ),
+            h("div",{style:{display:'flex',gap:8}},
+              [{k:'roman',l:'Roman',ic:'🇵🇰'},{k:'en',l:'English',ic:'🇬🇧'},{k:'ur',l:'اردو',ic:'🌙'}].map(o=>
+                h("button",{key:o.k,onClick:()=>{setLang(o.k);showT('✅ '+o.l);},style:{
+                  flex:1,padding:'8px 4px',borderRadius:10,fontSize:12,fontWeight:700,
+                  border:'none',cursor:'pointer',
+                  background:lang===o.k?'#16a34a':(darkMode?'#1e2438':'#f3f4f6'),
+                  color:lang===o.k?'white':(darkMode?'#94a3b8':'#374151'),
+                  boxShadow:lang===o.k?'0 2px 8px rgba(22,163,74,.3)':'none'
+                }},o.ic+' '+o.l)
+              )
+            )
+          )
+        ),
+        h("div",{style:{height:8}}),
+        h("button",{onClick:()=>setShowPr(true),className:darkMode?'dm-card':'',style:{background:darkMode?'#141824':D.card,borderRadius:14,padding:'13px 14px',display:'flex',alignItems:'center',gap:12,border:darkMode?'1px solid rgba(255,255,255,0.07)':`1px solid ${D.border}`,cursor:'pointer',width:'100%',boxShadow:darkMode?'0 2px 12px rgba(0,0,0,.4)':'0 1px 4px rgba(0,0,0,.05)',textAlign:'left'}},
+          h("div",{style:{width:42,height:42,borderRadius:12,background:'#fdf2f8',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}},"🛡️"),
+          h("div",{style:{flex:1}},
+            h("p",{style:{fontWeight:700,fontSize:13,color:D.text,margin:'0 0 1px'}},t.privacy2),
+            h("p",{style:{fontSize:11,color:'#9ca3af',margin:0}},t.privacyS)
+          ),
+          h(ChevR,{size:16,color:"#9ca3af"})
+        ),
+        h("button",{onClick:()=>setShowHl(true),className:darkMode?'dm-card':'',style:{background:darkMode?'#141824':D.card,borderRadius:14,padding:'13px 14px',display:'flex',alignItems:'center',gap:12,border:darkMode?'1px solid rgba(255,255,255,0.07)':`1px solid ${D.border}`,cursor:'pointer',width:'100%',boxShadow:darkMode?'0 2px 12px rgba(0,0,0,.4)':'0 1px 4px rgba(0,0,0,.05)',textAlign:'left'}},
+          h("div",{style:{width:42,height:42,borderRadius:12,background:'#ecfeff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}},"❓"),
+          h("div",{style:{flex:1}},
+            h("p",{style:{fontWeight:700,fontSize:13,color:D.text,margin:'0 0 1px'}},t.help2),
+            h("p",{style:{fontSize:11,color:'#9ca3af',margin:0}},t.helpS)
+          ),
+          h(ChevR,{size:16,color:"#9ca3af"})
+        ),
+        // Clear search history
+        recs.length>0&&h("button",{onClick:()=>{setRecs([]);showT('🗑️ Search history clear!');},style:{background:D.card,borderRadius:14,padding:'13px 14px',display:'flex',alignItems:'center',gap:12,border:`1px solid ${D.border}`,cursor:'pointer',width:'100%',boxShadow:'0 1px 4px rgba(0,0,0,.04)',textAlign:'left'}},
+          h("div",{style:{width:42,height:42,background:'#fff7ed',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}},"🗑️"),
+          h("div",{style:{flex:1}},
+            h("p",{style:{fontWeight:600,fontSize:13,color:D.text,margin:'0 0 1px'}},t.clearHistory),
+            h("p",{style:{fontSize:11,color:'#9ca3af',margin:0}},t.clearHistoryS(recs.length))
+          ),
+          h(ChevR,{size:14,color:"#9ca3af"})
+        ),
+        h("div",{style:{background:'linear-gradient(135deg,#f0fdf4,#dcfce7)',borderRadius:14,padding:'13px 14px',border:'1px solid #bbf7d0',display:'flex',alignItems:'center',gap:12}},
+          h("div",{style:{width:42,height:42,background:'#16a34a',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}},"🏪"),
+          h("div",{style:{flex:1}},
+            h("p",{style:{fontWeight:700,fontSize:13,color:'#15803d',margin:'0 0 1px'}},t.addBusiness),
+            h("p",{style:{fontSize:11,color:'#16a34a',margin:0}},t.addBusinessS)
+          ),
+          h("button",{onClick:()=>{resetBiz();setShowBiz(true);},style:{background:'#16a34a',border:'none',borderRadius:9,padding:'7px 12px',color:'white',fontSize:11,fontWeight:700,cursor:'pointer',flexShrink:0}},t.addBtn)
+        ),
+        h("button",{onClick:()=>setShowSO(true),style:{background:D.card,borderRadius:14,padding:'13px 14px',display:'flex',alignItems:'center',gap:12,border:'1px solid #fecaca',cursor:'pointer',width:'100%',boxShadow:'0 1px 4px rgba(0,0,0,.04)'}},
+          h("div",{style:{width:42,height:42,background:'#fef2f2',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}},"🚪"),
+          h("div",{style:{flex:1,textAlign:'left'}},
+            h("p",{style:{fontWeight:600,fontSize:13,color:'#dc2626',margin:'0 0 1px'}},t.signout),
+            h("p",{style:{fontSize:11,color:'#9ca3af',margin:0}},t.signoutS)
+          ),
+          h(ChevR,{size:14,color:"#fca5a5"})
+        )
+      ),
+      h("div",{style:{textAlign:'center',padding:'16px 0 4px'}},
+        h("p",{style:{fontSize:10,color:'#c4cdd6',margin:0}},t.ver+" • "+t.slogan)
+      )
+    );
+
+  // ── Place Detail Modal ────────────────────────────────────────────────────────
+  var PlaceModal=sel&&h("div",{style:{position:'fixed',inset:0,background:'rgba(0,0,0,.5)',display:'flex',alignItems:'flex-end',zIndex:200},className:"aFI",onClick:()=>setSel(null)},
+    h("div",{style:{width:'100%',background:darkMode?'#141824':D.card,borderRadius:'22px 22px 0 0',maxHeight:'88vh',overflowY:'auto'},className:"aSU",onClick:e=>e.stopPropagation(),dir:t.dir},
+      h("div",{style:{width:36,height:4,background:'#e5e7eb',borderRadius:2,margin:'10px auto 0'}}),
+      h("div",{style:{padding:'14px 14px 0'}},
+        h("div",{style:{display:'flex',alignItems:'flex-start',justifyContent:'space-between',marginBottom:14}},
+          h("div",{style:{display:'flex',alignItems:'center',gap:10,flex:1,minWidth:0}},
+            h("div",{style:{width:48,height:48,background:sel.bg,borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0,overflow:'hidden'}},
+              sel.customImg?h("img",{src:sel.customImg,style:{width:'100%',height:'100%',objectFit:'cover',borderRadius:12}}):sel.icon
+            ),
+            h("div",{style:{minWidth:0}},
+              h("div",{style:{display:'flex',alignItems:'center',gap:4}},
+                h("span",{style:{fontWeight:700,fontSize:16,color:D.text,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},sel.name),
+                sel.ver&&h("span",{style:{color:'#3b82f6',fontSize:12,flexShrink:0}},"✓"),
+                sel.userAdded&&h("span",{style:{fontSize:10,background:'#fef9c3',color:'#92400e',padding:'1px 6px',borderRadius:6,fontWeight:600,flexShrink:0}},t.userAdded)
+              ),
+              h("p",{style:{fontSize:12,color:'#6b7280',margin:'2px 0 0'}},sel.loc)
+            )
+          ),
+          h("div",{style:{display:'flex',gap:4,flexShrink:0}},
+            h("button",{onClick:()=>toggleSave(sel.id),style:{background:'#f3f4f6',border:'none',borderRadius:'50%',width:36,height:36,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}},
+              h(Heart,{size:16,filled:saved.has(sel.id)})
+            ),
+            h("button",{onClick:()=>setSel(null),style:{background:'#f3f4f6',border:'none',borderRadius:'50%',width:36,height:36,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',fontSize:16}},"✕")
+          )
+        ),
+        h("div",{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:12}},
+          h("div",{style:{background:'#eff6ff',padding:12,borderRadius:12,border:'1px solid #bfdbfe'}},
+            h("div",{style:{display:'flex',alignItems:'center',gap:5,marginBottom:4}},
+              h(MapPin,{size:13,color:"#3b82f6"}),
+              h("span",{style:{fontSize:11,fontWeight:700,color:'#3b82f6'}},t.dist)
+            ),
+            h("p",{style:{fontSize:20,fontWeight:700,color:'#1e40af',margin:0}},sel.dist.toFixed(1),"km")
+          ),
+          h("div",{style:{background:sel.open?'#f0fdf4':'#fef2f2',padding:12,borderRadius:12,border:`1px solid ${sel.open?'#bbf7d0':'#fecaca'}`}},
+            h("p",{style:{fontSize:11,fontWeight:700,color:sel.open?'#16a34a':'#dc2626',margin:'0 0 4px'}},t.stat),
+            h("p",{style:{fontSize:15,fontWeight:700,color:sel.open?'#15803d':'#b91c1c',margin:0}},sel.open?t.open:t.closed)
+          ),
+          sel.rating>0&&h("div",{style:{background:'#fffbeb',padding:12,borderRadius:12,border:'1px solid #fde68a',gridColumn:'1/-1'}},
+            h("div",{style:{display:'flex',alignItems:'center',gap:5,marginBottom:4}},
+              h(Star,{size:13,filled:true}),
+              h("span",{style:{fontSize:11,fontWeight:700,color:'#d97706'}},t.rating)
+            ),
+            h("div",{style:{display:'flex',alignItems:'center',gap:8}},
+              h("span",{style:{fontSize:22,fontWeight:700,color:'#92400e'}},sel.rating),
+              h("div",{style:{display:'flex',gap:2}},[1,2,3,4,5].map(s=>h(Star,{key:s,size:13,filled:s<=Math.round(sel.rating)}))),
+              h("span",{style:{fontSize:11,color:'#b45309',fontWeight:600}},sel.reviews," ",t.reviews)
+            )
+          )
+        ),
+        h("div",{style:{background:'#faf5ff',padding:12,borderRadius:12,border:'1px solid #e9d5ff',marginBottom:10}},
+          h("div",{style:{display:'flex',alignItems:'center',gap:5,marginBottom:5}},
+            h(Clock,{size:13,color:"#9333ea"}),
+            h("span",{style:{fontSize:11,fontWeight:700,color:'#7e22ce'}},t.hw)
+          ),
+          h("p",{style:{fontSize:13,fontWeight:600,color:D.text,margin:'0 0 3px'}},sel.hrs),
+          h("p",{style:{fontSize:12,color:'#6b7280',margin:0}},t.wait,": ",sel.wait)
+        ),
+        h("div",{style:{background:'#fdf2f8',padding:12,borderRadius:12,border:'1px solid #fbcfe8',marginBottom:10}},
+          h("div",{style:{display:'flex',alignItems:'center',gap:5,marginBottom:5}},
+            h(Phone,{size:13,color:"#db2777"}),
+            h("span",{style:{fontSize:11,fontWeight:700,color:'#be185d'}},t.contact)
+          ),
+          h("button",{onClick:()=>{
+            if(navigator.clipboard){navigator.clipboard.writeText(sel.ph).then(()=>showT(t.copied)).catch(()=>showT(t.copied));}
+            else{showT(sel.ph);}
+          },style:{fontSize:13,fontWeight:600,color:D.text,background:'transparent',border:'none',cursor:'pointer',fontFamily:'monospace',display:'flex',alignItems:'center',gap:5,padding:0}},
+            sel.ph," ",h("span",{style:{fontSize:11,color:'#9ca3af'}},"📋")
+          )
+        ),
+        h("div",{style:{background:darkMode?'#1e293b':'#f3f4f6',padding:12,borderRadius:12,marginBottom:14}},
+          h("p",{style:{fontSize:12,color:darkMode?'#94a3b8':'#374151',lineHeight:1.5,margin:0}},sel.desc)
+        ),
+        // ACTION BUTTONS - fully functional
+        h("div",{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}},
+          h("a",{
+            href:"tel:"+sel.ph,
+            style:{background:sel.bg,color:'white',fontWeight:700,padding:'12px 8px',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',gap:6,fontSize:13,textDecoration:'none'}
+          },
+            h(Phone,{size:16}),t.call
+          ),
+          h("button",{
+            onClick:()=>{
+              var q=encodeURIComponent(sel.name+', '+sel.loc);
+              var url=`https://maps.google.com/?q=${q}`;
+              window.open(url,'_blank');
+            },
+            style:{background:'#16a34a',color:'white',fontWeight:700,padding:'12px 8px',borderRadius:12,display:'flex',alignItems:'center',justifyContent:'center',gap:6,fontSize:13,border:'none',cursor:'pointer'}
+          },
+            h(NavArrow,{size:16}),t.nav
+          )
+        )
+      )
+    )
+  );
+
+  // ── Add Business Modal ────────────────────────────────────────────────────────
+  var BizModal=showBiz&&h("div",{style:{position:'fixed',inset:0,background:'rgba(0,0,0,.6)',display:'flex',alignItems:'flex-end',zIndex:50},className:"aFI",onClick:()=>{setShowBiz(false);resetBiz();}},
+    h("div",{style:{width:'100%',background:darkMode?'#141824':D.card,borderRadius:'22px 22px 0 0',maxHeight:'92vh',display:'flex',flexDirection:'column',overflow:'hidden'},className:"aSU",onClick:e=>e.stopPropagation()},
+      h("div",{style:{width:36,height:4,background:'#e5e7eb',borderRadius:2,margin:'10px auto 0',flexShrink:0}}),
+      // Step 1
+      step===1&&h(React.Fragment,null,
+        h(StepHdr,{s:1,title:t.bizType,sub:t.bizTypeSub}),
+        h("div",{style:{padding:14,overflowY:'auto',flex:1}},
+          h("div",{style:{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:10,marginBottom:16}},
+            CATS.map(c=>{var s=bizT===c.id;return h("button",{key:c.id,onClick:()=>setBizT(p=>p===c.id?'':c.id),style:{position:'relative',display:'flex',flexDirection:'column',alignItems:'center',gap:6,padding:12,borderRadius:16,border:`2px solid ${s?c.bg:'#e5e7eb'}`,background:s?c.lt:D.card,cursor:'pointer'}},
+              s&&h("span",{style:{position:'absolute',top:6,right:6,width:16,height:16,background:c.bg,borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',fontSize:9,color:'white'}},"✓"),
+              h("span",{style:{fontSize:22}},c.icon),
+              h("span",{style:{fontSize:11,fontWeight:600,textAlign:'center',color:s?c.bg:D.text,lineHeight:1.2}},t.cn[c.id])
+            );})
+          ),
+          h("button",{onClick:()=>{if(bizT)setStep(2);else showT(t.bizCatErr);},style:{width:'100%',padding:14,borderRadius:16,fontSize:14,fontWeight:700,background:bizT?'#16a34a':'#e5e7eb',color:bizT?'white':'#9ca3af',border:'none',cursor:'pointer'}},t.bizNext)
+        )
+      ),
+      // Step 2
+      step===2&&h(React.Fragment,null,
+        h(StepHdr,{s:2,title:t.bizDetails,sub:t.bizDetailsSub}),
+        h("div",{style:{padding:14,overflowY:'auto',flex:1}},
+          h("div",{style:{display:'inline-flex',alignItems:'center',gap:6,padding:'5px 12px',borderRadius:20,background:(CATS.find(c=>c.id===bizT)||{}).bg||'#16a34a',color:'white',fontSize:12,fontWeight:700,marginBottom:14}},
+            h("span",null,(CATS.find(c=>c.id===bizT)||{}).icon),t.cn[bizT]
+          ),
+          h("label",{htmlFor:"biz-img-upload",style:{display:'block',marginBottom:14,cursor:'pointer'}},
+            h("div",{style:{border:`2px dashed ${bizImg?'#16a34a':'#e5e7eb'}`,borderRadius:14,padding:12,display:'flex',alignItems:'center',gap:12,background:bizImg?'#f0fdf4':D.input,transition:'all .2s'}},
+              bizImg
+                ?h("img",{src:bizImg,style:{width:56,height:56,borderRadius:10,objectFit:'cover',flexShrink:0}})
+                :h("div",{style:{width:56,height:56,borderRadius:10,background:'#f3f4f6',display:'flex',alignItems:'center',justifyContent:'center',fontSize:24,flexShrink:0}},"📷"),
+              h("div",null,
+                h("p",{style:{fontWeight:700,fontSize:13,color:bizImg?'#16a34a':D.text,margin:'0 0 2px'}},bizImg?t.photoSaved:t.photoBtnAdd.replace('📷 ','📷 ')),
+                h("p",{style:{fontSize:11,color:'#9ca3af',margin:0}},bizImg?t.bizPhotoHint:t.bizPhotoOpt)
+              ),
+              bizImg&&h("button",{onClick:e=>{e.preventDefault();setBizImg(null);},style:{marginLeft:'auto',background:'transparent',border:'none',fontSize:18,cursor:'pointer',color:'#9ca3af',flexShrink:0}},"✕")
+            )
+          ),
+          h("input",{id:"biz-img-upload",type:"file",accept:"image/*",style:{position:'absolute',width:0,height:0,opacity:0,pointerEvents:'none'},onChange:e=>{var fl=e.target.files&&e.target.files[0];if(!fl)return;var rd=new FileReader();rd.onload=ev=>setBizImg(ev.target.result);rd.readAsDataURL(fl);}}),
+          FLDS.map(fl=>{
+            var err=bizErrs[fl.k],val=(bizF[fl.k]||'').trim(),ok=val&&!err&&val.length>=(fl.min||0);
+            return h("div",{key:fl.k,style:{marginBottom:14}},
+              h("label",{style:{display:'flex',alignItems:'center',gap:5,fontSize:12,fontWeight:700,color:D.sub,marginBottom:6}},fl.ic," ",fl.l,!fl.optional&&h("span",{style:{color:'#ef4444'}},"*"),ok&&!fl.optional&&h("span",{style:{marginLeft:'auto',color:'#16a34a',fontSize:14}},"✓"),fl.optional&&h("span",{style:{marginLeft:4,fontSize:10,color:'#9ca3af',fontWeight:500}},"("+t.optionalLabel+")")),
+              fl.ty==='textarea'?
+                h("textarea",{rows:3,placeholder:(fl.k==='name'&&bizT&&CAT_PLACEHOLDERS[bizT]?CAT_PLACEHOLDERS[bizT]:fl.ph),value:bizF[fl.k]||'',onChange:e=>{setBizF(p=>({...p,[fl.k]:e.target.value}));if(bizErrs[fl.k])setBizErrs(p=>({...p,[fl.k]:validate(fl.k,e.target.value)||undefined}));},onBlur:e=>{if(!fl.optional)setBizErrs(p=>({...p,[fl.k]:validate(fl.k,e.target.value)||undefined}));},style:{width:'100%',border:`2px solid ${(!fl.optional&&err)?'#ef4444':(ok&&!fl.optional)?'#16a34a':'#e5e7eb'}`,borderRadius:12,padding:'10px 12px',fontSize:13,outline:'none',background:D.input,resize:'none',boxSizing:'border-box',fontFamily:'inherit',color:D.text}}):
+                h("input",{type:fl.ty,placeholder:(fl.k==='name'&&bizT&&CAT_PLACEHOLDERS[bizT]?CAT_PLACEHOLDERS[bizT]:fl.ph),value:bizF[fl.k]||'',onChange:e=>{setBizF(p=>({...p,[fl.k]:e.target.value}));if(bizErrs[fl.k])setBizErrs(p=>({...p,[fl.k]:validate(fl.k,e.target.value)||undefined}));},onBlur:e=>{if(!fl.optional)setBizErrs(p=>({...p,[fl.k]:validate(fl.k,e.target.value)||undefined}));},style:{width:'100%',border:`2px solid ${(!fl.optional&&err)?'#ef4444':(ok&&!fl.optional)?'#16a34a':'#e5e7eb'}`,borderRadius:12,padding:'10px 12px',fontSize:13,outline:'none',background:D.input,boxSizing:'border-box',fontFamily:'inherit',color:D.text}}),
+              err&&h("p",{style:{color:'#ef4444',fontSize:11,fontWeight:600,margin:'4px 0 0'}},"⚠️ ",err)
+            );
+          }),
+          h("button",{onClick:handleBizNext,style:{width:'100%',padding:14,borderRadius:16,fontSize:14,fontWeight:700,background:'#16a34a',color:'white',border:'none',cursor:'pointer'}},t.bizSetTime)
+        )
+      ),
+      // Step 3
+      step===3&&h(React.Fragment,null,
+        h(StepHdr,{s:3,title:t.bizTimings,sub:t.bizTimingsSub}),
+        h("div",{style:{padding:14,overflowY:'auto',flex:1}},
+          h("div",{style:{display:'flex',alignItems:'center',justifyContent:'space-between',background:'#eff6ff',border:'1px solid #bfdbfe',borderRadius:12,padding:'12px 14px',marginBottom:16}},
+            h("div",{style:{display:'flex',alignItems:'center',gap:10}},
+              h("span",{style:{fontSize:20}},"🌐"),
+              h("div",null,
+                h("p",{style:{fontWeight:700,fontSize:13,color:D.text,margin:0}},t.bizAlways),
+                h("p",{style:{fontSize:11,color:'#6b7280',margin:0}},t.bizAlwaysS)
+              )
+            ),
+            h(Toggle,{val:bizF.always,fn:()=>setBizF(p=>({...p,always:!p.always})),accent:'#16a34a'})
+          ),
+          !bizF.always&&h(React.Fragment,null,
+            [{label:'🌅 Opening',hk:'oh',mk:'om',pk:'op'},{label:'🌙 Closing',hk:'ch',mk:'cm',pk:'cp'}].map(row=>h("div",{key:row.hk,style:{marginBottom:14}},
+              h("p",{style:{fontSize:12,fontWeight:700,color:D.sub,marginBottom:7}},row.label),
+              h("div",{style:{display:'flex',gap:8}},
+                h("select",{value:bizF[row.hk],onChange:e=>setBizF(p=>({...p,[row.hk]:e.target.value})),style:{flex:1,border:'2px solid #e5e7eb',borderRadius:10,padding:'9px 8px',fontSize:14,fontWeight:600,color:D.text,background:D.input,outline:'none',fontFamily:'inherit'}},
+                  Array.from({length:12},(_,i)=>{var hv=i+1,v=String(bizF[row.pk]==='AM'?hv%12:hv%12+12).padStart(2,'0');return h("option",{key:hv,value:v},String(hv).padStart(2,'0'));})
+                ),
+                h("select",{value:bizF[row.mk],onChange:e=>setBizF(p=>({...p,[row.mk]:e.target.value})),style:{flex:1,border:'2px solid #e5e7eb',borderRadius:10,padding:'9px 8px',fontSize:14,fontWeight:600,color:D.text,background:D.input,outline:'none',fontFamily:'inherit'}},
+                  ['00','15','30','45'].map(m=>h("option",{key:m,value:m},":",m))
+                ),
+                h("select",{value:bizF[row.pk],onChange:e=>setBizF(p=>({...p,[row.pk]:e.target.value})),style:{border:'2px solid #e5e7eb',borderRadius:10,padding:'9px 8px',fontSize:14,fontWeight:600,color:D.text,background:D.input,outline:'none',fontFamily:'inherit'}},
+                  h("option",null,"AM"),h("option",null,"PM")
+                )
+              )
+            )),
+            h("div",{style:{display:'flex',alignItems:'center',justifyContent:'center',gap:10,background:'#f9fafb',border:'1px solid #e5e7eb',borderRadius:12,padding:12,marginBottom:14}},
+              h("span",{style:{color:'#16a34a',fontWeight:700,fontSize:14}},oT),
+              h("span",{style:{color:'#9ca3af',fontSize:12}},"———"),
+              h("span",{style:{color:'#ef4444',fontWeight:700,fontSize:14}},cT)
+            ),
+            h("p",{style:{fontSize:11,fontWeight:700,color:'#6b7280',marginBottom:8}},t.quickSelect),
+            h("div",{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:14}},
+              [{l:'8am–5pm',oh:'08',om:'00',op:'AM',ch:'17',cm:'00',cp:'PM'},
+               {l:'9am–10pm',oh:'09',om:'00',op:'AM',ch:'22',cm:'00',cp:'PM'},
+               {l:'12pm–11pm',oh:'12',om:'00',op:'PM',ch:'23',cm:'00',cp:'PM'},
+               {l:'5pm–12am',oh:'17',om:'00',op:'PM',ch:'00',cm:'00',cp:'AM'},
+              ].map(p=>h("button",{key:p.l,onClick:()=>setBizF(prev=>({...prev,oh:p.oh,om:p.om,op:p.op,ch:p.ch,cm:p.cm,cp:p.cp})),style:{padding:'8px 10px',background:D.card,border:`2px solid ${D.border}`,borderRadius:10,fontSize:11,fontWeight:600,color:D.text,cursor:'pointer',textAlign:'center'}},p.l))
+            )
+          ),
+          h("button",{onClick:()=>setStep(4),style:{width:'100%',padding:14,borderRadius:16,fontSize:14,fontWeight:700,background:'#16a34a',color:'white',border:'none',cursor:'pointer'}},t.bizReviewBtn)
+        )
+      ),
+      // Step 4
+      step===4&&h(React.Fragment,null,
+        h(StepHdr,{s:4,title:t.bizReview,sub:t.bizReviewSub}),
+        h("div",{style:{padding:14,overflowY:'auto',flex:1}},
+          h("div",{style:{background:(CATS.find(c=>c.id===bizT)||{}).bg||'#16a34a',borderRadius:16,overflow:'hidden',marginBottom:14,boxShadow:'0 3px 10px rgba(0,0,0,.15)'}},
+            h("div",{style:{padding:14}},
+              h("div",{style:{display:'flex',alignItems:'center',gap:10,marginBottom:8}},
+                h("div",{style:{width:44,height:44,background:'rgba(255,255,255,.2)',borderRadius:10,display:'flex',alignItems:'center',justifyContent:'center',fontSize:20}},(CATS.find(c=>c.id===bizT)||{}).icon),
+                h("div",null,
+                  h("p",{style:{fontWeight:700,fontSize:15,color:'white',margin:0}},bizF.name||'Business Name'),
+                  h("p",{style:{fontSize:12,color:'rgba(255,255,255,.75)',margin:0}},bizF.loc||'Location')
+                )
+              ),
+              h("div",{style:{display:'flex',gap:7,flexWrap:'wrap'}},
+                h("span",{style:{background:'rgba(255,255,255,.2)',padding:'3px 10px',borderRadius:8,fontSize:11,color:'white'}},"📞 ",bizF.phone||'—'),
+                h("span",{style:{background:'rgba(255,255,255,.2)',padding:'3px 10px',borderRadius:8,fontSize:11,color:'white'}},"🕐 ",bizF.always?'24/7':`${oT}–${cT}`)
+              )
+            )
+          ),
+          [{ic:'🏷️',lk:'profName',v:bizF.name,s:2},{ic:'📞',lk:'profPhone',v:bizF.phone,s:2},{ic:'📍',lk:'profCity',v:bizF.loc,s:2},{ic:'🗺️',lk:'profCity',v:bizF.addr||'—',s:2},{ic:'✏️',lk:'profName',v:bizF.desc||'—',s:2},{ic:'🕐',lk:'hw',v:bizF.always?'24/7':`${oT}–${cT}`,s:3}].map((row,ri)=>h("div",{key:ri,style:{display:'flex',gap:10,padding:'10px 0',borderBottom:`1px solid ${D.border2}`}},
+            h("span",{style:{fontSize:16,width:22,textAlign:'center',flexShrink:0}},row.ic),
+            h("div",{style:{flex:1,minWidth:0}},
+              h("p",{style:{fontSize:10,color:'#9ca3af',fontWeight:600,margin:'0 0 1px'}},t[row.lk]||row.lk),
+              h("p",{style:{fontSize:13,color:D.text,fontWeight:500,margin:0,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},row.v||'—')
+            ),
+            h("button",{onClick:()=>setStep(row.s),style:{color:'#16a34a',fontSize:11,fontWeight:700,background:'transparent',border:'none',cursor:'pointer',flexShrink:0}},t.editBtn.replace('✏️ ',''))
+          )),
+          h("button",{onClick:submitBiz,style:{width:'100%',marginTop:16,padding:14,borderRadius:16,fontSize:14,fontWeight:700,background:'#16a34a',color:'white',border:'none',cursor:'pointer'}},t.bizSubmitBtn)
+        )
+      ),
+      // Step 5 - success
+      step===5&&h("div",{style:{padding:24,flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center'}},
+        h("div",{style:{width:80,height:80,background:'#dcfce7',borderRadius:'50%',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16}},
+          h(Check,{size:44})
+        ),
+        h("p",{style:{fontSize:20,fontWeight:800,color:D.text,marginBottom:4}},t.bizSuccess),
+        h("p",{style:{fontSize:13,color:'#6b7280',marginBottom:2}},h("b",{style:{color:D.text}},bizF.name)," ",t.bizSuccessS1('').trim()),
+        h("p",{style:{fontSize:11,color:'#9ca3af',marginBottom:20}},t.bizSuccessS2),
+        h("div",{style:{width:'100%',background:darkMode?'#243040':'#f9fafb',borderRadius:14,padding:14,border:`1px solid ${D.border2}`,textAlign:'left',marginBottom:20}},
+          [['🏷️',bizF.name],['📞',bizF.phone],['📍',bizF.loc],['🕐',bizF.always?'24/7':`${oT}–${cT}`]].map(([ic,v])=>h("div",{key:ic,style:{display:'flex',gap:8,fontSize:12,color:D.text,marginBottom:5}},h("span",null,ic),h("span",null,v)))
+        ),
+        h("button",{onClick:()=>{setShowBiz(false);resetBiz();setTab('discover');},style:{width:'100%',padding:14,borderRadius:16,fontSize:14,fontWeight:700,background:'#16a34a',color:'white',border:'none',cursor:'pointer'}},t.bizDiscoverBtn)
+      )
+    )
+  );
+
+  // ── Overlays ──
+  var PrivacyOverlay=h(Overlay,{show:showPr,onClose:()=>setShowPr(false),title:t.privacy,icon:"🛡️",col:"#ec4899",darkMode,okLabel:t.okBtn},
+    t.privData.map(([hh,d],i)=>h("div",{key:i,style:{background:darkMode?'#1a1525':'#fdf2f8',borderRadius:10,padding:12,border:darkMode?'1px solid rgba(236,72,153,0.15)':'1px solid #fbcfe8',marginBottom:8}},
+      h("p",{style:{fontWeight:700,fontSize:12,color:D.text,margin:'0 0 4px'}},hh),
+      h("p",{style:{fontSize:11,color:'#9ca3af',lineHeight:1.6,margin:0}},d)
+    ))
+  );
+
+  var HelpOverlay=h(Overlay,{show:showHl,onClose:()=>setShowHl(false),title:t.help,icon:"❓",col:"#0891b2",darkMode,okLabel:t.okBtn},
+    t.helpData.map(([q,a],i)=>h("div",{key:i,style:{background:darkMode?'#0f1e25':'#ecfeff',borderRadius:10,padding:12,border:darkMode?'1px solid rgba(8,145,178,0.15)':'1px solid #a5f3fc',marginBottom:8}},
+      h("div",{style:{display:'flex',alignItems:'flex-start',gap:6,marginBottom:4}},
+        h("span",{style:{fontSize:12,color:'#0891b2',fontWeight:800,flexShrink:0}},"Q"),
+        h("p",{style:{fontWeight:700,fontSize:12,color:D.text,margin:0}},q)
+      ),
+      h("div",{style:{display:'flex',alignItems:'flex-start',gap:6}},
+        h("span",{style:{fontSize:12,color:'#9ca3af',fontWeight:700,flexShrink:0}},"A"),
+        h("p",{style:{fontSize:11,color:'#9ca3af',lineHeight:1.6,margin:0}},a)
+      )
+    ))
+  );
+
+  var SignOutModal=showSO&&h("div",{style:{position:'fixed',inset:0,background:'rgba(0,0,0,.5)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:50,padding:20},className:"aFI",onClick:()=>setShowSO(false)},
+    h("div",{style:{background:darkMode?'#141824':D.card,borderRadius:20,padding:24,width:'100%',maxWidth:320,textAlign:'center'},className:"aSU",onClick:e=>e.stopPropagation()},
+      h("div",{style:{fontSize:40,marginBottom:10}},"🚪"),
+      h("p",{style:{fontWeight:700,fontSize:15,color:D.text,marginBottom:4}},t.signout,"?"),
+      h("p",{style:{fontSize:12,color:'#9ca3af',marginBottom:18}},t.waqaiSignout),
+      h("div",{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}},
+        h("button",{onClick:()=>setShowSO(false),style:{padding:10,borderRadius:12,border:`1px solid ${D.border}`,fontSize:12,fontWeight:700,color:D.text,background:D.card,cursor:'pointer'}},t.cancelBtn),
+        h("button",{onClick:handleSignout,style:{padding:10,borderRadius:12,background:'#ef4444',color:'white',fontSize:12,fontWeight:700,border:'none',cursor:'pointer'}},t.signout)
+      )
+    )
+  );
+
+  // ── Main render ──
+  if(!splashDone) return h(Splash,{onDone:()=>{setSplashDone(true);document.body.style.background='#f8fafc';document.body.style.overflow='';}});   if(!user) return h(Auth,{onAuth:handleAuth,lang});
+  return h("div",{
+    style:{position:'fixed',inset:0,display:'flex',flexDirection:'column',overflow:'hidden',background:darkMode?'#0a0d16':D.bg,color:D.text,transition:'background .3s,color .3s'},
+    className:[lang==='ur'?'ur-font':'',highContrast?'hc':''].filter(Boolean).join(' ')
+  },
+    h("div",{style:{flex:1,overflowX:'hidden',height:0,position:'relative'}},
+      h("div",{ref:scrollRef,style:{position:'absolute',inset:0,overflowY:'auto',overflowX:'hidden',display:tab==='discover'?'block':'none'}},Discover),
+      h("div",{style:{position:'absolute',inset:0,overflowY:'auto',overflowX:'hidden',display:tab==='browse'?'block':'none'}},Browse),
+      h("div",{style:{position:'absolute',inset:0,overflowY:'auto',overflowX:'hidden',display:tab==='saved'?'block':'none'}},Saved),
+      h("div",{ref:profScrollRef,style:{position:'absolute',inset:0,overflowY:'auto',overflowX:'hidden',display:tab==='profile'?'block':'none'}},Profile)
+    ),
+    // Bottom nav
+    h("nav",{className:darkMode?'dm-nav':'',style:{flexShrink:0,background:darkMode?'transparent':D.card,borderTop:darkMode?'none':`1px solid ${D.border}`,boxShadow:darkMode?'none':'0 -2px 10px rgba(0,0,0,.06)',display:'flex',alignItems:'center',justifyContent:'space-around',padding:`8px 4px max(14px, env(safe-area-inset-bottom))`,position:'relative',zIndex:40}},
+      [{k:'discover',ic:h(Compass,{size:22}),l:t.nDisc},{k:'browse',ic:h(Grid,{size:22}),l:t.nBrowse}].map(item=>h("button",{key:item.k,onClick:()=>setTab(item.k),style:{display:'flex',flexDirection:'column',alignItems:'center',gap:2,padding:'4px 10px',background:'transparent',border:'none',cursor:'pointer',color:tab===item.k?'#16a34a':'#9ca3af',fontSize:10,fontWeight:600}},item.ic,item.l)),
+      h("div",{style:{display:'flex',flexDirection:'column',alignItems:'center',marginTop:-20}},
+        h("button",{onClick:()=>{resetBiz();setShowBiz(true);},className:darkMode?'dm-glow-green':'',style:{width:54,height:54,background:'linear-gradient(135deg,#22c55e,#15803d)',borderRadius:'50%',border:'4px solid '+(darkMode?'#080b14':'white'),display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',boxShadow:darkMode?'0 0 20px rgba(34,197,94,.4),0 3px 10px rgba(0,0,0,.5)':'0 -2px 14px rgba(34,197,94,.35),0 3px 10px rgba(0,0,0,.15)'}},
+          h(Plus,{size:24,sw:2.8})
+        ),
+        h("span",{style:{fontSize:9,fontWeight:700,color:'#16a34a',marginTop:2}},t.listBtn)
+      ),
+      h("button",{onClick:()=>setTab('saved'),style:{display:'flex',flexDirection:'column',alignItems:'center',gap:2,padding:'4px 10px',background:'transparent',border:'none',cursor:'pointer',color:tab==='saved'?'#16a34a':'#9ca3af',fontSize:10,fontWeight:600}},
+        h("div",{style:{position:'relative'}},
+          h(Heart,{size:22,color:tab==='saved'?'#16a34a':'#9ca3af'}),
+          saved.size>0&&h("span",{style:{position:'absolute',top:-6,right:-6,width:15,height:15,background:'#ef4444',color:'white',borderRadius:'50%',fontSize:8,fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center'}},saved.size>9?'9+':saved.size)
+        ),
+        t.nSaved
+      ),
+      h("button",{onClick:()=>{setTab('profile');setProfPage('main');},style:{display:'flex',flexDirection:'column',alignItems:'center',gap:2,padding:'4px 10px',background:'transparent',border:'none',cursor:'pointer',color:tab==='profile'?'#16a34a':'#9ca3af',fontSize:10,fontWeight:600}},
+        h(User,{size:22}),t.nProf
+      )
+    ),
+    // Toast
+    toast&&h("div",{style:{position:'fixed',top:16,left:'50%',transform:'translateX(-50%)',background:'#111',color:'white',fontSize:12,fontWeight:600,padding:'8px 18px',borderRadius:24,boxShadow:'0 3px 12px rgba(0,0,0,.25)',zIndex:100,whiteSpace:'nowrap'},className:"aFI"},toast),
+    popNotif&&h("div",{
+      key:popNotif.id,
+      onClick:()=>{setPopNotif(null);setTab('profile');setProfPage('notif');},
+      style:{position:'fixed',top:12,left:12,right:12,zIndex:999,cursor:'pointer',animation:'slideInU .4s ease'}
+    },
+      h("div",{style:{
+        background:darkMode?'#1e2438':'white',
+        borderRadius:16,padding:'12px 14px',
+        display:'flex',alignItems:'center',gap:12,
+        boxShadow:'0 8px 32px rgba(0,0,0,.3)',
+        border:'1px solid '+(darkMode?'rgba(255,255,255,.1)':'#e5e7eb')
+      }},
+        h("div",{style:{
+          width:40,height:40,borderRadius:12,flexShrink:0,
+          background:'#16a34a20',border:'1px solid #16a34a40',
+          display:'flex',alignItems:'center',justifyContent:'center',
+          fontSize:20,animation:'bellRing .8s ease'
+        }},(NOTIF_TYPES[popNotif.type]||{icon:'🔔'}).icon),
+        h("div",{style:{flex:1,minWidth:0}},
+          h("p",{style:{fontSize:13,fontWeight:700,color:darkMode?'#f0f4ff':'#111',margin:'0 0 2px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},popNotif.title),
+          h("p",{style:{fontSize:11,color:'#6b7280',margin:0,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}},popNotif.body)
+        ),
+        h("button",{onClick:e=>{e.stopPropagation();setPopNotif(null);},style:{background:'transparent',border:'none',fontSize:16,color:'#9ca3af',cursor:'pointer',flexShrink:0}},"✕")
+      )
+    ),
+    // Modals
+    BizModal,PlaceModal,PrivacyOverlay,HelpOverlay,SignOutModal
+  );
+}
+
+ReactDOM.render(h(App,null),document.getElementById('root'));
+</script>
+</body>
+</html>
