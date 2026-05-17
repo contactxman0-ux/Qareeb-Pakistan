@@ -704,6 +704,7 @@ function App(){
           var lng=pos.coords.longitude;
           setUserLat(lat);
           setUserLng(lng);
+          setRad(15);
           // Reverse geocode city name
           fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json')
             .then(function(r){return r.json();})
@@ -712,11 +713,13 @@ function App(){
               if(city)setLocLabel(city);
             })
             .catch(function(){});
-          // Auto load real places
-          await loadGooglePlaces(lat,lng);
+          // Auto load real places - wait 500ms for state to update
+          setTimeout(async function(){
+            await loadGooglePlaces(lat,lng);
+          },500);
         },
         function(err){console.log('Auto GPS failed:',err);},
-        {timeout:10000,enableHighAccuracy:true}
+        {timeout:15000,enableHighAccuracy:true}
       );
     }
   },[]);
@@ -903,10 +906,12 @@ function App(){
 
   var loadGooglePlaces=async function(lat,lng){
     setBusy(true);
+    // Make sure userLat/userLng are set
+    setUserLat(lat);
+    setUserLng(lng);
     try{
       var cats=['restaurants','dhabas','clinics','pharmacy','grocery','mosque','petrol','atm','salons'];
       var allPlaces=[];
-      // Load all categories in parallel for speed
       var promises=cats.map(function(cat){return fetchNearbyPlaces(lat,lng,cat);});
       var results=await Promise.all(promises);
       for(var ri=0;ri<results.length;ri++){
@@ -915,16 +920,26 @@ function App(){
         }
       }
       if(allPlaces.length>0){
+        var withDist=allPlaces.map(function(p){
+          return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});
+        });
         setPL(function(prev){
           var userAdded=prev.filter(function(p){return p.userAdded;});
           var ids=new Set(userAdded.map(function(x){return x.id;}));
-          var withDist=allPlaces
-            .filter(function(p){return !ids.has(p.id);})
-            .map(function(p){return Object.assign({},p,{dist:+haversine(lat,lng,p.lat,p.lng).toFixed(1)});});
-          return withDist.concat(userAdded);
+          var newOnes=withDist.filter(function(p){return !ids.has(p.id);});
+          return newOnes.concat(userAdded);
         });
+        // Force display update with correct distances
+        setTimeout(function(){
+          setDP(function(prev){
+            var filtered=withDist.filter(function(p){return p.dist<=15;});
+            return filtered.sort(function(a,b){return a.dist-b.dist;});
+          });
+          setBusy(false);
+        },300);
+      } else {
+        setBusy(false);
       }
-      setBusy(false);
     }catch(e){setBusy(false);console.log('Load places error:',e);}
   };
 
